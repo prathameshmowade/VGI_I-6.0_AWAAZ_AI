@@ -1,0 +1,51 @@
+# Render Infrastructure-as-Code Blueprint
+# Deploy the entire Awaaz AI platform with 1 click: https://render.com/deploy
+version: "1"
+
+services:
+  # 1. Monolithic Production Web Gateway & Frontend SPA
+  - type: web
+    name: awaaz-ai-gateway
+    runtime: node
+    plan: starter
+    buildCommand: npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: JWT_SECRET
+        generateValue: true
+      - key: MONGODB_URI
+        sync: false
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: awaaz-ai-redis
+          property: connectionString
+
+  # 2. Dedicated Async Worker Pool (AI inference, verification, webhooks)
+  - type: worker
+    name: awaaz-ai-worker
+    runtime: node
+    plan: starter
+    buildCommand: cd backend && npm install
+    startCommand: node backend/workers/complaintProcessorWorker.js
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: awaaz-ai-redis
+          property: connectionString
+
+# 3. High-Performance Redis Cluster
+redis:
+  - name: awaaz-ai-redis
+    plan: free
+    ipAllowList: []

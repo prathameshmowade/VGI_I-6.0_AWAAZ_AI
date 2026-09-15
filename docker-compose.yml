@@ -1,12 +1,12 @@
 version: '3.8'
 
 services:
-  # 1. High-Throughput Node.js API Gateway & Webhook Ingress
-  api:
+  # 1. Full-Stack Web & API Gateway (Serves Vite Frontend + Express API)
+  web:
     build:
-      context: ./backend
+      context: .
       dockerfile: Dockerfile
-    container_name: awaaz_api_cluster
+    container_name: awaaz_web_gateway
     ports:
       - "5000:5000"
     environment:
@@ -15,6 +15,8 @@ services:
       - REDIS_URL=redis://redis:6379
       - POSTGRES_URL=postgresql://postgres:postgres@pgbouncer:6432/awaaz_db
       - MONGODB_URI=mongodb://mongo:27017/awaaz_db
+    volumes:
+      - uploads_data:/app/uploads
     depends_on:
       - redis
       - pgbouncer
@@ -25,7 +27,7 @@ services:
       retries: 3
     restart: always
 
-  # 2. Dedicated Asynchronous AI & Background Task Worker
+  # 2. Dedicated Asynchronous AI & Background Task Worker Pool
   worker:
     build:
       context: ./backend
@@ -36,6 +38,9 @@ services:
       - NODE_ENV=production
       - REDIS_URL=redis://redis:6379
       - POSTGRES_URL=postgresql://postgres:postgres@pgbouncer:6432/awaaz_db
+      - MONGODB_URI=mongodb://mongo:27017/awaaz_db
+    volumes:
+      - uploads_data:/app/uploads
     depends_on:
       - redis
       - pgbouncer
@@ -88,3 +93,4 @@ services:
 volumes:
   postgis_data:
   redis_data:
+  uploads_data:
