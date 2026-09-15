@@ -1,0 +1,707 @@
+[
+  {
+    "complaintId": "CMP-2026-016",
+    "intakeReference": "ING-2026-0016",
+    "tenantId": "tenant_nmc",
+    "title": "Severe road crater and water pipeline burst near Ward 12 bus station",
+    "description": "Vehicle axle damaged, water spilling on road. Citizen phone [REDACTED_PHONE] Aadhaar [REDACTED_AADHAAR]",
+    "category": "Road Damage",
+    "urgency": "Critical",
+    "status": "Accepted",
+    "department": "Municipal Corporation Intake Desk",
+    "location": "21.1458 N, 79.0882 E (Laxmi Nagar, Nagpur)",
+    "h3IndexRes8": "88a16eea9acf208",
+    "h3IndexRes9": "89a3b9fd7280f09",
+    "pHash": null,
+    "isDuplicate": false,
+    "duplicateCount": 0,
+    "duplicateParentId": null,
+    "source": "web",
+    "citizenPhone": null,
+    "createdAt": "2026-09-15T19:49:07.255Z"
+  },
+  {
+    "complaintId": "CMP-2026-015",
+    "_id": "CMP-2026-015",
+    "title": "Electricity transformer sparking violently with open wire ha...",
+    "description": "Electricity transformer sparking violently with open wire hanging near Ward 12 playground",
+    "category": "Electrical",
+    "department": "Electrical & Smart Lighting",
+    "departmentCode": "DEPT_ELECTRICAL",
+    "urgency": "High Priority",
+    "status": "New",
+    "source": "telegram",
+    "citizenPhone": "@rahul_dev",
+    "telegramChatId": "11223344",
+    "telegramUsername": "@rahul_dev",
+    "telegramMessageId": "32073",
+    "location": {
+      "address": "Laxmi Nagar, Nagpur (Reported via Telegram)",
+      "lat": 21.1458,
+      "lng": 79.0882
+    },
+    "confidenceScore": 94,
+    "isAutoClassified": true,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 92,
+    "isDuplicate": false,
+    "blockchainHash": "e11101ce94d5c99b6dc556333316b11e9ef9fbb2e7af4e19d151e011e6f475e1",
+    "language": "en",
+    "evidencePhotos": [],
+    "priority_weight": 1,
+    "verification_status": "NONE",
+    "verified_count": 0,
+    "rejected_count": 0,
+    "xaiData": {
+      "confidence": 94,
+      "reasoning": [
+        "Electrical hazard and public streetlight outage detected",
+        "Urgent night safety routing applied"
+      ],
+      "rulesApplied": [
+        "Telegram Direct Message Protocol",
+        "NLP Semantic Department Router"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "auditTimeline": [
+      {
+        "event": "Complaint Registered via Telegram",
+        "actor": "@rahul_dev",
+        "actorRole": "Citizen",
+        "timestamp": "2026-09-15T17:30:57.629Z",
+        "details": {
+          "chatId": "11223344",
+          "messageId": "32073"
+        },
+        "hash": "e11101ce94d5c99b6dc556333316b11e9ef9fbb2e7af4e19d151e011e6f475e1"
+      }
+    ],
+    "createdAt": "2026-09-15T17:30:57.629Z"
+  },
+  {
+    "complaintId": "CMP-2026-014",
+    "_id": "CMP-2026-014",
+    "title": "Deep crater pothole on Ward 12 Main Road causing traffic blo...",
+    "description": "Deep crater pothole on Ward 12 Main Road causing traffic blockage",
+    "category": "Road Damage",
+    "department": "Roads & Infrastructure Department",
+    "departmentCode": "DEPT_ROAD",
+    "urgency": "High Priority",
+    "status": "New",
+    "source": "telegram",
+    "citizenPhone": "@amit_dev",
+    "telegramChatId": "123456",
+    "telegramUsername": "@amit_dev",
+    "telegramMessageId": "4521",
+    "location": {
+      "address": "Laxmi Nagar, Nagpur (Reported via Telegram)",
+      "lat": 21.1458,
+      "lng": 79.0882
+    },
+    "confidenceScore": 96,
+    "isAutoClassified": true,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 88,
+    "isDuplicate": false,
+    "blockchainHash": "0b078580ce2222eda30e9ec3c343a1b7f06666ec1d35b47c4d7c7e5946dcded9",
+    "language": "en",
+    "evidencePhotos": [],
+    "priority_weight": 1,
+    "verification_status": "NONE",
+    "verified_count": 0,
+    "rejected_count": 0,
+    "xaiData": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "Telegram Direct Message Protocol",
+        "NLP Semantic Department Router"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "auditTimeline": [
+      {
+        "event": "Complaint Registered via Telegram",
+        "actor": "@amit_dev",
+        "actorRole": "Citizen",
+        "timestamp": "2026-09-15T16:54:33.170Z",
+        "details": {
+          "chatId": "123456",
+          "messageId": "4521"
+        },
+        "hash": "0b078580ce2222eda30e9ec3c343a1b7f06666ec1d35b47c4d7c7e5946dcded9"
+      }
+    ],
+    "createdAt": "2026-09-15T16:54:33.170Z"
+  },
+  {
+    "complaintId": "CMP-2026-013",
+    "_id": "CMP-2026-013",
+    "title": "Major water pipeline break flooding the street near Dharampe...",
+    "description": "Major water pipeline break flooding the street near Dharampeth Girls School, Ward 12",
+    "category": "Water Supply",
+    "department": "Water Supply & Drainage Dept",
+    "departmentCode": "DEPT_WATER",
+    "urgency": "Critical Priority",
+    "status": "New",
+    "source": "telegram",
+    "citizenPhone": "@priya_nagpur",
+    "telegramChatId": "87654321",
+    "telegramUsername": "@priya_nagpur",
+    "telegramMessageId": "92389",
+    "location": {
+      "address": "Laxmi Nagar, Nagpur (Reported via Telegram)",
+      "lat": 21.1458,
+      "lng": 79.0882
+    },
+    "confidenceScore": 95,
+    "isAutoClassified": true,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 87,
+    "isDuplicate": false,
+    "blockchainHash": "b262b90a4585ff8393c8897e7b6f415788246db6be8b337db59838d28ef0d6ad",
+    "language": "en",
+    "evidencePhotos": [],
+    "priority_weight": 1,
+    "verification_status": "NONE",
+    "verified_count": 0,
+    "rejected_count": 0,
+    "xaiData": {
+      "confidence": 95,
+      "reasoning": [
+        "Hydraulic pipeline and drainage leakage detected",
+        "Priority escalation for potential drinking water contamination"
+      ],
+      "rulesApplied": [
+        "Telegram Direct Message Protocol",
+        "NLP Semantic Department Router"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "auditTimeline": [
+      {
+        "event": "Complaint Registered via Telegram",
+        "actor": "@priya_nagpur",
+        "actorRole": "Citizen",
+        "timestamp": "2026-09-15T16:54:02.492Z",
+        "details": {
+          "chatId": "87654321",
+          "messageId": "92389"
+        },
+        "hash": "b262b90a4585ff8393c8897e7b6f415788246db6be8b337db59838d28ef0d6ad"
+      }
+    ],
+    "createdAt": "2026-09-15T16:54:02.492Z"
+  },
+  {
+    "complaintId": "CMP-2026-012",
+    "title": "Major water leakage on Ward 12 Main Road",
+    "description": "Clean drinking water pipe burst causing road flooding. Contact citizen at [REDACTED_PHONE] and Aadhaar [REDACTED_AADHAAR]",
+    "category": "Road Damage",
+    "urgency": "High Priority",
+    "status": "Pending Verification",
+    "department": "Roads & Infrastructure Department",
+    "departmentCode": "DEPT_ROAD",
+    "location": "22.7510, 75.8920 (Ward 12, Vijay Nagar)",
+    "jurisdiction": {
+      "ward": "12",
+      "zone": "North",
+      "zoneName": "Vijay Nagar Zone"
+    },
+    "officerId": "OFF-001",
+    "assetId": null,
+    "contractorId": "CON-006",
+    "workOrderId": null,
+    "responsibilityData": {
+      "officer": {
+        "id": "OFF-001",
+        "name": "Er. Rajesh Sharma",
+        "designation": "Ward Engineer",
+        "departmentName": "Roads & Infrastructure Department",
+        "stats": {
+          "activeComplaints": 14,
+          "pending": 8,
+          "inProgress": 4,
+          "overdue": 2,
+          "avgResolutionHours": 31
+        }
+      },
+      "contractor": {
+        "id": "CON-006",
+        "name": "Malwa Roads & Bridges Corp",
+        "stats": {
+          "totalAssigned": 156,
+          "completed": 118,
+          "pending": 28,
+          "overdue": 10,
+          "avgResolutionHours": 26.1,
+          "slaCompliance": 78,
+          "resolutionRate": 82,
+          "citizenSatisfaction": 72,
+          "repeatComplaints": 14,
+          "performanceScore": 74
+        }
+      },
+      "asset": null,
+      "project": null,
+      "slaHours": 48,
+      "explanation": [
+        {
+          "check": "✓",
+          "label": "Complaint category: Road Damage",
+          "detail": "Mapped to Roads & Infrastructure"
+        },
+        {
+          "check": "✓",
+          "label": "GPS location: Ward 12 — Vijay Nagar",
+          "detail": "Zone: Vijay Nagar Zone (North)"
+        },
+        {
+          "check": "✓",
+          "label": "Jurisdiction: Ward 12 — Vijay Nagar Roads & Infrastructure",
+          "detail": "Responsible officer: Er. Rajesh Sharma (Ward Engineer)"
+        },
+        {
+          "check": "✓",
+          "label": "Assigned contractor: Malwa Roads & Bridges Corp",
+          "detail": "Performance score: 74%"
+        }
+      ]
+    },
+    "isAutoClassified": true,
+    "confidenceScore": 96,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 91,
+    "isDuplicate": false,
+    "blockchainHash": "d65426fc0d56ef4d43ec9d7378b7f6b8a14133e1974b4da027adfc77fa60c787",
+    "xaiData": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule",
+        "Municipal Service Routing Protocol"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "xaiExplanation": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "createdAt": "2026-08-29T08:03:34.466Z",
+    "verifications": [
+      {
+        "citizenName": "Aarav Sharma",
+        "comment": "Inspected on site - road patch completed smoothly.",
+        "verifiedAt": "2026-08-29T08:04:14.788Z"
+      }
+    ],
+    "verificationsCount": 1,
+    "requiredVerifications": 3,
+    "pendingVerificationStartedAt": "2026-08-29T08:04:14.788Z",
+    "verificationWindowDays": 7
+  },
+  {
+    "complaintId": "CMP-2026-011",
+    "_id": "CMP-2026-011",
+    "title": "Hello.",
+    "description": "Hello.",
+    "category": "Road Damage",
+    "department": "Roads & Infrastructure Department",
+    "departmentCode": "DEPT_ROAD",
+    "urgency": "High Priority",
+    "status": "New",
+    "source": "call",
+    "citizenPhone": "+919876543210",
+    "confidenceScore": 92,
+    "isAutoClassified": true,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 93,
+    "isDuplicate": false,
+    "blockchainHash": "884ea5803cf1eb5aa4a0ed1eb83bcb0b3ebc2fdf51b330b3690c90fee343b151",
+    "language": "en",
+    "xaiData": {
+      "confidence": 92,
+      "reasoning": [
+        "Civic anomaly classified by municipal rule engine",
+        "Assigned to Central Redressal Taskforce"
+      ],
+      "rulesApplied": [
+        "Call Simulation Protocol"
+      ],
+      "similarCases": [
+        "CMP-2025-8891"
+      ]
+    },
+    "createdAt": "2026-08-15T17:57:28.546Z"
+  },
+  {
+    "complaintId": "CMP-2026-010",
+    "_id": "CMP-2026-010",
+    "title": "Huge pothole on Main Road near ABC School causing bike accid...",
+    "description": "Huge pothole on Main Road near ABC School causing bike accidents daily",
+    "category": "Road Damage",
+    "department": "Roads & Infrastructure Department",
+    "departmentCode": "DEPT_ROAD",
+    "urgency": "High Priority",
+    "status": "New",
+    "source": "sms",
+    "citizenPhone": "+919876543210",
+    "confidenceScore": 96,
+    "isAutoClassified": true,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 86,
+    "isDuplicate": false,
+    "blockchainHash": "269eefb89e5be21a43699613c2f6603e8ac800b8659b566654195cc37d038ecf",
+    "language": "en",
+    "xaiData": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "SMS Simulation Protocol"
+      ],
+      "similarCases": [
+        "CMP-2025-8891"
+      ]
+    },
+    "createdAt": "2026-08-15T17:47:56.576Z"
+  },
+  {
+    "complaintId": "CMP-2026-009",
+    "_id": "CMP-2026-009",
+    "title": "Streetlights on Ring Road have been off for a week causing a...",
+    "description": "Streetlights on Ring Road have been off for a week causing accidents",
+    "category": "Road Damage",
+    "department": "Roads & Infrastructure Department",
+    "departmentCode": "DEPT_ROAD",
+    "urgency": "High Priority",
+    "status": "New",
+    "source": "call",
+    "citizenPhone": "+919876543210",
+    "confidenceScore": 96,
+    "isAutoClassified": true,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 94,
+    "isDuplicate": false,
+    "blockchainHash": "276a027836ee9ed92a09fb2108b83e8dda596db7c210c41e6208a9c7291155b6",
+    "language": "en",
+    "xaiData": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "Call Simulation Protocol"
+      ],
+      "similarCases": [
+        "CMP-2025-8891"
+      ]
+    },
+    "createdAt": "2026-08-15T17:25:20.265Z"
+  },
+  {
+    "complaintId": "CMP-2026-008",
+    "_id": "CMP-2026-008",
+    "title": "Huge water pipe leak in Ward 12 near medical square",
+    "description": "Huge water pipe leak in Ward 12 near medical square",
+    "category": "Water Supply",
+    "department": "Water Supply & Drainage Dept",
+    "departmentCode": "DEPT_WATER",
+    "urgency": "Critical Priority",
+    "status": "New",
+    "source": "sms",
+    "citizenPhone": "+919876543210",
+    "confidenceScore": 95,
+    "isAutoClassified": true,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 91,
+    "isDuplicate": false,
+    "blockchainHash": "9e58b70ae7217ac3046b7a1b8c9181d1cf7397d5b9a4c03fb8c94642c729cb74",
+    "language": "en",
+    "xaiData": {
+      "confidence": 95,
+      "reasoning": [
+        "Hydraulic pipeline and drainage leakage detected",
+        "Priority escalation for potential drinking water contamination"
+      ],
+      "rulesApplied": [
+        "SMS Simulation Protocol"
+      ],
+      "similarCases": [
+        "CMP-2025-8891"
+      ]
+    },
+    "createdAt": "2026-08-15T17:24:28.270Z"
+  },
+  {
+    "complaintId": "CMP-2026-382",
+    "title": "Municipal Grievance Issue",
+    "description": "Grievance ticket under officer resolution",
+    "category": "Road Damage",
+    "urgency": "High Priority",
+    "status": "In Progress",
+    "createdAt": "2026-08-08T00:35:01.618Z"
+  },
+  {
+    "complaintId": "CMP-2026-006",
+    "title": "Water pipeline burst near Rajiv Gandhi Park",
+    "description": "Huge water pressure leakage flooding main road",
+    "category": "Water Supply",
+    "urgency": "High Priority",
+    "status": "Verified & Resolved",
+    "department": "DEPT_ROAD",
+    "confidenceScore": 94,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 93,
+    "isDuplicate": false,
+    "blockchainHash": "b2c1d6d06195893885fe52ce86025e13a1deac223d187181c0c2c5daf202fb00",
+    "xaiExplanation": {
+      "confidence": 95,
+      "reasoning": [
+        "Category keywords matched in Water Supply",
+        "Mapped to Civic Jurisdiction"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "createdAt": "2026-08-08T00:25:18.248Z",
+    "resolutionProof": "https://images.unsplash.com/photo-1542013936693-884638332954?w=600&auto=format&fit=crop&q=80",
+    "resolutionNotes": "Mainline joint replaced, pressure restored to 4.2 bar."
+  },
+  {
+    "complaintId": "CMP-2026-005",
+    "title": "Severe road pothole near ABC School in Vijay Nagar...Pothole near ABC School",
+    "description": "Severe road pothole near ABC School in Vijay Nagar causing traffic accidents.",
+    "category": "Water Supply",
+    "urgency": "High",
+    "status": "New",
+    "department": "DEPT_ROAD",
+    "confidenceScore": 96,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 93,
+    "isDuplicate": false,
+    "blockchainHash": "933704102b783180e3106c87ba49a62cc495aa6f3f4c8286ee010db4ab81a829",
+    "xaiExplanation": {
+      "confidence": 95,
+      "reasoning": [
+        "Category keywords matched in Water Supply",
+        "Mapped to Civic Jurisdiction"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "createdAt": "2026-08-07T23:24:06.992Z"
+  },
+  {
+    "complaintId": "CMP-2026-004",
+    "title": "Broken pipeline near Central Market",
+    "description": "Water gushing out of pipe for 2 days. Phone: [REDACTED_PHONE]",
+    "category": "Water Supply",
+    "urgency": "High",
+    "status": "New",
+    "department": "DEPT_ROAD",
+    "confidenceScore": 95,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 92,
+    "isDuplicate": false,
+    "blockchainHash": "054d3ce7fe530088f41e6d31bfb79da20f8cf3eec68366e03bc1887584d47ac3",
+    "xaiExplanation": {
+      "confidence": 95,
+      "reasoning": [
+        "Category keywords matched in Water Supply",
+        "Mapped to Old Palasia Zone Jurisdiction"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "createdAt": "2026-08-07T08:14:26.042Z"
+  },
+  {
+    "complaintId": "CMP-2026-001",
+    "title": "Severe road pothole near ABC School",
+    "category": "Road Damage",
+    "urgency": "High",
+    "status": "Completed",
+    "confidenceScore": 96,
+    "completion_history": [],
+    "completion_proof": "https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600",
+    "completion_notes": "Road resurfacing completed with hot-mix asphalt.",
+    "resolutionProof": "https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600",
+    "resolutionNotes": "Road resurfacing completed with hot-mix asphalt.",
+    "completed_by": {
+      "id": "OFF-001",
+      "name": "Er. Rajesh Sharma",
+      "email": "rajesh@imc.gov.in",
+      "role": "officer",
+      "department": "Roads Dept"
+    },
+    "completed_at": "2026-09-15T14:07:46.928Z",
+    "verification_status": "VERIFIED",
+    "verification_deadline": "2026-09-22T14:07:46.928Z",
+    "verification_attempts": 1,
+    "verified_count": 3,
+    "rejected_count": 0,
+    "verificationsCount": 3,
+    "requiredVerifications": 3,
+    "pendingVerificationStartedAt": "2026-09-15T14:07:46.928Z",
+    "verificationWindowDays": 7,
+    "auditTimeline": [
+      {
+        "event": "Officer Marked Completed & Uploaded Proof",
+        "actor": "Er. Rajesh Sharma",
+        "actorRole": "officer",
+        "timestamp": "2026-09-15T14:07:46.928Z",
+        "details": {
+          "proof": "https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600",
+          "notes": "Road resurfacing completed with hot-mix asphalt."
+        },
+        "hash": "039d826451625cc10282e007f164277ca85d98ab63d2182a101d40561f54dd17"
+      },
+      {
+        "event": "Citizen Verified (1/3)",
+        "actor": "Priya Patel",
+        "actorRole": "citizen",
+        "timestamp": "2026-09-15T14:08:16.934Z",
+        "details": {
+          "vote": "VERIFIED",
+          "feedback": "Road is properly repaired, smooth surface now.",
+          "verifiedCount": 1,
+          "rejectedCount": 0
+        },
+        "hash": "5b66b455c94e5f92a7f801b13eb9e638998d6ac2f149a0b72724a6518d2f8846"
+      },
+      {
+        "event": "Citizen Verified (2/3)",
+        "actor": "Amit Verma",
+        "actorRole": "citizen",
+        "timestamp": "2026-09-15T14:09:17.307Z",
+        "details": {
+          "vote": "VERIFIED",
+          "feedback": "Road is fixed, good work.",
+          "verifiedCount": 2,
+          "rejectedCount": 0
+        },
+        "hash": "6827b9c5683d29305ced5f962659d64582b476163f54f9d715f97de8b4aad4eb"
+      },
+      {
+        "event": "Citizen Verified (3/3)",
+        "actor": "Sunita Devi",
+        "actorRole": "citizen",
+        "timestamp": "2026-09-15T14:09:41.514Z",
+        "details": {
+          "vote": "VERIFIED",
+          "feedback": "Pothole fixed completely. Safe road now.",
+          "verifiedCount": 3,
+          "rejectedCount": 0
+        },
+        "hash": "c4d1b8b6d4fa98bd86abf85fb47b7709f1b19cafc6f53a0a07e160727712b673"
+      },
+      {
+        "event": "Community Verification Complete (3/3) — Complaint Completed",
+        "actor": "System",
+        "actorRole": "system",
+        "timestamp": "2026-09-15T14:09:41.514Z",
+        "details": {
+          "verifiedCount": 3,
+          "rejectedCount": 0
+        },
+        "hash": "ae336a0dae9e745627ccf2cee54194e66fbb7a4036621bbfd1f31be07da2a442"
+      }
+    ],
+    "blockchainHash": "ae336a0dae9e745627ccf2cee54194e66fbb7a4036621bbfd1f31be07da2a442",
+    "verifications": [
+      {
+        "citizenName": "Priya Patel",
+        "comment": "Road is properly repaired, smooth surface now.",
+        "verifiedAt": "2026-09-15T14:08:16.934Z",
+        "vote": "VERIFIED"
+      },
+      {
+        "citizenName": "Amit Verma",
+        "comment": "Road is fixed, good work.",
+        "verifiedAt": "2026-09-15T14:09:17.307Z",
+        "vote": "VERIFIED"
+      },
+      {
+        "citizenName": "Sunita Devi",
+        "comment": "Pothole fixed completely. Safe road now.",
+        "verifiedAt": "2026-09-15T14:09:41.514Z",
+        "vote": "VERIFIED"
+      }
+    ]
+  },
+  {
+    "complaintId": "CMP-2026-002",
+    "title": "Major water pipe leakage",
+    "category": "Water Supply",
+    "urgency": "Critical",
+    "status": "Assigned",
+    "confidenceScore": 94
+  },
+  {
+    "complaintId": "CMP-2026-003",
+    "title": "Uncollected garbage near park",
+    "category": "Sanitation",
+    "urgency": "Medium",
+    "status": "New",
+    "confidenceScore": 91
+  }
+]
