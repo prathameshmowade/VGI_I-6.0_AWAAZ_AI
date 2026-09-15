@@ -1,0 +1,367 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ========================================================
+     FIGMA DESIGN HARMONY COLOR COMBINATIONS (1 TO 38)
+     ======================================================== */
+
+  /* Combination 1 & 3: Stormy Morning & Blue Eclipse */
+  --c-stormy-blue: #334155;
+  --c-stormy-mist: #64748b;
+  --c-blue-eclipse-deep: #0f172a;
+  --c-blue-eclipse-mid: #1e293b;
+  --c-blue-eclipse-electric: #2563eb;
+
+  /* Combination 4 & 5: Lush Forest & Green Juice */
+  --c-forest-deep: #14532d;
+  --c-forest-mid: #166534;
+  --c-kelly-green: #16a34a;
+  --c-mint-fresh: #10b981;
+  --c-pistachio: #86efac;
+
+  /* Combination 6 & 33: Chili Spice & Guava */
+  --c-chili-red: #dc2626;
+  --c-chili-crimson: #991b1b;
+  --c-guava-coral: #f43f5e;
+  --c-guava-plum: #881337;
+
+  /* Combination 10 & 20: Wisteria Bloom & Iris Garden */
+  --c-wisteria-deep: #581c87;
+  --c-wisteria-violet: #7c3aed;
+  --c-wisteria-lavender: #c084fc;
+  --c-iris-lilac: #a855f7;
+  --c-iris-sage: #84cc16;
+
+  /* Combination 22 & 34 & 35: Golden Hour, Glowing Horizon & Sunny Day */
+  --c-golden-amber: #f59e0b;
+  --c-golden-sun: #eab308;
+  --c-horizon-orange: #f97316;
+  --c-horizon-terracotta: #c2410c;
+
+  /* Combination 29 & 36: California Beaches & Retro Sunset */
+  --c-cali-orange: #fb923c;
+  --c-cali-cyan: #06b6d4;
+  --c-retro-mustard: #d97706;
+  --c-retro-teal: #0d9488;
+
+  /* Combination 37 & 38: Bubblegum Pop & Cotton Candy Skies */
+  --c-bubblegum-pink: #ec4899;
+  --c-bubblegum-teal: #14b8a6;
+  --c-cotton-candy-purple: #c084fc;
+  --c-cotton-candy-blue: #60a5fa;
+
+  /* Combination 19: Lotus Garden */
+  --c-lotus-mint: #2dd4bf;
+  --c-lotus-coral: #fb7185;
+  --c-lotus-purple: #9333ea;
+
+  /* Global Layout */
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --border-light: #e2e8f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', 'Outfit', system-ui, -apple-system, sans-serif;
+  touch-action: manipulation;
+}
+
+html, body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  letter-spacing: -0.01em;
+}
+
+/* Custom Figma Rainbow Smooth Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 33%, #ec4899 66%, #f59e0b 100%);
+  border-radius: 9999px;
+  border: 2px solid #f1f5f9;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2563eb 0%, #7c3aed 33%, #db2777 66%, #d97706 100%);
+}
+
+/* Responsive Navbar Media Query Rules */
+@media (min-width: 1200px) {
+  .navbar-mobile-toggle {
+    display: none !important;
+  }
+  .navbar-desktop {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .navbar-desktop {
+    display: none !important;
+  }
+  .navbar-mobile-toggle {
+    display: flex !important;
+  }
+}
+
+/* ===================================================
+   CURATED FIGMA COLOR PALETTES & GRADIENTS
+   =================================================== */
+
+/* Combo 3 & 1: Blue Eclipse & Stormy Morning */
+.theme-blue-eclipse {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #2563eb 100%);
+}
+.btn-blue-eclipse {
+  background: linear-gradient(135deg, #1e293b 0%, #2563eb 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+  transition: all 0.25s ease;
+}
+.btn-blue-eclipse:hover {
+  background: linear-gradient(135deg, #0f172a 0%, #1d4ed8 100%);
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Combo 34 & 35: Glowing Horizon & Sunny Day */
+.theme-glowing-horizon {
+  background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #2563eb 100%);
+}
+.btn-glowing-horizon {
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+  transition: all 0.25s ease;
+}
+.btn-glowing-horizon:hover {
+  background: linear-gradient(135deg, #d97706 0%, #c2410c 100%);
+  box-shadow: 0 8px 22px rgba(245, 158, 11, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Combo 10 & 20: Wisteria Bloom & Iris Garden */
+.theme-wisteria-bloom {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%);
+}
+.btn-wisteria {
+  background: linear-gradient(135deg, #7c3aed 0%, #6366f1 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);
+  transition: all 0.25s ease;
+}
+.btn-wisteria:hover {
+  background: linear-gradient(135deg, #6d28d9 0%, #4f46e5 100%);
+  box-shadow: 0 8px 22px rgba(124, 58, 237, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Combo 4 & 5: Lush Forest & Green Juice */
+.theme-lush-forest {
+  background: linear-gradient(135deg, #14532d 0%, #16a34a 50%, #10b981 100%);
+}
+.btn-lush-forest {
+  background: linear-gradient(135deg, #16a34a 0%, #059669 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.25);
+  transition: all 0.25s ease;
+}
+.btn-lush-forest:hover {
+  background: linear-gradient(135deg, #15803d 0%, #047857 100%);
+  box-shadow: 0 8px 20px rgba(22, 163, 74, 0.35);
+  transform: translateY(-2px);
+}
+
+/* Combo 6 & 33: Chili Spice & Guava */
+.theme-chili-spice {
+  background: linear-gradient(135deg, #dc2626 0%, #f43f5e 50%, #881337 100%);
+}
+.btn-chili-spice {
+  background: linear-gradient(135deg, #dc2626 0%, #f43f5e 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
+  transition: all 0.25s ease;
+}
+.btn-chili-spice:hover {
+  background: linear-gradient(135deg, #b91c1c 0%, #e11d48 100%);
+  box-shadow: 0 8px 22px rgba(220, 38, 38, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Combo 37 & 38: Bubblegum Pop & Cotton Candy Skies */
+.theme-bubblegum-pop {
+  background: linear-gradient(135deg, #ec4899 0%, #14b8a6 50%, #a855f7 100%);
+}
+.btn-bubblegum {
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  box-shadow: 0 4px 14px rgba(236, 72, 153, 0.3);
+  transition: all 0.25s ease;
+}
+
+/* Combo 36: Retro Sunset */
+.theme-retro-sunset {
+  background: linear-gradient(135deg, #ea580c 0%, #d97706 50%, #0d9488 100%);
+}
+.btn-retro-sunset {
+  background: linear-gradient(135deg, #0d9488 0%, #0284c7 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  box-shadow: 0 4px 14px rgba(13, 148, 136, 0.3);
+  transition: all 0.25s ease;
+}
+
+/* Legacy Alias Mappings for App Components */
+.btn-primary {
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #4338ca 100%);
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-indigo {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+.btn-indigo:hover {
+  background: linear-gradient(135deg, #4338ca 0%, #6d28d9 100%);
+  box-shadow: 0 8px 22px rgba(79, 70, 229, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-amber {
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+}
+.btn-amber:hover {
+  background: linear-gradient(135deg, #d97706 0%, #c2410c 100%);
+  box-shadow: 0 8px 22px rgba(245, 158, 11, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-emerald {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
+}
+.btn-emerald:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-rose {
+  background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%);
+  color: #ffffff;
+  font-weight: 700;
+  padding: 0.65rem 1.35rem;
+  border-radius: 0.85rem;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.3);
+}
+.btn-rose:hover {
+  background: linear-gradient(135deg, #e11d48 0%, #be123c 100%);
+  box-shadow: 0 8px 22px rgba(244, 63, 94, 0.45);
+  transform: translateY(-2px);
+}
+
+/* Animated Rainbow Top Bar */
+.rainbow-strip {
+  background: linear-gradient(90deg, #3b82f6, #6366f1, #a855f7, #ec4899, #f59e0b, #10b981, #06b6d4, #3b82f6);
+  background-size: 300% 100%;
+  animation: rainbowMove 5s linear infinite;
+}
+
+@keyframes rainbowMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes liveDotPulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.animate-live-dot {
+  animation: liveDotPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
