@@ -1,0 +1,97 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: awaaz-api-deployment
+  namespace: civicflow
+  labels:
+    app: awaaz-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: awaaz-api
+  template:
+    metadata:
+      labels:
+        app: awaaz-api
+    spec:
+      containers:
+        - name: awaaz-api
+          image: civicflow/awaaz-api:2.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "5000"
+            - name: REDIS_URL
+              value: "redis://awaaz-redis-service:6379"
+            - name: POSTGRES_URL
+              value: "postgresql://postgres:postgres@awaaz-pgbouncer-service:6432/awaaz_db"
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "2000m"
+              memory: "2048Mi"
+          # SRE Kubernetes Liveness & Readiness Probes
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: 5000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: awaaz-api-service
+  namespace: civicflow
+spec:
+  type: ClusterIP
+  selector:
+    app: awaaz-api
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+---
+# Horizontal Pod Autoscaler for Surge/Monsoon Event Spikes
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: awaaz-api-hpa
+  namespace: civicflow
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: awaaz-api-deployment
+  minReplicas: 2
+  maxReplicas: 20
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
