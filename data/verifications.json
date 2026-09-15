@@ -1,0 +1,38 @@
+[
+  {
+    "verificationId": "VER-MU2QYLNR-0001",
+    "complaintId": "CMP-2026-001",
+    "citizenId": "citizen-001",
+    "citizenName": "Priya Patel",
+    "citizenEmail": "priya@gmail.com",
+    "vote": "VERIFIED",
+    "feedback": "Road is properly repaired, smooth surface now.",
+    "location": {},
+    "createdAt": "2026-09-15T14:08:16.934Z",
+    "updatedAt": "2026-09-15T14:08:16.934Z"
+  },
+  {
+    "verificationId": "VER-MU2QZW8R-0002",
+    "complaintId": "CMP-2026-001",
+    "citizenId": "citizen-002",
+    "citizenName": "Amit Verma",
+    "citizenEmail": "",
+    "vote": "VERIFIED",
+    "feedback": "Road is fixed, good work.",
+    "location": {},
+    "createdAt": "2026-09-15T14:09:17.307Z",
+    "updatedAt": "2026-09-15T14:09:17.307Z"
+  },
+  {
+    "verificationId": "VER-MU2R0EX6-0003",
+    "complaintId": "CMP-2026-001",
+    "citizenId": "citizen-003",
+    "citizenName": "Sunita Devi",
+    "citizenEmail": "",
+    "vote": "VERIFIED",
+    "feedback": "Pothole fixed completely. Safe road now.",
+    "location": {},
+    "createdAt": "2026-09-15T14:09:41.514Z",
+    "updatedAt": "2026-09-15T14:09:41.514Z"
+  }
+]

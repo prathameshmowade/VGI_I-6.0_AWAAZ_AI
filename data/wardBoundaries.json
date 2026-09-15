@@ -1,0 +1,132 @@
+[
+  {
+    "wardId": "1",
+    "wardName": "Ward 1 — Rajwada",
+    "zoneId": "rajwada",
+    "zoneName": "Rajwada Zone",
+    "zone": "Central",
+    "polygon": [
+      { "lat": 22.7180, "lng": 75.8540 },
+      { "lat": 22.7180, "lng": 75.8600 },
+      { "lat": 22.7220, "lng": 75.8600 },
+      { "lat": 22.7220, "lng": 75.8540 }
+    ]
+  },
+  {
+    "wardId": "2",
+    "wardName": "Ward 2 — Sarafa Bazaar",
+    "zoneId": "rajwada",
+    "zoneName": "Rajwada Zone",
+    "zone": "Central",
+    "polygon": [
+      { "lat": 22.7160, "lng": 75.8500 },
+      { "lat": 22.7160, "lng": 75.8560 },
+      { "lat": 22.7200, "lng": 75.8560 },
+      { "lat": 22.7200, "lng": 75.8500 }
+    ]
+  },
+  {
+    "wardId": "5",
+    "wardName": "Ward 5 — Chhappan Dukan",
+    "zoneId": "chhappan-dukan",
+    "zoneName": "Chhappan Dukan Zone",
+    "zone": "Central",
+    "polygon": [
+      { "lat": 22.7230, "lng": 75.8750 },
+      { "lat": 22.7230, "lng": 75.8820 },
+      { "lat": 22.7280, "lng": 75.8820 },
+      { "lat": 22.7280, "lng": 75.8750 }
+    ]
+  },
+  {
+    "wardId": "6",
+    "wardName": "Ward 6 — New Palasia",
+    "zoneId": "palasia",
+    "zoneName": "Palasia Zone",
+    "zone": "East",
+    "polygon": [
+      { "lat": 22.7220, "lng": 75.8820 },
+      { "lat": 22.7220, "lng": 75.8900 },
+      { "lat": 22.7280, "lng": 75.8900 },
+      { "lat": 22.7280, "lng": 75.8820 }
+    ]
+  },
+  {
+    "wardId": "7",
+    "wardName": "Ward 7 — Old Palasia",
+    "zoneId": "palasia",
+    "zoneName": "Palasia Zone",
+    "zone": "East",
+    "polygon": [
+      { "lat": 22.7170, "lng": 75.8800 },
+      { "lat": 22.7170, "lng": 75.8880 },
+      { "lat": 22.7230, "lng": 75.8880 },
+      { "lat": 22.7230, "lng": 75.8800 }
+    ]
+  },
+  {
+    "wardId": "8",
+    "wardName": "Ward 8 — Vijay Nagar North",
+    "zoneId": "vijay-nagar",
+    "zoneName": "Vijay Nagar Zone",
+    "zone": "North",
+    "polygon": [
+      { "lat": 22.7530, "lng": 75.8900 },
+      { "lat": 22.7530, "lng": 75.8980 },
+      { "lat": 22.7600, "lng": 75.8980 },
+      { "lat": 22.7600, "lng": 75.8900 }
+    ]
+  },
+  {
+    "wardId": "12",
+    "wardName": "Ward 12 — Vijay Nagar",
+    "zoneId": "vijay-nagar",
+    "zoneName": "Vijay Nagar Zone",
+    "zone": "North",
+    "polygon": [
+      { "lat": 22.7480, "lng": 75.8880 },
+      { "lat": 22.7480, "lng": 75.8960 },
+      { "lat": 22.7540, "lng": 75.8960 },
+      { "lat": 22.7540, "lng": 75.8880 }
+    ]
+  },
+  {
+    "wardId": "13",
+    "wardName": "Ward 13 — Vijay Nagar South",
+    "zoneId": "vijay-nagar",
+    "zoneName": "Vijay Nagar Zone",
+    "zone": "North",
+    "polygon": [
+      { "lat": 22.7420, "lng": 75.8880 },
+      { "lat": 22.7420, "lng": 75.8960 },
+      { "lat": 22.7480, "lng": 75.8960 },
+      { "lat": 22.7480, "lng": 75.8880 }
+    ]
+  },
+  {
+    "wardId": "15",
+    "wardName": "Ward 15 — Annapurna",
+    "zoneId": "annapurna",
+    "zoneName": "Annapurna Zone",
+    "zone": "West",
+    "polygon": [
+      { "lat": 22.6950, "lng": 75.8310 },
+      { "lat": 22.6950, "lng": 75.8380 },
+      { "lat": 22.7020, "lng": 75.8380 },
+      { "lat": 22.7020, "lng": 75.8310 }
+    ]
+  },
+  {
+    "wardId": "10",
+    "wardName": "Ward 10 — Bhanwarkuan",
+    "zoneId": "bhanwarkuan",
+    "zoneName": "Bhanwarkuan Zone",
+    "zone": "South",
+    "polygon": [
+      { "lat": 22.6860, "lng": 75.8610 },
+      { "lat": 22.6860, "lng": 75.8680 },
+      { "lat": 22.6930, "lng": 75.8680 },
+      { "lat": 22.6930, "lng": 75.8610 }
+    ]
+  }
+]

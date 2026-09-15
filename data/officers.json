@@ -1,0 +1,102 @@
+[
+  {
+    "officerId": "OFF-001",
+    "name": "Er. Rajesh Sharma",
+    "designation": "Ward Engineer",
+    "departmentId": "DEPT_ROAD",
+    "departmentName": "Roads & Infrastructure Department",
+    "jurisdiction": { "ward": "12", "zone": "East", "zoneName": "Vijay Nagar Zone" },
+    "responsibilities": ["Road Infrastructure", "Footpath Maintenance", "Flyover Inspection"],
+    "stats": { "activeComplaints": 14, "pending": 8, "inProgress": 4, "overdue": 2, "avgResolutionHours": 31 }
+  },
+  {
+    "officerId": "OFF-002",
+    "name": "Er. Anita Deshmukh",
+    "designation": "Ward Hydraulic Engineer",
+    "departmentId": "DEPT_WATER",
+    "departmentName": "Water Supply & Drainage Dept",
+    "jurisdiction": { "ward": "12", "zone": "East", "zoneName": "Vijay Nagar Zone" },
+    "responsibilities": ["Water Pipeline", "Sewage System", "Drainage"],
+    "stats": { "activeComplaints": 11, "pending": 5, "inProgress": 4, "overdue": 2, "avgResolutionHours": 22 }
+  },
+  {
+    "officerId": "OFF-003",
+    "name": "Mr. Suresh Patil",
+    "designation": "Ward Sanitation Inspector",
+    "departmentId": "DEPT_SAN",
+    "departmentName": "Sanitation & Waste Management",
+    "jurisdiction": { "ward": "12", "zone": "East", "zoneName": "Vijay Nagar Zone" },
+    "responsibilities": ["Solid Waste Collection", "Street Sweeping", "Drain Cleaning"],
+    "stats": { "activeComplaints": 9, "pending": 4, "inProgress": 3, "overdue": 2, "avgResolutionHours": 18 }
+  },
+  {
+    "officerId": "OFF-004",
+    "name": "Er. Vikas Kulkarni",
+    "designation": "Ward Electrical Engineer",
+    "departmentId": "DEPT_ELEC",
+    "departmentName": "Electrical & Smart Lighting",
+    "jurisdiction": { "ward": "12", "zone": "East", "zoneName": "Vijay Nagar Zone" },
+    "responsibilities": ["Streetlight Maintenance", "Transformer Monitoring", "Smart Grid"],
+    "stats": { "activeComplaints": 6, "pending": 3, "inProgress": 2, "overdue": 1, "avgResolutionHours": 16 }
+  },
+  {
+    "officerId": "OFF-005",
+    "name": "Mrs. Sunita Jadhav",
+    "designation": "Ward Horticulture Officer",
+    "departmentId": "DEPT_PARK",
+    "departmentName": "Parks & Public Amenities",
+    "jurisdiction": { "ward": "12", "zone": "East", "zoneName": "Vijay Nagar Zone" },
+    "responsibilities": ["Park Maintenance", "Tree Management", "Playground Upkeep"],
+    "stats": { "activeComplaints": 4, "pending": 2, "inProgress": 1, "overdue": 1, "avgResolutionHours": 40 }
+  },
+  {
+    "officerId": "OFF-006",
+    "name": "Er. Anil Deshpande",
+    "designation": "Ward Engineer",
+    "departmentId": "DEPT_ROAD",
+    "departmentName": "Roads & Infrastructure Department",
+    "jurisdiction": { "ward": "5", "zone": "West", "zoneName": "Old Palasia Zone" },
+    "responsibilities": ["Road Infrastructure", "Drainage", "Footpath"],
+    "stats": { "activeComplaints": 22, "pending": 12, "inProgress": 7, "overdue": 3, "avgResolutionHours": 38 }
+  },
+  {
+    "officerId": "OFF-007",
+    "name": "Er. Priya Wankhede",
+    "designation": "Ward Hydraulic Engineer",
+    "departmentId": "DEPT_WATER",
+    "departmentName": "Water Supply & Drainage Dept",
+    "jurisdiction": { "ward": "5", "zone": "West", "zoneName": "Old Palasia Zone" },
+    "responsibilities": ["Water Pipeline", "Sewage System", "Drainage"],
+    "stats": { "activeComplaints": 18, "pending": 9, "inProgress": 6, "overdue": 3, "avgResolutionHours": 28 }
+  },
+  {
+    "officerId": "OFF-008",
+    "name": "Er. Manoj Thakur",
+    "designation": "Ward Engineer",
+    "departmentId": "DEPT_ROAD",
+    "departmentName": "Roads & Infrastructure Department",
+    "jurisdiction": { "ward": "7", "zone": "Central", "zoneName": "Sadar Zone" },
+    "responsibilities": ["Road Infrastructure", "Bridge Inspection", "Divider Maintenance"],
+    "stats": { "activeComplaints": 16, "pending": 7, "inProgress": 6, "overdue": 3, "avgResolutionHours": 34 }
+  },
+  {
+    "officerId": "OFF-009",
+    "name": "Er. Kavita Meshram",
+    "designation": "Ward Electrical Engineer",
+    "departmentId": "DEPT_ELEC",
+    "departmentName": "Electrical & Smart Lighting",
+    "jurisdiction": { "ward": "7", "zone": "Central", "zoneName": "Sadar Zone" },
+    "responsibilities": ["Streetlight Maintenance", "Junction Box Repair", "Underground Cabling"],
+    "stats": { "activeComplaints": 8, "pending": 4, "inProgress": 3, "overdue": 1, "avgResolutionHours": 20 }
+  },
+  {
+    "officerId": "OFF-010",
+    "name": "Mr. Ramesh Borkar",
+    "designation": "Ward Sanitation Inspector",
+    "departmentId": "DEPT_SAN",
+    "departmentName": "Sanitation & Waste Management",
+    "jurisdiction": { "ward": "1", "zone": "Central", "zoneName": "Sitabuldi Zone" },
+    "responsibilities": ["Solid Waste Collection", "Public Toilet Maintenance", "Drain Desilting"],
+    "stats": { "activeComplaints": 10, "pending": 5, "inProgress": 3, "overdue": 2, "avgResolutionHours": 24 }
+  }
+]

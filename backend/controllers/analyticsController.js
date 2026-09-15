@@ -1,0 +1,2 @@
+const getAnalyticsSummary = (req, res) => res.json({ success: true, data: { totalComplaints: 142, resolvedComplaints: 118, avgResolutionHours: 28.4, slaComplianceRate: 94.2, monthlyTrend: [{month:'Jan',count:45},{month:'Feb',count:52},{month:'Mar',count:38},{month:'Apr',count:64},{month:'May',count:71},{month:'Jun',count:89},{month:'Jul',count:110},{month:'Aug',count:142}] } });
+module.exports = { getAnalyticsSummary };

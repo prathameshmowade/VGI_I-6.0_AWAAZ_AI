@@ -1,0 +1,2 @@
+import { useState } from 'react';
+export function useAuth() { const [user, setUser] = useState(() => { const s = localStorage.getItem('user'); return s ? JSON.parse(s) : null; }); const login = (u, t) => { localStorage.setItem('user', JSON.stringify(u)); localStorage.setItem('token', t); setUser(u); }; const logout = () => { localStorage.clear(); setUser(null); }; return { user, login, logout }; }

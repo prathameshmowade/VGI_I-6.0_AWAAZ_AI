@@ -1,0 +1,2 @@
+import React from 'react';
+export default function AdminPanel() { return (<div className='max-w-7xl mx-auto px-4 py-8 space-y-6'><h2 className='text-2xl font-bold text-white'>System Admin</h2><div className='bg-slate-800 p-6 rounded-2xl border border-slate-700'><h3 className='font-semibold text-slate-200'>SLA Rules</h3><p className='text-xs text-slate-400'>Road (Critical) = 24h | Water (High) = 48h</p></div></div>); }

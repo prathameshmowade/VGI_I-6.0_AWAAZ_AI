@@ -1,0 +1,1 @@
+module.exports = (req, res, next) => { if(req.body?.description) { req.body.description = req.body.description.replace(/\b\d{4}\s?\d{4}\s?\d{4}\b/g, '[REDACTED_AADHAAR]').replace(/\b[6-9]\d{9}\b/g, '[REDACTED_PHONE]'); } next(); };

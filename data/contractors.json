@@ -1,0 +1,170 @@
+[
+  {
+    "contractorId": "CON-001",
+    "name": "Apex Infrastructure Pvt Ltd",
+    "departmentId": "DEPT_ROAD",
+    "assignedWards": ["12", "7", "1"],
+    "activeContracts": ["WO-2026-1042", "WO-2026-3001"],
+    "contactOffice": "IMC Contractor Office, Nagar Nigam HQ, Indore",
+    "registrationNo": "IMC-REG-2024-0142",
+    "stats": {
+      "totalAssigned": 128,
+      "completed": 102,
+      "pending": 21,
+      "overdue": 5,
+      "avgResolutionHours": 18.4,
+      "slaCompliance": 92,
+      "resolutionRate": 88,
+      "citizenSatisfaction": 84,
+      "repeatComplaints": 7,
+      "performanceScore": 87
+    }
+  },
+  {
+    "contractorId": "CON-002",
+    "name": "Jal Hydro Engineering Services",
+    "departmentId": "DEPT_WATER",
+    "assignedWards": ["12"],
+    "activeContracts": ["WO-2026-1043"],
+    "contactOffice": "Sanwer Road Industrial Area, Indore",
+    "registrationNo": "IMC-REG-2024-0198",
+    "stats": {
+      "totalAssigned": 86,
+      "completed": 72,
+      "pending": 11,
+      "overdue": 3,
+      "avgResolutionHours": 14.2,
+      "slaCompliance": 95,
+      "resolutionRate": 91,
+      "citizenSatisfaction": 88,
+      "repeatComplaints": 5,
+      "performanceScore": 91
+    }
+  },
+  {
+    "contractorId": "CON-003",
+    "name": "Indore Swachh Sanitation Services",
+    "departmentId": "DEPT_SAN",
+    "assignedWards": ["12"],
+    "activeContracts": ["WO-2026-1044"],
+    "contactOffice": "Chhappan Dukan Zonal Office, Indore",
+    "registrationNo": "IMC-REG-2025-0056",
+    "stats": {
+      "totalAssigned": 210,
+      "completed": 185,
+      "pending": 18,
+      "overdue": 7,
+      "avgResolutionHours": 12.8,
+      "slaCompliance": 89,
+      "resolutionRate": 93,
+      "citizenSatisfaction": 81,
+      "repeatComplaints": 9,
+      "performanceScore": 85
+    }
+  },
+  {
+    "contractorId": "CON-004",
+    "name": "BrightGrid Electrical Solutions",
+    "departmentId": "DEPT_ELEC",
+    "assignedWards": ["12", "7"],
+    "activeContracts": ["WO-2026-1045", "WO-2026-3002"],
+    "contactOffice": "Palasia Electrical Yard, Indore",
+    "registrationNo": "IMC-REG-2024-0231",
+    "stats": {
+      "totalAssigned": 94,
+      "completed": 82,
+      "pending": 9,
+      "overdue": 3,
+      "avgResolutionHours": 10.6,
+      "slaCompliance": 96,
+      "resolutionRate": 94,
+      "citizenSatisfaction": 90,
+      "repeatComplaints": 4,
+      "performanceScore": 93
+    }
+  },
+  {
+    "contractorId": "CON-005",
+    "name": "GreenScape Horticulture Ltd",
+    "departmentId": "DEPT_PARK",
+    "assignedWards": ["12", "7"],
+    "activeContracts": ["WO-2026-1046"],
+    "contactOffice": "Meghdoot Garden Office, Indore",
+    "registrationNo": "IMC-REG-2025-0089",
+    "stats": {
+      "totalAssigned": 52,
+      "completed": 44,
+      "pending": 6,
+      "overdue": 2,
+      "avgResolutionHours": 36.5,
+      "slaCompliance": 85,
+      "resolutionRate": 87,
+      "citizenSatisfaction": 79,
+      "repeatComplaints": 11,
+      "performanceScore": 80
+    }
+  },
+  {
+    "contractorId": "CON-006",
+    "name": "Malwa Roads & Bridges Corp",
+    "departmentId": "DEPT_ROAD",
+    "assignedWards": ["5", "6"],
+    "activeContracts": ["WO-2026-2010"],
+    "contactOffice": "AB Road Infrastructure Office, Indore",
+    "registrationNo": "IMC-REG-2024-0310",
+    "stats": {
+      "totalAssigned": 156,
+      "completed": 118,
+      "pending": 28,
+      "overdue": 10,
+      "avgResolutionHours": 26.1,
+      "slaCompliance": 78,
+      "resolutionRate": 82,
+      "citizenSatisfaction": 72,
+      "repeatComplaints": 14,
+      "performanceScore": 74
+    }
+  },
+  {
+    "contractorId": "CON-007",
+    "name": "AquaFlow Pipeline Contractors",
+    "departmentId": "DEPT_WATER",
+    "assignedWards": ["5", "7"],
+    "activeContracts": ["WO-2026-2011"],
+    "contactOffice": "Bhanwarkuan Municipal Depot, Indore",
+    "registrationNo": "IMC-REG-2025-0112",
+    "stats": {
+      "totalAssigned": 72,
+      "completed": 58,
+      "pending": 10,
+      "overdue": 4,
+      "avgResolutionHours": 20.3,
+      "slaCompliance": 83,
+      "resolutionRate": 85,
+      "citizenSatisfaction": 77,
+      "repeatComplaints": 10,
+      "performanceScore": 79
+    }
+  },
+  {
+    "contractorId": "CON-008",
+    "name": "CleanCity Waste Solutions Pvt Ltd",
+    "departmentId": "DEPT_SAN",
+    "assignedWards": ["1", "2"],
+    "activeContracts": ["WO-2026-4001"],
+    "contactOffice": "Rajwada Municipal Complex, Indore",
+    "registrationNo": "IMC-REG-2025-0145",
+    "stats": {
+      "totalAssigned": 180,
+      "completed": 162,
+      "pending": 14,
+      "overdue": 4,
+      "avgResolutionHours": 15.7,
+      "slaCompliance": 91,
+      "resolutionRate": 90,
+      "citizenSatisfaction": 85,
+      "repeatComplaints": 6,
+      "performanceScore": 89
+    }
+  }
+]

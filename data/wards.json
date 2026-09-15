@@ -1,0 +1,12 @@
+[
+  { "wardId": "1", "wardName": "Ward 1 — Rajwada", "zoneId": "rajwada", "zoneName": "Rajwada Zone", "zone": "Central", "healthScore": 85, "departments": ["DEPT_ROAD", "DEPT_SAN"], "officerIds": ["OFF-010"] },
+  { "wardId": "2", "wardName": "Ward 2 — Sarafa Bazaar", "zoneId": "rajwada", "zoneName": "Rajwada Zone", "zone": "Central", "healthScore": 82, "departments": ["DEPT_ROAD", "DEPT_SAN"], "officerIds": ["OFF-010"] },
+  { "wardId": "5", "wardName": "Ward 5 — Chhappan Dukan", "zoneId": "chhappan-dukan", "zoneName": "Chhappan Dukan Zone", "zone": "Central", "healthScore": 62, "departments": ["DEPT_ROAD", "DEPT_WATER"], "officerIds": ["OFF-006", "OFF-007"] },
+  { "wardId": "6", "wardName": "Ward 6 — New Palasia", "zoneId": "palasia", "zoneName": "Palasia Zone", "zone": "East", "healthScore": 68, "departments": ["DEPT_ROAD"], "officerIds": ["OFF-006"] },
+  { "wardId": "7", "wardName": "Ward 7 — Old Palasia", "zoneId": "palasia", "zoneName": "Palasia Zone", "zone": "East", "healthScore": 74, "departments": ["DEPT_ROAD", "DEPT_ELEC", "DEPT_PARK"], "officerIds": ["OFF-008", "OFF-009"] },
+  { "wardId": "8", "wardName": "Ward 8 — Vijay Nagar North", "zoneId": "vijay-nagar", "zoneName": "Vijay Nagar Zone", "zone": "North", "healthScore": 76, "departments": ["DEPT_ROAD", "DEPT_ELEC"], "officerIds": ["OFF-008", "OFF-009"] },
+  { "wardId": "10", "wardName": "Ward 10 — Bhanwarkuan", "zoneId": "bhanwarkuan", "zoneName": "Bhanwarkuan Zone", "zone": "South", "healthScore": 71, "departments": ["DEPT_ROAD", "DEPT_WATER"], "officerIds": ["OFF-008"] },
+  { "wardId": "12", "wardName": "Ward 12 — Vijay Nagar", "zoneId": "vijay-nagar", "zoneName": "Vijay Nagar Zone", "zone": "North", "healthScore": 91, "departments": ["DEPT_ROAD", "DEPT_WATER", "DEPT_SAN", "DEPT_ELEC", "DEPT_PARK"], "officerIds": ["OFF-001", "OFF-002", "OFF-003", "OFF-004", "OFF-005"] },
+  { "wardId": "13", "wardName": "Ward 13 — Vijay Nagar South", "zoneId": "vijay-nagar", "zoneName": "Vijay Nagar Zone", "zone": "North", "healthScore": 88, "departments": ["DEPT_ROAD", "DEPT_WATER"], "officerIds": ["OFF-001", "OFF-002"] },
+  { "wardId": "15", "wardName": "Ward 15 — Annapurna", "zoneId": "annapurna", "zoneName": "Annapurna Zone", "zone": "West", "healthScore": 79, "departments": ["DEPT_ROAD"], "officerIds": ["OFF-001"] }
+]

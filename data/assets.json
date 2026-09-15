@@ -1,0 +1,164 @@
+[
+  {
+    "assetId": "ROAD-1204",
+    "type": "Road",
+    "name": "Main Road Segment — Vijay Nagar Square to AB Road",
+    "ward": "12",
+    "coordinates": { "lat": 22.7510, "lng": 75.8920 },
+    "departmentId": "DEPT_ROAD",
+    "contractorId": "CON-001"
+  },
+  {
+    "assetId": "ROAD-1205",
+    "type": "Road",
+    "name": "Internal Road — Scheme 54 School Lane",
+    "ward": "12",
+    "coordinates": { "lat": 22.7525, "lng": 75.8935 },
+    "departmentId": "DEPT_ROAD",
+    "contractorId": "CON-001"
+  },
+  {
+    "assetId": "ROAD-1206",
+    "type": "Road",
+    "name": "Ring Road Segment — Vijay Nagar Flyover",
+    "ward": "12",
+    "coordinates": { "lat": 22.7495, "lng": 75.8945 },
+    "departmentId": "DEPT_ROAD",
+    "contractorId": "CON-001"
+  },
+  {
+    "assetId": "PIPE-501",
+    "type": "Water Pipeline",
+    "name": "12-inch Main Water Pipeline — Vijay Nagar Junction",
+    "ward": "12",
+    "coordinates": { "lat": 22.7508, "lng": 75.8915 },
+    "departmentId": "DEPT_WATER",
+    "contractorId": "CON-002"
+  },
+  {
+    "assetId": "PIPE-502",
+    "type": "Water Pipeline",
+    "name": "Sewage Line — Meghdoot Garden Crossing",
+    "ward": "12",
+    "coordinates": { "lat": 22.7518, "lng": 75.8905 },
+    "departmentId": "DEPT_WATER",
+    "contractorId": "CON-002"
+  },
+  {
+    "assetId": "ST-1298",
+    "type": "Streetlight",
+    "name": "LED Streetlight Pole #ST-1298 — BCM Heights Chowk",
+    "ward": "12",
+    "coordinates": { "lat": 22.7515, "lng": 75.8925 },
+    "departmentId": "DEPT_ELEC",
+    "contractorId": "CON-004"
+  },
+  {
+    "assetId": "ST-1299",
+    "type": "Streetlight",
+    "name": "LED Streetlight Cluster — Scheme 54 Crossing",
+    "ward": "12",
+    "coordinates": { "lat": 22.7528, "lng": 75.8930 },
+    "departmentId": "DEPT_ELEC",
+    "contractorId": "CON-004"
+  },
+  {
+    "assetId": "PARK-301",
+    "type": "Park",
+    "name": "Meghdoot Upvan Community Park",
+    "ward": "12",
+    "coordinates": { "lat": 22.7512, "lng": 75.8900 },
+    "departmentId": "DEPT_PARK",
+    "contractorId": "CON-005"
+  },
+  {
+    "assetId": "DRAIN-201",
+    "type": "Drainage",
+    "name": "Storm Drain — Vijay Nagar Main Nullah",
+    "ward": "12",
+    "coordinates": { "lat": 22.7500, "lng": 75.8910 },
+    "departmentId": "DEPT_SAN",
+    "contractorId": "CON-003"
+  },
+  {
+    "assetId": "ROAD-5001",
+    "type": "Road",
+    "name": "Chhappan Dukan Food Street — MG Road Connector",
+    "ward": "5",
+    "coordinates": { "lat": 22.7255, "lng": 75.8778 },
+    "departmentId": "DEPT_ROAD",
+    "contractorId": "CON-006"
+  },
+  {
+    "assetId": "PIPE-5001",
+    "type": "Water Pipeline",
+    "name": "Sewage Main Line — Chhappan Dukan Central",
+    "ward": "5",
+    "coordinates": { "lat": 22.7250, "lng": 75.8770 },
+    "departmentId": "DEPT_WATER",
+    "contractorId": "CON-007"
+  },
+  {
+    "assetId": "ROAD-7001",
+    "type": "Road",
+    "name": "Palasia Main Road — Industry House to Geeta Bhawan",
+    "ward": "7",
+    "coordinates": { "lat": 22.7200, "lng": 75.8840 },
+    "departmentId": "DEPT_ROAD",
+    "contractorId": "CON-001"
+  },
+  {
+    "assetId": "ST-7001",
+    "type": "Streetlight",
+    "name": "Junction Box Cluster — Palasia Square",
+    "ward": "7",
+    "coordinates": { "lat": 22.7205, "lng": 75.8845 },
+    "departmentId": "DEPT_ELEC",
+    "contractorId": "CON-004"
+  },
+  {
+    "assetId": "ROAD-1001",
+    "type": "Road",
+    "name": "Rajwada Historical Ring Road — Khajuri Bazaar to Palace Square",
+    "ward": "1",
+    "coordinates": { "lat": 22.7196, "lng": 75.8577 },
+    "departmentId": "DEPT_ROAD",
+    "contractorId": "CON-001"
+  },
+  {
+    "assetId": "DRAIN-1001",
+    "type": "Drainage",
+    "name": "Kanh River Storm Drain — Rajwada Stretch",
+    "ward": "1",
+    "coordinates": { "lat": 22.7190, "lng": 75.8570 },
+    "departmentId": "DEPT_SAN",
+    "contractorId": "CON-008"
+  },
+  {
+    "assetId": "ROAD-5002",
+    "type": "Road",
+    "name": "Pedestrian Promenade — Chhappan Dukan Walkway",
+    "ward": "5",
+    "coordinates": { "lat": 22.7260, "lng": 75.8785 },
+    "departmentId": "DEPT_ROAD",
+    "contractorId": "CON-006"
+  },
+  {
+    "assetId": "PIPE-7001",
+    "type": "Water Pipeline",
+    "name": "Water Supply Main — Old Palasia Colony",
+    "ward": "7",
+    "coordinates": { "lat": 22.7210, "lng": 75.8850 },
+    "departmentId": "DEPT_WATER",
+    "contractorId": "CON-007"
+  },
+  {
+    "assetId": "PARK-7001",
+    "type": "Park",
+    "name": "Palasia Children's Garden & Playground",
+    "ward": "7",
+    "coordinates": { "lat": 22.7195, "lng": 75.8835 },
+    "departmentId": "DEPT_PARK",
+    "contractorId": "CON-005"
+  }
+]

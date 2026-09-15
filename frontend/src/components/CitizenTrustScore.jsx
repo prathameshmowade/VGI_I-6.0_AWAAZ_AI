@@ -1,0 +1,2 @@
+import React from 'react';
+export default function CitizenTrustScore({ score = 92 }) { return (<div className='bg-slate-800 p-5 rounded-2xl border border-slate-700 text-center'><h4 className='text-xs text-slate-400 uppercase tracking-wider'>Citizen Trust Score</h4><div className='text-4xl font-black text-cyan-400 my-2'>{score}%</div><p className='text-xs text-slate-400'>Based on SLA adherence & XAI governance</p></div>); }

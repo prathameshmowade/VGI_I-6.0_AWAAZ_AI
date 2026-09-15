@@ -1,0 +1,2 @@
+import React from 'react';
+export default function ImpactScoreCard({ score = 88 }) { return (<div className='bg-slate-800 p-4 rounded-xl border border-slate-700 flex items-center justify-between'><div><h4 className='text-xs text-slate-400'>Community Impact</h4><p className='text-sm font-semibold text-slate-200'>High Citizen Density Zone</p></div><div className='bg-gradient-to-br from-amber-500 to-red-500 text-white font-extrabold px-3 py-2 rounded-xl text-lg'>{score}/100</div></div>); }
