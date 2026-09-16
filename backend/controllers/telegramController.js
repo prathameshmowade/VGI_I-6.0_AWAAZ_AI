@@ -10,6 +10,7 @@ const {
   formatWelcomeMessage
 } = require('../services/telegramService');
 const { recordAuditEvent } = require('../services/blockchainService');
+const { generateUniqueComplaintId } = require('../utils/idGenerator');
 
 const dataFilePath = path.join(__dirname, '../../data/sample_complaints.json');
 
@@ -79,7 +80,7 @@ const handleWebhook = async (req, res) => {
     }
 
     const store = loadDatabase();
-    const newId = `CMP-2026-${String(store.length + 1).padStart(3, '0')}`;
+    const newId = generateUniqueComplaintId(store);
 
     // Blockchain audit hash
     const auditRecord = recordAuditEvent({
@@ -226,7 +227,7 @@ const simulateTelegramMessage = async (req, res) => {
     }
 
     const store = loadDatabase();
-    const newId = `CMP-2026-${String(store.length + 1).padStart(3, '0')}`;
+    const newId = generateUniqueComplaintId(store);
 
     const auditRecord = recordAuditEvent({
       complaintId: newId,

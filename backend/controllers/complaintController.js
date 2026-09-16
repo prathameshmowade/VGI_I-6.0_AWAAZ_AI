@@ -10,23 +10,34 @@ const guardrailService = require('../services/guardrailService');
 const { taskQueue, JOB_TYPES } = require('../infrastructure/queue/taskQueue');
 const logger = require('../infrastructure/observability/logger');
 
+const { generateUniqueComplaintId, generateUniqueIntakeId } = require('../utils/idGenerator');
+
 const dataFilePath = path.join(__dirname, '../../data/sample_complaints.json');
+
+// In-memory cache to guarantee persistence across requests and prevent ephemeral filesystem loss
+let inMemoryStore = null;
 
 // Helper to load persistent database file
 const loadDatabase = () => {
+  if (inMemoryStore && inMemoryStore.length > 0) {
+    return inMemoryStore;
+  }
   try {
     if (fs.existsSync(dataFilePath)) {
       const data = fs.readFileSync(dataFilePath, 'utf8');
-      return JSON.parse(data);
+      inMemoryStore = JSON.parse(data);
+      return inMemoryStore;
     }
   } catch (err) {
     console.error('Error reading database file:', err);
   }
-  return [];
+  inMemoryStore = inMemoryStore || [];
+  return inMemoryStore;
 };
 
 // Helper to save persistent database file
 const saveDatabase = (complaints) => {
+  inMemoryStore = complaints;
   try {
     fs.writeFileSync(dataFilePath, JSON.stringify(complaints, null, 2), 'utf8');
   } catch (err) {
@@ -95,8 +106,8 @@ const ingestComplaintAsync = async (req, res) => {
 
   try {
     const store = loadDatabase();
-    const intakeId = `ING-2026-${String(store.length + 1).padStart(4, '0')}`;
-    const newComplaintId = `CMP-2026-${String(store.length + 1).padStart(3, '0')}`;
+    const intakeId = generateUniqueIntakeId(store, req.body.intakeReference || req.body.intakeId);
+    const newComplaintId = generateUniqueComplaintId(store, req.body.complaintId || req.body._id);
 
     // 1. PII Redaction & Guardrail Sanitization
     const sanitized = guardrailService.processGrievancePayload({
@@ -200,7 +211,7 @@ const ingestComplaintAsync = async (req, res) => {
 const createComplaint = async (req, res) => {
   try {
     const store = loadDatabase();
-    const newId = `CMP-2026-${String(store.length + 1).padStart(3, '0')}`;
+    const newId = generateUniqueComplaintId(store, req.body.complaintId || req.body._id);
     const tenantId = req.tenantId || req.body.tenantId || 'tenant_nmc';
     
     // Privacy Shield PII redaction & Constitutional Guardrails

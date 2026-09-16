@@ -3,6 +3,7 @@ const path = require('path');
 const { generateIncomingCallTwiml, generateRecordingCompleteTwiml, processCallTranscription } = require('../services/callService');
 const { sendConfirmationSms } = require('../services/smsService');
 const { recordAuditEvent } = require('../services/blockchainService');
+const { generateUniqueComplaintId } = require('../utils/idGenerator');
 
 const dataFilePath = path.join(__dirname, '../../data/sample_complaints.json');
 
@@ -69,7 +70,7 @@ const handleCallRecording = async (req, res) => {
 
     // Generate a pending complaint (full complaint is created when transcription arrives)
     const store = loadDatabase();
-    const newId = `CMP-2026-${String(store.length + 1).padStart(3, '0')}`;
+    const newId = generateUniqueComplaintId(store);
 
     const pendingComplaint = {
       complaintId: newId,
@@ -201,7 +202,7 @@ const simulateCall = async (req, res) => {
     }
 
     const store = loadDatabase();
-    const newId = `CMP-2026-${String(store.length + 1).padStart(3, '0')}`;
+    const newId = generateUniqueComplaintId(store);
 
     const auditRecord = recordAuditEvent({
       complaintId: newId,

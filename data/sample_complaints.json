@@ -1,5 +1,617 @@
 [
   {
+    "complaintId": "CMP-2026-021",
+    "tenantId": "tenant_nmc",
+    "h3IndexRes8": "88a16a65ef5b108",
+    "h3IndexRes9": "89a3ae3a4e53209",
+    "pHash": null,
+    "title": "Verifying Unique ID Counter",
+    "description": "Verifying that each complaint gets its own unique ID",
+    "category": "Water Supply",
+    "urgency": "Critical Priority",
+    "status": "Assigned",
+    "department": "Water Supply & Drainage Dept",
+    "departmentCode": "DEPT_WATER",
+    "location": "Palasia, Indore",
+    "jurisdiction": {
+      "ward": "12",
+      "zone": "North",
+      "zoneName": "Vijay Nagar Zone"
+    },
+    "officerId": "OFF-002",
+    "assetId": "PIPE-501",
+    "contractorId": "CON-002",
+    "workOrderId": "WO-2026-1043",
+    "responsibilityData": {
+      "officer": {
+        "id": "OFF-002",
+        "name": "Er. Anita Deshmukh",
+        "designation": "Ward Hydraulic Engineer",
+        "departmentName": "Water Supply & Drainage Dept",
+        "stats": {
+          "activeComplaints": 11,
+          "pending": 5,
+          "inProgress": 4,
+          "overdue": 2,
+          "avgResolutionHours": 22
+        }
+      },
+      "contractor": {
+        "id": "CON-002",
+        "name": "Jal Hydro Engineering Services",
+        "stats": {
+          "totalAssigned": 86,
+          "completed": 72,
+          "pending": 11,
+          "overdue": 3,
+          "avgResolutionHours": 14.2,
+          "slaCompliance": 95,
+          "resolutionRate": 91,
+          "citizenSatisfaction": 88,
+          "repeatComplaints": 5,
+          "performanceScore": 91
+        }
+      },
+      "asset": {
+        "id": "PIPE-501",
+        "type": "Water Pipeline",
+        "name": "12-inch Main Water Pipeline — Vijay Nagar Junction"
+      },
+      "project": "Ward 12 Water Pipeline Maintenance",
+      "slaHours": 24,
+      "explanation": [
+        {
+          "check": "✓",
+          "label": "Complaint category: Water Supply",
+          "detail": "Mapped to Water Supply & Sewage"
+        },
+        {
+          "check": "✓",
+          "label": "GPS location: Ward 12 — Vijay Nagar",
+          "detail": "Zone: Vijay Nagar Zone (North)"
+        },
+        {
+          "check": "✓",
+          "label": "Infrastructure asset: PIPE-501",
+          "detail": "12-inch Main Water Pipeline — Vijay Nagar Junction"
+        },
+        {
+          "check": "✓",
+          "label": "Jurisdiction: Ward 12 — Vijay Nagar Water Supply & Sewage",
+          "detail": "Responsible officer: Er. Anita Deshmukh (Ward Hydraulic Engineer)"
+        },
+        {
+          "check": "✓",
+          "label": "Active maintenance contract: WO-2026-1043",
+          "detail": "Ward 12 Water Pipeline Maintenance"
+        },
+        {
+          "check": "✓",
+          "label": "Assigned contractor: Jal Hydro Engineering Services",
+          "detail": "Performance score: 91%"
+        }
+      ]
+    },
+    "isAutoClassified": false,
+    "confidenceScore": 95,
+    "slaHoursTotal": 24,
+    "slaHoursRemaining": 24,
+    "impactScore": 93,
+    "isDuplicate": false,
+    "duplicateCount": 0,
+    "duplicateParentId": null,
+    "blockchainHash": "c7c195d76b94de73ae7fd22f353d84c3fc5d8620190f899cafa3fbea381125eb",
+    "priority_weight": 1,
+    "verification_status": "NONE",
+    "verification_attempts": 0,
+    "verification_failures": 0,
+    "verified_count": 0,
+    "rejected_count": 0,
+    "xaiData": {
+      "confidence": 95,
+      "reasoning": [
+        "Hydraulic pipeline and drainage leakage detected",
+        "Priority escalation for potential drinking water contamination"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule",
+        "Municipal Service Routing Protocol"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "xaiExplanation": {
+      "confidence": 95,
+      "reasoning": [
+        "Hydraulic pipeline and drainage leakage detected",
+        "Priority escalation for potential drinking water contamination"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "auditTimeline": [
+      {
+        "event": "Complaint Created & AI Triaged",
+        "actor": "System",
+        "actorRole": "system",
+        "timestamp": "2026-09-16T05:19:26.192Z",
+        "details": {
+          "category": "Water Supply",
+          "department": "Water Supply & Drainage Dept",
+          "urgency": "Critical Priority"
+        },
+        "hash": "c7c195d76b94de73ae7fd22f353d84c3fc5d8620190f899cafa3fbea381125eb"
+      }
+    ],
+    "createdAt": "2026-09-16T05:19:26.192Z"
+  },
+  {
+    "complaintId": "CMP-2026-020",
+    "tenantId": "tenant_nmc",
+    "h3IndexRes8": "88a16a65ef5b108",
+    "h3IndexRes9": "89a3ae3a4e53209",
+    "pHash": null,
+    "title": "Sequential Test Complaint 2",
+    "description": "Testing unique complaint ID generation sequence 2",
+    "category": "Road Damage",
+    "urgency": "High Priority",
+    "status": "Assigned",
+    "department": "Roads & Infrastructure Department",
+    "departmentCode": "DEPT_ROAD",
+    "location": "Vijay Nagar, Indore",
+    "jurisdiction": {
+      "ward": "12",
+      "zone": "North",
+      "zoneName": "Vijay Nagar Zone"
+    },
+    "officerId": "OFF-001",
+    "assetId": "ROAD-1204",
+    "contractorId": "CON-001",
+    "workOrderId": "WO-2026-1042",
+    "responsibilityData": {
+      "officer": {
+        "id": "OFF-001",
+        "name": "Er. Rajesh Sharma",
+        "designation": "Ward Engineer",
+        "departmentName": "Roads & Infrastructure Department",
+        "stats": {
+          "activeComplaints": 14,
+          "pending": 8,
+          "inProgress": 4,
+          "overdue": 2,
+          "avgResolutionHours": 31
+        }
+      },
+      "contractor": {
+        "id": "CON-001",
+        "name": "Apex Infrastructure Pvt Ltd",
+        "stats": {
+          "totalAssigned": 128,
+          "completed": 102,
+          "pending": 21,
+          "overdue": 5,
+          "avgResolutionHours": 18.4,
+          "slaCompliance": 92,
+          "resolutionRate": 88,
+          "citizenSatisfaction": 84,
+          "repeatComplaints": 7,
+          "performanceScore": 87
+        }
+      },
+      "asset": {
+        "id": "ROAD-1204",
+        "type": "Road",
+        "name": "Main Road Segment — Vijay Nagar Square to AB Road"
+      },
+      "project": "Ward 12 Road Resurfacing & Pothole Repair",
+      "slaHours": 48,
+      "explanation": [
+        {
+          "check": "✓",
+          "label": "Complaint category: Road Damage",
+          "detail": "Mapped to Roads & Infrastructure"
+        },
+        {
+          "check": "✓",
+          "label": "GPS location: Ward 12 — Vijay Nagar",
+          "detail": "Zone: Vijay Nagar Zone (North)"
+        },
+        {
+          "check": "✓",
+          "label": "Infrastructure asset: ROAD-1204",
+          "detail": "Main Road Segment — Vijay Nagar Square to AB Road"
+        },
+        {
+          "check": "✓",
+          "label": "Jurisdiction: Ward 12 — Vijay Nagar Roads & Infrastructure",
+          "detail": "Responsible officer: Er. Rajesh Sharma (Ward Engineer)"
+        },
+        {
+          "check": "✓",
+          "label": "Active maintenance contract: WO-2026-1042",
+          "detail": "Ward 12 Road Resurfacing & Pothole Repair"
+        },
+        {
+          "check": "✓",
+          "label": "Assigned contractor: Apex Infrastructure Pvt Ltd",
+          "detail": "Performance score: 87%"
+        }
+      ]
+    },
+    "isAutoClassified": false,
+    "confidenceScore": 96,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 85,
+    "isDuplicate": false,
+    "duplicateCount": 0,
+    "duplicateParentId": null,
+    "blockchainHash": "612996b8b79719507c4973c4940a678c749053382c0317e2e483d7819ed93f51",
+    "priority_weight": 1,
+    "verification_status": "NONE",
+    "verification_attempts": 0,
+    "verification_failures": 0,
+    "verified_count": 0,
+    "rejected_count": 0,
+    "xaiData": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule",
+        "Municipal Service Routing Protocol"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "xaiExplanation": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "auditTimeline": [
+      {
+        "event": "Complaint Created & AI Triaged",
+        "actor": "System",
+        "actorRole": "system",
+        "timestamp": "2026-09-16T05:18:57.692Z",
+        "details": {
+          "category": "Road Damage",
+          "department": "Roads & Infrastructure Department",
+          "urgency": "High Priority"
+        },
+        "hash": "612996b8b79719507c4973c4940a678c749053382c0317e2e483d7819ed93f51"
+      }
+    ],
+    "createdAt": "2026-09-16T05:18:57.692Z"
+  },
+  {
+    "complaintId": "CMP-2026-019",
+    "tenantId": "tenant_nmc",
+    "h3IndexRes8": "88a16a65ef5b108",
+    "h3IndexRes9": "89a3ae3a4e53209",
+    "pHash": null,
+    "title": "Sequential Test Complaint 1",
+    "description": "Testing unique complaint ID generation sequence 1",
+    "category": "Road Damage",
+    "urgency": "High Priority",
+    "status": "Assigned",
+    "department": "Roads & Infrastructure Department",
+    "departmentCode": "DEPT_ROAD",
+    "location": "Vijay Nagar, Indore",
+    "jurisdiction": {
+      "ward": "12",
+      "zone": "North",
+      "zoneName": "Vijay Nagar Zone"
+    },
+    "officerId": "OFF-001",
+    "assetId": "ROAD-1204",
+    "contractorId": "CON-001",
+    "workOrderId": "WO-2026-1042",
+    "responsibilityData": {
+      "officer": {
+        "id": "OFF-001",
+        "name": "Er. Rajesh Sharma",
+        "designation": "Ward Engineer",
+        "departmentName": "Roads & Infrastructure Department",
+        "stats": {
+          "activeComplaints": 14,
+          "pending": 8,
+          "inProgress": 4,
+          "overdue": 2,
+          "avgResolutionHours": 31
+        }
+      },
+      "contractor": {
+        "id": "CON-001",
+        "name": "Apex Infrastructure Pvt Ltd",
+        "stats": {
+          "totalAssigned": 128,
+          "completed": 102,
+          "pending": 21,
+          "overdue": 5,
+          "avgResolutionHours": 18.4,
+          "slaCompliance": 92,
+          "resolutionRate": 88,
+          "citizenSatisfaction": 84,
+          "repeatComplaints": 7,
+          "performanceScore": 87
+        }
+      },
+      "asset": {
+        "id": "ROAD-1204",
+        "type": "Road",
+        "name": "Main Road Segment — Vijay Nagar Square to AB Road"
+      },
+      "project": "Ward 12 Road Resurfacing & Pothole Repair",
+      "slaHours": 48,
+      "explanation": [
+        {
+          "check": "✓",
+          "label": "Complaint category: Road Damage",
+          "detail": "Mapped to Roads & Infrastructure"
+        },
+        {
+          "check": "✓",
+          "label": "GPS location: Ward 12 — Vijay Nagar",
+          "detail": "Zone: Vijay Nagar Zone (North)"
+        },
+        {
+          "check": "✓",
+          "label": "Infrastructure asset: ROAD-1204",
+          "detail": "Main Road Segment — Vijay Nagar Square to AB Road"
+        },
+        {
+          "check": "✓",
+          "label": "Jurisdiction: Ward 12 — Vijay Nagar Roads & Infrastructure",
+          "detail": "Responsible officer: Er. Rajesh Sharma (Ward Engineer)"
+        },
+        {
+          "check": "✓",
+          "label": "Active maintenance contract: WO-2026-1042",
+          "detail": "Ward 12 Road Resurfacing & Pothole Repair"
+        },
+        {
+          "check": "✓",
+          "label": "Assigned contractor: Apex Infrastructure Pvt Ltd",
+          "detail": "Performance score: 87%"
+        }
+      ]
+    },
+    "isAutoClassified": false,
+    "confidenceScore": 96,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 85,
+    "isDuplicate": false,
+    "duplicateCount": 0,
+    "duplicateParentId": null,
+    "blockchainHash": "2f8287a358aca448a70d63f891e1fc97506c4e30cdfcfb579de8684da1e77db5",
+    "priority_weight": 1,
+    "verification_status": "NONE",
+    "verification_attempts": 0,
+    "verification_failures": 0,
+    "verified_count": 0,
+    "rejected_count": 0,
+    "xaiData": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule",
+        "Municipal Service Routing Protocol"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "xaiExplanation": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "auditTimeline": [
+      {
+        "event": "Complaint Created & AI Triaged",
+        "actor": "System",
+        "actorRole": "system",
+        "timestamp": "2026-09-16T05:18:47.644Z",
+        "details": {
+          "category": "Road Damage",
+          "department": "Roads & Infrastructure Department",
+          "urgency": "High Priority"
+        },
+        "hash": "2f8287a358aca448a70d63f891e1fc97506c4e30cdfcfb579de8684da1e77db5"
+      }
+    ],
+    "createdAt": "2026-09-16T05:18:47.644Z"
+  },
+  {
+    "complaintId": "CMP-2026-018",
+    "tenantId": "tenant_nmc",
+    "h3IndexRes8": "88a16a65ef5b108",
+    "h3IndexRes9": "89a3ae3a4e53209",
+    "pHash": null,
+    "title": "Test Teammate Pothole Issue",
+    "description": "Major pothole reported by citizen teammate",
+    "category": "Road Damage",
+    "urgency": "High Priority",
+    "status": "Assigned",
+    "department": "Roads & Infrastructure Department",
+    "departmentCode": "DEPT_ROAD",
+    "location": "Vijay Nagar, Indore",
+    "jurisdiction": {
+      "ward": "12",
+      "zone": "North",
+      "zoneName": "Vijay Nagar Zone"
+    },
+    "officerId": "OFF-001",
+    "assetId": "ROAD-1204",
+    "contractorId": "CON-001",
+    "workOrderId": "WO-2026-1042",
+    "responsibilityData": {
+      "officer": {
+        "id": "OFF-001",
+        "name": "Er. Rajesh Sharma",
+        "designation": "Ward Engineer",
+        "departmentName": "Roads & Infrastructure Department",
+        "stats": {
+          "activeComplaints": 14,
+          "pending": 8,
+          "inProgress": 4,
+          "overdue": 2,
+          "avgResolutionHours": 31
+        }
+      },
+      "contractor": {
+        "id": "CON-001",
+        "name": "Apex Infrastructure Pvt Ltd",
+        "stats": {
+          "totalAssigned": 128,
+          "completed": 102,
+          "pending": 21,
+          "overdue": 5,
+          "avgResolutionHours": 18.4,
+          "slaCompliance": 92,
+          "resolutionRate": 88,
+          "citizenSatisfaction": 84,
+          "repeatComplaints": 7,
+          "performanceScore": 87
+        }
+      },
+      "asset": {
+        "id": "ROAD-1204",
+        "type": "Road",
+        "name": "Main Road Segment — Vijay Nagar Square to AB Road"
+      },
+      "project": "Ward 12 Road Resurfacing & Pothole Repair",
+      "slaHours": 48,
+      "explanation": [
+        {
+          "check": "✓",
+          "label": "Complaint category: Road Damage",
+          "detail": "Mapped to Roads & Infrastructure"
+        },
+        {
+          "check": "✓",
+          "label": "GPS location: Ward 12 — Vijay Nagar",
+          "detail": "Zone: Vijay Nagar Zone (North)"
+        },
+        {
+          "check": "✓",
+          "label": "Infrastructure asset: ROAD-1204",
+          "detail": "Main Road Segment — Vijay Nagar Square to AB Road"
+        },
+        {
+          "check": "✓",
+          "label": "Jurisdiction: Ward 12 — Vijay Nagar Roads & Infrastructure",
+          "detail": "Responsible officer: Er. Rajesh Sharma (Ward Engineer)"
+        },
+        {
+          "check": "✓",
+          "label": "Active maintenance contract: WO-2026-1042",
+          "detail": "Ward 12 Road Resurfacing & Pothole Repair"
+        },
+        {
+          "check": "✓",
+          "label": "Assigned contractor: Apex Infrastructure Pvt Ltd",
+          "detail": "Performance score: 87%"
+        }
+      ]
+    },
+    "isAutoClassified": false,
+    "confidenceScore": 96,
+    "slaHoursTotal": 48,
+    "slaHoursRemaining": 48,
+    "impactScore": 85,
+    "isDuplicate": false,
+    "duplicateCount": 0,
+    "duplicateParentId": null,
+    "blockchainHash": "7323131aa797a975b06976a3aab7d0e2a4f5b7074bb334b905aa6c17e74861ce",
+    "priority_weight": 1,
+    "verification_status": "NONE",
+    "verification_attempts": 0,
+    "verification_failures": 0,
+    "verified_count": 0,
+    "rejected_count": 0,
+    "xaiData": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule",
+        "Municipal Service Routing Protocol"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "xaiExplanation": {
+      "confidence": 96,
+      "reasoning": [
+        "Road hazard and crater keywords detected",
+        "Mapped to Indore Municipal Corporation (IMC) Zone 12 Road Dept"
+      ],
+      "rulesApplied": [
+        "School & Hospital Proximity Priority Rule"
+      ],
+      "similarCases": [
+        "CMP-2025-8891",
+        "CMP-2025-9102"
+      ]
+    },
+    "auditTimeline": [
+      {
+        "event": "Complaint Created & AI Triaged",
+        "actor": "System",
+        "actorRole": "system",
+        "timestamp": "2026-09-16T05:14:53.483Z",
+        "details": {
+          "category": "Road Damage",
+          "department": "Roads & Infrastructure Department",
+          "urgency": "High Priority"
+        },
+        "hash": "7323131aa797a975b06976a3aab7d0e2a4f5b7074bb334b905aa6c17e74861ce"
+      }
+    ],
+    "createdAt": "2026-09-16T05:14:53.484Z"
+  },
+  {
     "complaintId": "CMP-2026-415",
     "title": "Municipal Grievance Issue",
     "description": "Grievance ticket under officer resolution",
