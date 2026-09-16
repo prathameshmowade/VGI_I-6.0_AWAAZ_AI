@@ -3,11 +3,11 @@
 version: "1"
 
 services:
-  # 1. Monolithic Production Web Gateway & Frontend SPA
+  # 1. Monolithic Production Web Gateway, Frontend SPA & In-Process AI Worker
   - type: web
     name: awaaz-ai-gateway
     runtime: node
-    plan: starter
+    plan: free
     buildCommand: npm run build
     startCommand: npm start
     healthCheckPath: /healthz
@@ -27,22 +27,24 @@ services:
           name: awaaz-ai-redis
           property: connectionString
 
-  # 2. Dedicated Async Worker Pool (AI inference, verification, webhooks)
-  - type: worker
-    name: awaaz-ai-worker
-    runtime: node
-    plan: starter
-    buildCommand: cd backend && npm install
-    startCommand: node backend/workers/complaintProcessorWorker.js
-    autoDeploy: true
-    envVars:
-      - key: NODE_ENV
-        value: production
-      - key: REDIS_URL
-        fromService:
-          type: redis
-          name: awaaz-ai-redis
-          property: connectionString
+  # 2. (Optional) Dedicated Horizontal Worker Pool (Requires Render Starter Plan)
+  # Note: The gateway web service already runs the background worker in-process for free.
+  # Uncomment this service if upgrading to a paid plan for dedicated worker scaling:
+  # - type: worker
+  #   name: awaaz-ai-worker
+  #   runtime: node
+  #   plan: starter
+  #   buildCommand: cd backend && npm install
+  #   startCommand: node backend/workers/complaintProcessorWorker.js
+  #   autoDeploy: true
+  #   envVars:
+  #     - key: NODE_ENV
+  #       value: production
+  #     - key: REDIS_URL
+  #       fromService:
+  #         type: redis
+  #         name: awaaz-ai-redis
+  #         property: connectionString
 
 # 3. High-Performance Redis Cluster
 redis:

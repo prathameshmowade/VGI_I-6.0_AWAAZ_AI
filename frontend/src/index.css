@@ -72,7 +72,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: 'Plus Jakarta Sans', 'Outfit', system-ui, -apple-system, sans-serif;
-  touch-action: manipulation;
 }
 
 html, body {
@@ -343,17 +342,9 @@ html, body {
   transform: translateY(-2px);
 }
 
-/* Animated Rainbow Top Bar */
+/* Premium Rainbow Top Bar (Hardware Composited, Zero Repaint) */
 .rainbow-strip {
   background: linear-gradient(90deg, #3b82f6, #6366f1, #a855f7, #ec4899, #f59e0b, #10b981, #06b6d4, #3b82f6);
-  background-size: 300% 100%;
-  animation: rainbowMove 5s linear infinite;
-}
-
-@keyframes rainbowMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
 }
 
 @keyframes liveDotPulse {
@@ -366,38 +357,4 @@ html, body {
   animation: liveDotPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
-/* Hardware-Accelerated Ambient Aurora Drift Animations (0% CPU, 60-120 FPS) */
-@keyframes ambientDrift1 {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(40px, 30px, 0) scale(1.08); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
-}
 
-@keyframes ambientDrift2 {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(-35px, 25px, 0) scale(0.94); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
-}
-
-@keyframes ambientDrift3 {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(30px, -20px, 0) scale(1.05); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
-}
-
-.animate-ambient-drift-1 {
-  animation: ambientDrift1 18s ease-in-out infinite alternate;
-}
-
-.animate-ambient-drift-2 {
-  animation: ambientDrift2 22s ease-in-out infinite alternate;
-}
-
-.animate-ambient-drift-3 {
-  animation: ambientDrift3 20s ease-in-out infinite alternate;
-}
-
-/* Global Smooth Scroll Performance */
-html {
-  scroll-behavior: smooth;
-}

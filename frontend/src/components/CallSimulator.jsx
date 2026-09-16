@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
 import { Phone, PhoneOff, Mic, CheckCircle2, AlertCircle, Radio, Clock, Volume2 } from 'lucide-react';
 import axios from 'axios';
+import { enhanceSpeechTranscript } from '../utils/speechEnhancer';
 
 const IVR_STEPS = {
   en: [
@@ -142,11 +143,12 @@ export default function CallSimulator() {
     recognition.interimResults = true;
 
     recognition.onresult = (event) => {
-      let finalTranscript = '';
+      let rawTranscript = '';
       for (let i = 0; i < event.results.length; i++) {
-        finalTranscript += event.results[i][0].transcript;
+        rawTranscript += event.results[i][0].transcript + ' ';
       }
-      setTranscript(finalTranscript);
+      const cleaned = enhanceSpeechTranscript(rawTranscript, isHindi ? 'hi-IN' : 'en-IN');
+      setTranscript(cleaned);
     };
 
     recognition.onerror = () => {};
