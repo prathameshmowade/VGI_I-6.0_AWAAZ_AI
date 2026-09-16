@@ -67,6 +67,21 @@ export default function DigitalTwinPage() {
     return () => clearInterval(interval);
   }, [user]);
 
+  const displayedComplaints = (pendingVerificationComplaints || []).filter((c) => {
+    if (streamFilter === 'PENDING') {
+      return c.status === 'Under Verification' || c.status === 'Pending Verification';
+    }
+    if (streamFilter === 'COMPLETED') {
+      return (
+        c.status === 'Completed' ||
+        c.status === 'Verified & Resolved' ||
+        c.status === 'Resolved' ||
+        c.verification_status === 'VERIFIED'
+      );
+    }
+    return true;
+  });
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Header Container with Vibrant Cyber Violet Theme */}
