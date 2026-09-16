@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from 'react';
 import { LanguageContext } from '../context/LanguageContext';
-import { Camera, RefreshCw, CheckCircle2, ShieldCheck, MapPin, Sparkles, Lock, Video, Eye, EyeOff, Upload } from 'lucide-react';
+import { Camera, RefreshCw, CheckCircle2, ShieldCheck, MapPin, Sparkles, Lock, Video, Eye, EyeOff } from 'lucide-react';
 import { processPrivacyBlur } from '../utils/imageAnonymizer';
 
 const GEOTAG_PRESETS = [
@@ -51,11 +51,8 @@ const GEOTAG_PRESETS = [
   }
 ];
 
-export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }) {
+export default function GeoTagCamera({ onCapture, onLocationDetected }) {
   const { t, isHindi } = useContext(LanguageContext);
-
-  // Tab: 'geotag' or 'upload'
-  const [activeTab, setActiveTab] = useState('geotag');
 
   // --- Geo-Tag Camera State ---
   const [cameraActive, setCameraActive] = useState(false);
@@ -67,13 +64,6 @@ export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }
   const [processingYolo, setProcessingYolo] = useState(false);
   const [showOriginal, setShowOriginal] = useState(false);
   const [yoloDetections, setYoloDetections] = useState(null);
-
-  // --- File Upload State ---
-  const [uploadOriginal, setUploadOriginal] = useState(null);
-  const [uploadAnonymized, setUploadAnonymized] = useState(null);
-  const [uploadProcessing, setUploadProcessing] = useState(false);
-  const [uploadShowOriginal, setUploadShowOriginal] = useState(false);
-  const [uploadDetections, setUploadDetections] = useState(null);
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -247,83 +237,12 @@ export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }
     };
   };
 
-  // --- File Upload Handler (Robust FileReader for local base64) ---
-  const handleFileUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setUploadProcessing(true);
-    const reader = new FileReader();
-
-    reader.onload = async () => {
-      const dataUrl = reader.result;
-      setUploadOriginal(dataUrl);
-
-      try {
-        const result = await processPrivacyBlur(dataUrl);
-        setUploadAnonymized(result.anonymizedImage);
-        setUploadDetections(result.detections);
-        onUpload?.(file, result.anonymizedImage);
-        onCapture?.(result.anonymizedImage, dataUrl);
-      } catch (err) {
-        console.error('[Upload] Anonymization error:', err);
-        setUploadAnonymized(dataUrl);
-        onCapture?.(dataUrl, dataUrl);
-      } finally {
-        setUploadProcessing(false);
-      }
-    };
-
-    reader.onerror = () => {
-      setUploadProcessing(false);
-    };
-
-    reader.readAsDataURL(file);
-  };
-
-  // Switch tabs — stop camera if leaving geo-tag tab
-  const switchTab = (tab) => {
-    if (tab !== 'geotag') stopCamera();
-    setActiveTab(tab);
-  };
-
   return (
     <div className="bg-white dark:bg-emerald-950/70 rounded-2xl p-5 border border-emerald-100 dark:border-emerald-900 space-y-4 shadow-xs">
       <canvas ref={canvasRef} className="hidden" />
 
-      {/* ═══ Tab Toggle: Geo-Tag Camera | Upload Image ═══ */}
-      <div className="flex items-center bg-emerald-50 dark:bg-emerald-900/50 p-1 rounded-xl border border-emerald-200 dark:border-emerald-800">
-        <button
-          type="button"
-          onClick={() => switchTab('geotag')}
-          className={`flex-1 flex items-center justify-center gap-1.5 text-xs font-bold py-2 px-3 rounded-lg transition-all ${
-            activeTab === 'geotag'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-800'
-          }`}
-        >
-          <Camera className="w-3.5 h-3.5" />
-          <span>{isHindi ? '📸 जियो-टैग कैमरा' : '📸 Geo-Tag Camera'}</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => switchTab('upload')}
-          className={`flex-1 flex items-center justify-center gap-1.5 text-xs font-bold py-2 px-3 rounded-lg transition-all ${
-            activeTab === 'upload'
-              ? 'bg-emerald-600 text-white shadow-md'
-              : 'text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-800'
-          }`}
-        >
-          <Upload className="w-3.5 h-3.5" />
-          <span>{isHindi ? '📁 फोटो अपलोड' : '📁 Upload Image'}</span>
-        </button>
-      </div>
-
-      {/* ═══════════════════════════════════════════════ */}
-      {/* TAB 1: GEO-TAG CAMERA                          */}
-      {/* ═══════════════════════════════════════════════ */}
-      {activeTab === 'geotag' && (
-        <div className="space-y-4">
+      {/* ═══ GEO-TAG CAMERA & EVIDENCE ATTACHMENT ═══ */}
+      <div className="space-y-4">
           {/* Header */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2 border-b border-emerald-100 dark:border-emerald-900">
             <div className="space-y-0.5">
@@ -510,98 +429,6 @@ export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }
             </div>
           </div>
         </div>
-      )}
-
-      {/* ═══════════════════════════════════════════════ */}
-      {/* TAB 2: TRADITIONAL FILE UPLOAD                 */}
-      {/* ═══════════════════════════════════════════════ */}
-      {activeTab === 'upload' && (
-        <div className="space-y-4">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileUpload}
-            className="hidden"
-            id="img-upload-unified"
-          />
-          <label
-            htmlFor="img-upload-unified"
-            className="cursor-pointer flex flex-col items-center justify-center gap-3 p-6 rounded-xl border-2 border-dashed border-emerald-200 dark:border-emerald-800 hover:border-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-900/30 transition"
-          >
-            <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-900 text-emerald-600 flex items-center justify-center font-bold">
-              <Upload className="w-6 h-6" />
-            </div>
-            <div className="space-y-1 text-center">
-              <span className="text-sm font-bold text-emerald-950 dark:text-white block">
-                {isHindi ? 'समस्या का साक्ष्य फोटो अपलोड करें' : 'Upload Evidence Photo'}
-              </span>
-              <span className="text-[11px] text-emerald-700 dark:text-emerald-300 block">
-                {isHindi ? 'यहाँ क्लिक करके फोटो चुनें या खींचकर छोड़ें • PNG, JPG, WEBP (10MB तक)' : 'Click to browse or drag & drop • PNG, JPG, WEBP up to 10MB'}
-              </span>
-            </div>
-          </label>
-
-          {/* Privacy Guarantee Pill */}
-          <div className="flex justify-center">
-            <div className="inline-flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-900/50 border border-emerald-200 dark:border-emerald-800 px-3 py-1 rounded-full text-[10.5px] font-bold text-emerald-800 dark:text-emerald-300">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{isHindi ? 'YOLO एआई सुरक्षा: चेहरे व वाहन नंबर प्लेट स्वतः धुंधली की जाती हैं' : 'YOLO AI Shield: Faces & Vehicle License Plates Auto-Blurred'}</span>
-            </div>
-          </div>
-
-          {uploadProcessing && (
-            <div className="text-xs font-bold text-emerald-700 dark:text-emerald-300 flex items-center justify-center gap-2 py-2">
-              <Sparkles className="w-4 h-4 text-emerald-600 animate-spin" />
-              <span>{isHindi ? 'YOLOv8 कंप्यूटर विजन चेहरे व नंबर प्लेट स्कैन कर रहा है...' : 'YOLOv8 Computer Vision Scanning for Faces & License Plates...'}</span>
-            </div>
-          )}
-
-          {/* Dual Before/After Privacy View */}
-          {uploadAnonymized && (
-            <div className="space-y-3 pt-3 border-t border-emerald-100 dark:border-emerald-800 text-left">
-              <div className="flex justify-between items-center text-xs">
-                <span className="font-bold text-emerald-950 dark:text-white flex items-center gap-1.5">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>{isHindi ? 'गोपनीयता सुरक्षा लागू की गई ✓' : 'Privacy Protection Applied ✓'}</span>
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setUploadShowOriginal(!uploadShowOriginal)}
-                  className="text-[11px] font-bold text-emerald-700 dark:text-emerald-300 hover:text-emerald-900 flex items-center gap-1 bg-emerald-50 dark:bg-emerald-900 px-2 py-0.5 rounded"
-                >
-                  {uploadShowOriginal ? <EyeOff className="w-3 h-3" /> : <Eye className="w-3 h-3" />}
-                  <span>{uploadShowOriginal ? (isHindi ? 'ब्लर फोटो देखें' : 'Show Blurred') : (isHindi ? 'मूल फोटो देखें' : 'Show Original')}</span>
-                </button>
-              </div>
-
-              <div className="relative rounded-xl overflow-hidden border border-emerald-200 dark:border-emerald-800 max-h-48 bg-black flex items-center justify-center">
-                <img
-                  src={uploadShowOriginal ? uploadOriginal : uploadAnonymized}
-                  alt="Anonymized Evidence"
-                  className="w-full h-48 object-cover"
-                />
-                {!uploadShowOriginal && (
-                  <span className="absolute bottom-2 right-2 bg-emerald-950/85 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-xs flex items-center gap-1 border border-emerald-400">
-                    <ShieldCheck className="w-3 h-3 text-emerald-400" />
-                    <span>{isHindi ? 'गोपनीयता सुरक्षित ✓' : 'Privacy Protected ✓'}</span>
-                  </span>
-                )}
-              </div>
-
-              {!uploadShowOriginal && (
-                <div className="flex items-center gap-1.5 pt-1 text-[11px] text-emerald-800 dark:text-emerald-300 font-medium">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                  <span>
-                    {isHindi
-                      ? 'फोटो में चेहरे और वाहन नंबर प्लेट स्वतः सुरक्षित कर दिए गए हैं'
-                      : 'Faces and vehicle plates automatically blurred for privacy'}
-                  </span>
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-      )}
-    </div>
+      </div>
   );
 }

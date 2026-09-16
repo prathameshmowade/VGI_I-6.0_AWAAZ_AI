@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import CitizenResolutionModal from './CitizenResolutionModal';
 import {
   FileText,
   Clock,
@@ -40,6 +41,7 @@ export default function CitizenGrievanceTracker({
   const navigate = useNavigate();
   const [filter, setFilter] = useState('ALL'); // 'ALL' | 'ACTIVE' | 'RESOLVED'
   const [copiedId, setCopiedId] = useState(null);
+  const [resolutionModalTarget, setResolutionModalTarget] = useState(null);
 
   const handleCopyId = (id, e) => {
     e?.stopPropagation();
@@ -129,6 +131,44 @@ export default function CitizenGrievanceTracker({
             </button>
           </div>
         </div>
+
+        {/* Celebratory Resolved Complaint Banner */}
+        {resolvedCount > 0 && (
+          <div className="bg-gradient-to-r from-emerald-500/15 via-teal-500/10 to-emerald-500/15 border-2 border-emerald-500/40 dark:border-emerald-500/30 rounded-3xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm animate-in fade-in duration-300">
+            <div className="flex items-center gap-3.5">
+              <div className="w-11 h-11 rounded-2xl bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-md">
+                <Sparkles className="w-6 h-6" />
+              </div>
+              <div className="space-y-0.5">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
+                    Resolution Alert
+                  </span>
+                  <span className="text-xs text-emerald-700 dark:text-emerald-400 font-bold">
+                    {resolvedCount} {isHindi ? 'समस्या हल की गई' : 'Grievance(s) Resolved'}
+                  </span>
+                </div>
+                <h3 className="font-black text-slate-900 dark:text-white text-sm sm:text-base">
+                  {isHindi ? '🎉 अच्छी खबर! आपकी शिकायत का समाधान हो गया है' : '🎉 Good News! Your Complaint Has Been Officially Resolved'}
+                </h3>
+                <p className="text-xs text-slate-600 dark:text-slate-300">
+                  {isHindi 
+                    ? 'अधिकारी द्वारा फोटो प्रमाण अपलोड किया गया है। पहले और बाद की स्थिति जांचें।' 
+                    : 'Municipal field team has uploaded before & after proof. Inspect the work and confirm satisfaction.'}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setFilter('RESOLVED')}
+              className="bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-black text-xs py-2.5 px-4 rounded-xl shadow-xs shrink-0 flex items-center gap-2 transition"
+            >
+              <CheckCircle2 className="w-4 h-4" />
+              <span>{isHindi ? 'सत्यापित प्रमाण देखें' : 'View Resolved Grievances'}</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+        )}
 
         {/* 4 Summary Metric Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
@@ -417,9 +457,19 @@ export default function CitizenGrievanceTracker({
                 {/* Completed / Resolved Callout (Shows Proof & Notes) */}
                 {isCompleted && (
                   <div className="bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 rounded-2xl p-4 space-y-3">
-                    <div className="flex items-center gap-2 text-xs font-black text-emerald-950 dark:text-emerald-200">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                      <span>{isHindi ? 'समाधान पूर्ण व सत्यापित ✓' : 'Grievance Resolved & Officially Verified ✓'}</span>
+                    <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                      <div className="flex items-center gap-2 text-xs font-black text-emerald-950 dark:text-emerald-200">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        <span>{isHindi ? 'समाधान पूर्ण व सत्यापित ✓' : 'Grievance Resolved & Officially Verified ✓'}</span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setResolutionModalTarget(c)}
+                        className="self-start sm:self-auto bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs py-1.5 px-3 rounded-lg shadow-2xs flex items-center gap-1.5 transition"
+                      >
+                        <Camera className="w-3.5 h-3.5" />
+                        <span>{isHindi ? 'पूर्ण प्रमाण व फोटो जांचें' : 'Inspect Before & After Proof'}</span>
+                      </button>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
@@ -493,8 +543,19 @@ export default function CitizenGrievanceTracker({
               </div>
             );
           })}
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+
+        {/* Resolution Proof Details Modal */}
+        {resolutionModalTarget && (
+          <CitizenResolutionModal
+            complaint={resolutionModalTarget}
+            onClose={() => setResolutionModalTarget(null)}
+            onFeedback={(id, satisfied) => {
+              console.log(`Citizen feedback on ${id}: ${satisfied ? 'SATISFIED' : 'UNSATISFIED'}`);
+            }}
+          />
+        )}
+      </div>
   );
 }

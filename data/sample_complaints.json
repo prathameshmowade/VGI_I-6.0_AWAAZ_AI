@@ -1341,14 +1341,14 @@
     "description": "Water gushing out of pipe for 2 days. Phone: [REDACTED_PHONE]",
     "category": "Water Supply",
     "urgency": "High",
-    "status": "New",
+    "status": "Resolved",
     "department": "DEPT_ROAD",
     "confidenceScore": 95,
     "slaHoursTotal": 48,
     "slaHoursRemaining": 48,
     "impactScore": 92,
     "isDuplicate": false,
-    "blockchainHash": "054d3ce7fe530088f41e6d31bfb79da20f8cf3eec68366e03bc1887584d47ac3",
+    "blockchainHash": "2192409dac319f8597dbc2099fe5a9b02e1a5a3d9d7f28c66585cfe2e18090ca",
     "xaiExplanation": {
       "confidence": 95,
       "reasoning": [
@@ -1363,7 +1363,23 @@
         "CMP-2025-9102"
       ]
     },
-    "createdAt": "2026-08-07T08:14:26.042Z"
+    "createdAt": "2026-08-07T08:14:26.042Z",
+    "resolutionProof": "https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80",
+    "resolutionNotes": "Streetlight repair certified complete by electrical squad.",
+    "auditTimeline": [
+      {
+        "event": "Status Updated to \"Resolved\"",
+        "actor": "Chief Engineer Amit Verma",
+        "actorRole": "officer",
+        "timestamp": "2026-09-16T07:07:16.272Z",
+        "details": {
+          "status": "Resolved",
+          "resolutionProof": "https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600&auto=format&fit=crop&q=80",
+          "resolutionNotes": "Streetlight repair certified complete by electrical squad."
+        },
+        "hash": "2192409dac319f8597dbc2099fe5a9b02e1a5a3d9d7f28c66585cfe2e18090ca"
+      }
+    ]
   },
   {
     "complaintId": "CMP-2026-001",

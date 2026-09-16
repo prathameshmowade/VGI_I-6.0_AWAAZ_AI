@@ -53,6 +53,7 @@ app.use('/api/sms', require('./routes/sms'));
 app.use('/api/call', require('./routes/call'));
 app.use('/api/telegram', require('./routes/telegram'));
 app.use('/api/civic', require('./routes/civicResponsibility'));
+app.use('/api/notifications', require('./routes/notifications'));
 
 // 5. High-Throughput B2B Telemetry Gateway (Zomato / Swiggy / Zepto / Uber)
 app.use('/api/v1/b2b', require('./routes/b2bGateway'));

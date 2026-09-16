@@ -11,6 +11,7 @@ import PrivacyShield from '../components/PrivacyShield';
 import TelegramBotModal from '../components/TelegramBotModal';
 import ResponsibilityPanel from '../components/ResponsibilityPanel';
 import CitizenGrievanceTracker from '../components/CitizenGrievanceTracker';
+import NotificationCenter from '../components/NotificationCenter';
 import { redactPII } from '../utils/piiShield';
 import {
   FileEdit,
@@ -219,40 +220,46 @@ export default function CitizenPortal() {
             </p>
           </div>
 
-          {/* Tab Switcher */}
-          <div className="flex bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700 shrink-0 shadow-2xs">
-            <button
-              type="button"
-              onClick={() => { setActiveTab('report'); setSubmitted(null); }}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
-                activeTab === 'report'
-                  ? 'bg-white dark:bg-slate-900 text-blue-700 dark:text-blue-200 shadow-xs'
-                  : 'text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <PlusCircle className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-              <span>{isHindi ? 'समस्या दर्ज करें' : 'Report Issue'}</span>
-            </button>
+          {/* Header Controls: Tab Switcher & Notification Center */}
+          <div className="flex items-center gap-2.5 shrink-0">
+            {/* Tab Switcher */}
+            <div className="flex bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-2xs">
+              <button
+                type="button"
+                onClick={() => { setActiveTab('report'); setSubmitted(null); }}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
+                  activeTab === 'report'
+                    ? 'bg-white dark:bg-slate-900 text-blue-700 dark:text-blue-200 shadow-xs'
+                    : 'text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <PlusCircle className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span>{isHindi ? 'समस्या दर्ज करें' : 'Report Issue'}</span>
+              </button>
 
-            <button
-              type="button"
-              onClick={() => setActiveTab('my-complaints')}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
-                activeTab === 'my-complaints'
-                  ? 'bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-200 shadow-xs'
-                  : 'text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white'
-              }`}
-            >
-              <ListOrdered className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              <span>{isHindi ? 'मेरी शिकायतें' : 'My Complaints'}</span>
-              <span className={`text-[10px] px-2 py-0.5 rounded-full font-black ${
-                activeTab === 'my-complaints'
-                  ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200'
-                  : 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-white'
-              }`}>
-                {myComplaints.length}
-              </span>
-            </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('my-complaints')}
+                className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
+                  activeTab === 'my-complaints'
+                    ? 'bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-200 shadow-xs'
+                    : 'text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <ListOrdered className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                <span>{isHindi ? 'मेरी शिकायतें' : 'My Complaints'}</span>
+                <span className={`text-[10px] px-2 py-0.5 rounded-full font-black ${
+                  activeTab === 'my-complaints'
+                    ? 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200'
+                    : 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-white'
+                }`}>
+                  {myComplaints.length}
+                </span>
+              </button>
+            </div>
+
+            {/* Notification Center */}
+            <NotificationCenter user={user} />
           </div>
         </div>
       </div>

@@ -383,6 +383,20 @@ const updateStatus = async (req, res) => {
     );
   } catch (err) {}
 
+  // Dispatch resolution notification to citizen if complaint reached resolved/completed state
+  const isResolvedStatus = ['Resolved', 'Completed', 'Verified & Resolved'].includes(status);
+  if (isResolvedStatus) {
+    try {
+      const { dispatchResolutionNotification } = require('../services/notificationService');
+      dispatchResolutionNotification(comp, {
+        actorName: req.body.actorName || 'Municipal Officer',
+        actorRole: req.body.actorRole || 'officer',
+        resolutionProof: resolutionProof || comp.resolutionProof,
+        resolutionNotes: resolutionNotes || comp.resolutionNotes
+      }).catch(e => console.warn('[Notification Trigger]', e.message));
+    } catch (e) {}
+  }
+
   console.log(`[STATUS UPDATE] Ticket ${id} status updated to '${status}'. Stored in database.`);
 
   return res.json({ success: true, message: `Status updated to ${status}`, data: comp });
@@ -425,6 +439,17 @@ const completeComplaint = async (req, res) => {
         { upsert: true }
       );
     } catch (err) {}
+
+    // Dispatch completion & resolution notification to citizen
+    try {
+      const { dispatchResolutionNotification } = require('../services/notificationService');
+      dispatchResolutionNotification(result.data, {
+        actorName: officerData.name,
+        actorRole: officerData.role || 'officer',
+        resolutionProof: proof,
+        resolutionNotes: notes
+      }).catch(e => console.warn('[Notification Trigger]', e.message));
+    } catch (e) {}
 
     return res.json(result);
   } catch (err) {
@@ -472,6 +497,19 @@ const verifyComplaint = async (req, res) => {
         { upsert: true }
       );
     } catch (err) {}
+
+    // If verification marked complaint as Completed/VERIFIED, dispatch resolution notification
+    if (result.data?.status === 'Completed' || result.data?.verification_status === 'VERIFIED') {
+      try {
+        const { dispatchResolutionNotification } = require('../services/notificationService');
+        dispatchResolutionNotification(result.data, {
+          actorName: 'Community Consensus Verified',
+          actorRole: 'citizen-consensus',
+          resolutionProof: result.data.completion_proof || result.data.resolutionProof,
+          resolutionNotes: 'Verified and certified closed by community consensus.'
+        }).catch(e => console.warn('[Notification Trigger]', e.message));
+      } catch (e) {}
+    }
 
     return res.json(result);
   } catch (err) {
