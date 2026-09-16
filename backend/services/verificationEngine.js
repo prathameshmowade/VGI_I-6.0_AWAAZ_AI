@@ -227,19 +227,34 @@ const submitVerification = ({ complaintId, citizen, vote, feedback, location }) 
 
   // Anti-abuse: check duplicate vote — 1 vote per citizen per problem in 7-day window
   const allVerifications = loadVerifications();
+  const GENERIC_NAMES = ['verified citizen', 'citizen', 'anonymous', 'guest', 'citizen-anonymous', 'local resident', 'user'];
+  const GENERIC_IDS = ['guest', 'anonymous', 'citizen-anonymous', 'citizen-000', ''];
+  const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+  const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
+
   const normalizedCitizenEmail = citizen.email ? citizen.email.trim().toLowerCase() : '';
   const normalizedCitizenName = citizen.name ? citizen.name.trim().toLowerCase() : '';
   const normalizedCitizenId = citizenId ? citizenId.trim().toLowerCase() : '';
 
+  const isGenericName = !normalizedCitizenName || GENERIC_NAMES.includes(normalizedCitizenName);
+  const isGenericId = !normalizedCitizenId || GENERIC_IDS.includes(normalizedCitizenId);
+
   const existingVote = allVerifications.find((v) => {
     if (v.complaintId !== complaintId) return false;
+    
+    // Enforce 7-day duration rule: votes older than 7 days do not block
+    if (v.createdAt) {
+      const voteAgeMs = Date.now() - new Date(v.createdAt).getTime();
+      if (voteAgeMs >= SEVEN_DAYS_MS) return false;
+    }
+
     const vId = (v.citizenId || '').trim().toLowerCase();
     const vEmail = (v.citizenEmail || '').trim().toLowerCase();
     const vName = (v.citizenName || '').trim().toLowerCase();
 
-    const matchId = normalizedCitizenId && vId && (vId === normalizedCitizenId || vId === normalizedCitizenEmail);
-    const matchEmail = normalizedCitizenEmail && vEmail && vEmail === normalizedCitizenEmail;
-    const matchName = normalizedCitizenName && vName && vName === normalizedCitizenName;
+    const matchId = !isGenericId && normalizedCitizenId && vId && (vId === normalizedCitizenId);
+    const matchEmail = normalizedCitizenEmail && vEmail && (vEmail === normalizedCitizenEmail);
+    const matchName = !isGenericName && normalizedCitizenName && vName && (vName === normalizedCitizenName);
 
     return matchId || matchEmail || matchName;
   });
@@ -251,16 +266,20 @@ const submitVerification = ({ complaintId, citizen, vote, feedback, location }) 
     };
   }
 
-  // Also check comp.verifications array
+  // Also check comp.verifications array with 7-day window
   if (Array.isArray(comp.verifications)) {
     const existingInComp = comp.verifications.find((v) => {
+      if (v.verifiedAt) {
+        const voteAgeMs = Date.now() - new Date(v.verifiedAt).getTime();
+        if (voteAgeMs >= SEVEN_DAYS_MS) return false;
+      }
       const vId = (v.citizenId || '').trim().toLowerCase();
       const vEmail = (v.citizenEmail || '').trim().toLowerCase();
       const vName = (v.citizenName || '').trim().toLowerCase();
 
-      const matchId = normalizedCitizenId && vId && (vId === normalizedCitizenId || vId === normalizedCitizenEmail);
-      const matchEmail = normalizedCitizenEmail && vEmail && vEmail === normalizedCitizenEmail;
-      const matchName = normalizedCitizenName && vName && vName === normalizedCitizenName;
+      const matchId = !isGenericId && normalizedCitizenId && vId && (vId === normalizedCitizenId);
+      const matchEmail = normalizedCitizenEmail && vEmail && (vEmail === normalizedCitizenEmail);
+      const matchName = !isGenericName && normalizedCitizenName && vName && (vName === normalizedCitizenName);
 
       return matchId || matchEmail || matchName;
     });
@@ -338,6 +357,12 @@ const submitVerification = ({ complaintId, citizen, vote, feedback, location }) 
   // ─── Evaluate Transition Rules ───
   let transitionMessage = '';
 
+  // Rule: 3 positive verifications OR 3 days of positive verification consensus
+  const startedAt = comp.pendingVerificationStartedAt || comp.completed_at;
+  const elapsedMs = startedAt ? (now.getTime() - new Date(startedAt).getTime()) : 0;
+  const hasThreePositiveVotes = verifiedCount >= REQUIRED_VERIFICATIONS;
+  const hasThreeDaysConsensus = (elapsedMs >= THREE_DAYS_MS) && (verifiedCount > rejectedCount) && (verifiedCount >= 1);
+
   if (vote === 'REJECTED') {
     // Rejection: increase priority, mark failed, return to assignment queue
     comp.priority_weight = (comp.priority_weight || 1) + 1;
@@ -366,11 +391,11 @@ const submitVerification = ({ complaintId, citizen, vote, feedback, location }) 
     });
     comp.blockchainHash = failAudit.hash;
 
-    transitionMessage = `Verification failed. Complaint returned to assignment queue with priority weight ${comp.priority_weight}.`;
-    console.log(`[VerificationEngine] Complaint ${complaintId} REJECTED by ${citizen.name}. Priority weight: ${comp.priority_weight}, Failures: ${comp.verification_failures}`);
+    transitionMessage = `Verification failed. Complaint returned to queue with priority weight ${comp.priority_weight}.`;
+    console.log(`[VerificationEngine] Complaint ${complaintId} REJECTED by ${citizen.name}. Priority weight: ${comp.priority_weight}`);
 
-  } else if (verifiedCount >= REQUIRED_VERIFICATIONS) {
-    // 3 verified — mark completed
+  } else if (hasThreePositiveVotes || hasThreeDaysConsensus) {
+    // 3 verified votes OR 3 days with positive consensus — mark completed
     comp.status = 'Completed';
     comp.verification_status = 'VERIFIED';
 
@@ -381,7 +406,9 @@ const submitVerification = ({ complaintId, citizen, vote, feedback, location }) 
       timestamp: now.toISOString()
     });
     comp.auditTimeline.push({
-      event: `Community Verification Complete (${verifiedCount}/${REQUIRED_VERIFICATIONS}) — Complaint Completed`,
+      event: hasThreePositiveVotes
+        ? `Community Verification Complete (${verifiedCount}/${REQUIRED_VERIFICATIONS}) — Complaint Completed`
+        : `Verification Complete (3 Days Positive Consensus: ${verifiedCount} votes) — Complaint Completed`,
       actor: 'System',
       actorRole: 'system',
       timestamp: now.toISOString(),
@@ -390,8 +417,10 @@ const submitVerification = ({ complaintId, citizen, vote, feedback, location }) 
     });
     comp.blockchainHash = completeAudit.hash;
 
-    transitionMessage = `All ${REQUIRED_VERIFICATIONS} citizen verifications received. Complaint marked as COMPLETED.`;
-    console.log(`[VerificationEngine] Complaint ${complaintId} VERIFIED by ${verifiedCount} citizens. Status: COMPLETED.`);
+    transitionMessage = hasThreePositiveVotes
+      ? `All ${REQUIRED_VERIFICATIONS} citizen verifications received. Complaint marked as COMPLETED.`
+      : `3 days elapsed with positive citizen consensus (${verifiedCount} verified). Complaint marked as COMPLETED.`;
+    console.log(`[VerificationEngine] Complaint ${complaintId} COMPLETED. Verified: ${verifiedCount}`);
 
   } else {
     transitionMessage = `Verification recorded (${verifiedCount}/${REQUIRED_VERIFICATIONS}). Awaiting more citizen verifications.`;
@@ -416,13 +445,28 @@ const getTwinCityVerifications = ({ citizenId, citizenEmail, citizenName, zone, 
   const store = loadComplaints();
   const allVerifications = loadVerifications();
   const now = new Date();
+  const GENERIC_NAMES = ['verified citizen', 'citizen', 'anonymous', 'guest', 'citizen-anonymous', 'local resident', 'user'];
+  const GENERIC_IDS = ['guest', 'anonymous', 'citizen-anonymous', 'citizen-000', ''];
+  const SEVEN_DAYS_MS = 7 * 24 * 60 * 60 * 1000;
+  const THREE_DAYS_MS = 3 * 24 * 60 * 60 * 1000;
 
-  // Check for expired verifications and transition them
+  // Check for expired verifications or 3-day positive consensus completions
   let needsSave = false;
   store.forEach((comp) => {
-    if ((comp.status === 'Under Verification' || comp.status === 'Pending Verification') && comp.verification_deadline) {
-      const deadline = new Date(comp.verification_deadline);
-      if (now > deadline && comp.verification_status === 'PENDING') {
+    if (comp.status === 'Under Verification' || comp.status === 'Pending Verification') {
+      const votes = allVerifications.filter((v) => v.complaintId === comp.complaintId);
+      const verifiedCount = votes.filter((v) => v.vote === 'VERIFIED').length;
+      const rejectedCount = votes.filter((v) => v.vote === 'REJECTED').length;
+      const startedAt = comp.pendingVerificationStartedAt || comp.completed_at;
+      const elapsedMs = startedAt ? (now.getTime() - new Date(startedAt).getTime()) : 0;
+
+      if (verifiedCount >= REQUIRED_VERIFICATIONS || (elapsedMs >= THREE_DAYS_MS && verifiedCount > rejectedCount && verifiedCount >= 1)) {
+        comp.status = 'Completed';
+        comp.verification_status = 'VERIFIED';
+        comp.verified_count = verifiedCount;
+        comp.rejected_count = rejectedCount;
+        needsSave = true;
+      } else if (comp.verification_deadline && now > new Date(comp.verification_deadline) && comp.verification_status === 'PENDING') {
         handleVerificationExpiry(comp, store);
         needsSave = true;
       }
@@ -430,9 +474,14 @@ const getTwinCityVerifications = ({ citizenId, citizenEmail, citizenName, zone, 
   });
   if (needsSave) saveComplaints(store);
 
-  // Filter complaints in verification states
-  const verificationStatuses = ['Under Verification', 'Pending Verification'];
-  let pendingList = store.filter((c) => verificationStatuses.includes(c.status));
+  // Filter complaints in verification states + completed verification complaints
+  const verificationStatuses = ['Under Verification', 'Pending Verification', 'Completed'];
+  let pendingList = store.filter((c) => {
+    if (c.status === 'Completed') {
+      return c.verification_status === 'VERIFIED' || !!(c.completion_proof || c.resolutionProof);
+    }
+    return verificationStatuses.includes(c.status);
+  });
 
   // Optionally filter by locality/zone/ward
   if (zone) {
@@ -448,21 +497,25 @@ const getTwinCityVerifications = ({ citizenId, citizenEmail, citizenName, zone, 
     });
   }
 
-  // Sort by priority_weight (higher priority first), then by deadline (closest first)
+  // Sort by priority_weight (higher priority first), then by status (Under Verification first)
   pendingList.sort((a, b) => {
+    const isUnderA = (a.status === 'Under Verification' || a.status === 'Pending Verification') ? 1 : 0;
+    const isUnderB = (b.status === 'Under Verification' || b.status === 'Pending Verification') ? 1 : 0;
+    if (isUnderB !== isUnderA) return isUnderB - isUnderA;
+
     const wA = a.priority_weight || 1;
     const wB = b.priority_weight || 1;
     if (wB !== wA) return wB - wA;
-    const dA = a.verification_deadline ? new Date(a.verification_deadline).getTime() : Infinity;
-    const dB = b.verification_deadline ? new Date(b.verification_deadline).getTime() : Infinity;
-    return dA - dB;
+    return 0;
   });
 
   // Annotate each with citizen-specific voting info (enforce 1 vote per citizen in 7-day window)
   const normalizedCitizenId = (citizenId || '').trim().toLowerCase();
   const normalizedCitizenEmail = (citizenEmail || '').trim().toLowerCase();
   const normalizedCitizenName = (citizenName || '').trim().toLowerCase();
-  const hasCitizenContext = normalizedCitizenId || normalizedCitizenEmail || normalizedCitizenName;
+  const isGenericId = !normalizedCitizenId || GENERIC_IDS.includes(normalizedCitizenId);
+  const isGenericName = !normalizedCitizenName || GENERIC_NAMES.includes(normalizedCitizenName);
+  const hasCitizenContext = (!isGenericId && normalizedCitizenId) || normalizedCitizenEmail || (!isGenericName && normalizedCitizenName);
 
   const annotated = pendingList.map((comp) => {
     const votes = allVerifications.filter((v) => v.complaintId === comp.complaintId);
@@ -475,13 +528,19 @@ const getTwinCityVerifications = ({ citizenId, citizenEmail, citizenName, zone, 
 
     if (hasCitizenContext) {
       const myVote = votes.find((v) => {
+        // Only active within 7 days
+        if (v.createdAt) {
+          const voteAgeMs = now.getTime() - new Date(v.createdAt).getTime();
+          if (voteAgeMs >= SEVEN_DAYS_MS) return false;
+        }
+
         const vId = (v.citizenId || '').trim().toLowerCase();
         const vEmail = (v.citizenEmail || '').trim().toLowerCase();
         const vName = (v.citizenName || '').trim().toLowerCase();
 
-        const matchId = normalizedCitizenId && vId && (vId === normalizedCitizenId || vId === normalizedCitizenEmail);
-        const matchEmail = normalizedCitizenEmail && vEmail && vEmail === normalizedCitizenEmail;
-        const matchName = normalizedCitizenName && vName && vName === normalizedCitizenName;
+        const matchId = !isGenericId && normalizedCitizenId && vId && (vId === normalizedCitizenId);
+        const matchEmail = normalizedCitizenEmail && vEmail && (vEmail === normalizedCitizenEmail);
+        const matchName = !isGenericName && normalizedCitizenName && vName && (vName === normalizedCitizenName);
 
         return matchId || matchEmail || matchName;
       });
@@ -495,13 +554,17 @@ const getTwinCityVerifications = ({ citizenId, citizenEmail, citizenName, zone, 
       // Also check comp.verifications array
       if (!hasVoted && Array.isArray(comp.verifications)) {
         const legacyVote = comp.verifications.find((v) => {
+          if (v.verifiedAt) {
+            const voteAgeMs = now.getTime() - new Date(v.verifiedAt).getTime();
+            if (voteAgeMs >= SEVEN_DAYS_MS) return false;
+          }
           const vId = (v.citizenId || '').trim().toLowerCase();
           const vEmail = (v.citizenEmail || '').trim().toLowerCase();
           const vName = (v.citizenName || '').trim().toLowerCase();
 
-          const matchId = normalizedCitizenId && vId && (vId === normalizedCitizenId || vId === normalizedCitizenEmail);
-          const matchEmail = normalizedCitizenEmail && vEmail && vEmail === normalizedCitizenEmail;
-          const matchName = normalizedCitizenName && vName && vName === normalizedCitizenName;
+          const matchId = !isGenericId && normalizedCitizenId && vId && (vId === normalizedCitizenId);
+          const matchEmail = normalizedCitizenEmail && vEmail && (vEmail === normalizedCitizenEmail);
+          const matchName = !isGenericName && normalizedCitizenName && vName && (vName === normalizedCitizenName);
 
           return matchId || matchEmail || matchName;
         });

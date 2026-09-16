@@ -67,47 +67,53 @@ export default function ResolutionProofModal({ complaint, onClose, onSubmitResol
       department: user?.department || ''
     };
 
-    // Officer resolution directly marks complaint as Completed
+    // Officer resolution certifies completion and routes ticket to Under Verification for community audit
     try {
-      // 1. Update status to Completed directly
-      await axios.patch(`/api/complaints/${compId}/status`, {
-        status: 'Completed',
-        resolutionProof: photoUrl,
-        resolutionNotes: notes,
-        actorName: officerData.name,
-        actorRole: 'officer'
+      // 1. Submit completion proof to backend verification engine
+      const res = await axios.post(`/api/complaints/${compId}/complete`, {
+        completionProof: photoUrl,
+        completionNotes: notes,
+        officer: officerData
       });
 
-      // 2. Also record completion record
+      const updatedStatus = res.data?.data?.status || 'Under Verification';
+
+      // 2. Also ensure status is updated
       try {
-        await axios.post(`/api/complaints/${compId}/complete`, {
-          completionProof: photoUrl,
-          completionNotes: notes,
-          officer: officerData
+        await axios.patch(`/api/complaints/${compId}/status`, {
+          status: updatedStatus,
+          resolutionProof: photoUrl,
+          resolutionNotes: notes,
+          actorName: officerData.name,
+          actorRole: 'officer'
         });
       } catch (e) {}
 
-      setSubmitSuccess('Resolution certified successfully! Grievance marked as Completed.');
+      setSubmitSuccess('Resolution proof certified successfully! Grievance moved to Under Verification.');
       
       const payload = {
         complaintId: compId,
         resolutionProof: photoUrl,
         resolutionNotes: notes,
+        completion_proof: photoUrl,
+        completion_notes: notes,
         aiSimilarityScore,
-        status: 'Completed'
+        status: updatedStatus
       };
       const submitCallback = onSubmitResolution || onSubmit;
       if (submitCallback) {
         await submitCallback(payload);
       }
     } catch (err) {
-      // Fallback: still notify parent with Completed status
+      // Fallback
       const payload = {
         complaintId: compId,
         resolutionProof: photoUrl,
         resolutionNotes: notes,
+        completion_proof: photoUrl,
+        completion_notes: notes,
         aiSimilarityScore,
-        status: 'Completed'
+        status: 'Under Verification'
       };
       const submitCallback = onSubmitResolution || onSubmit;
       if (submitCallback) {

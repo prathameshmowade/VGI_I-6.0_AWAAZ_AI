@@ -3,15 +3,14 @@ import { LanguageContext } from '../context/LanguageContext';
 import KanbanCard from './KanbanCard';
 import { Users, Award } from 'lucide-react';
 
-const COLS = ['New', 'Assigned', 'In Progress', 'Under Verification', 'Completed', 'Not Assigned'];
+const COLS = ['New', 'Assigned', 'In Progress', 'Under Verification', 'Completed'];
 
 const COL_NAMES_HI = {
   'New': 'नई शिकायतें',
   'Assigned': 'अधिकारी आवंटित',
   'In Progress': 'कार्य प्रगति पर',
   'Under Verification': 'सत्यापन जारी',
-  'Completed': 'सत्यापित व पूर्ण',
-  'Not Assigned': 'पुनः आवंटन'
+  'Completed': 'सत्यापित व पूर्ण'
 };
 
 const COL_STYLES = {
@@ -19,8 +18,7 @@ const COL_STYLES = {
   'Assigned': 'border-indigo-200 bg-gradient-to-b from-indigo-50/50 to-white dark:from-indigo-950/30 dark:to-slate-900 dark:border-indigo-900',
   'In Progress': 'border-amber-200 bg-gradient-to-b from-amber-50/50 to-white dark:from-amber-950/30 dark:to-slate-900 dark:border-amber-900',
   'Under Verification': 'border-purple-200 bg-gradient-to-b from-purple-50/50 to-white dark:from-purple-950/30 dark:to-slate-900 dark:border-purple-900',
-  'Completed': 'border-emerald-200 bg-gradient-to-b from-emerald-50/50 to-white dark:from-emerald-950/30 dark:to-slate-900 dark:border-emerald-900',
-  'Not Assigned': 'border-rose-200 bg-gradient-to-b from-rose-50/50 to-white dark:from-rose-950/30 dark:to-slate-900 dark:border-rose-900'
+  'Completed': 'border-emerald-200 bg-gradient-to-b from-emerald-50/50 to-white dark:from-emerald-950/30 dark:to-slate-900 dark:border-emerald-900'
 };
 
 
@@ -72,8 +70,8 @@ export default function KanbanBoard({ complaints = [], onSelect, onStatusChange 
         </div>
       </div>
 
-      {/* Kanban Column Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3">
+      {/* Kanban Column Grid — Clean 5 Stages */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3">
         {COLS.map((col) => {
           const colComplaints = complaints.filter((c) => {
             const status = (c.status || 'New').trim();
@@ -85,9 +83,6 @@ export default function KanbanBoard({ complaints = [], onSelect, onStatusChange 
             if (col === 'Under Verification') {
               return status === 'Under Verification' || status === 'Pending Verification';
             }
-            if (col === 'Not Assigned') {
-              return status === 'Not Assigned' && (vStatus === 'FAILED' || vStatus === 'EXPIRED' || (c.verification_failures || 0) > 0);
-            }
             if (col === 'In Progress') {
               return status === 'In Progress' || status === 'In-Progress' || status === 'Started';
             }
@@ -95,9 +90,8 @@ export default function KanbanBoard({ complaints = [], onSelect, onStatusChange 
               return status === 'Assigned';
             }
             if (col === 'New') {
-              const knownStatuses = ['Assigned', 'In Progress', 'In-Progress', 'Started', 'Under Verification', 'Pending Verification', 'Completed', 'Resolved', 'Verified & Resolved', 'Not Assigned'];
-              if (status === 'Not Assigned' && !(vStatus === 'FAILED' || vStatus === 'EXPIRED' || (c.verification_failures || 0) > 0)) return true;
-              return status === 'New' || status === 'new' || !knownStatuses.includes(status);
+              const knownStatuses = ['Assigned', 'In Progress', 'In-Progress', 'Started', 'Under Verification', 'Pending Verification', 'Completed', 'Resolved', 'Verified & Resolved'];
+              return status === 'New' || status === 'new' || status === 'Accepted' || status === 'Not Assigned' || !knownStatuses.includes(status);
             }
             return false;
           });

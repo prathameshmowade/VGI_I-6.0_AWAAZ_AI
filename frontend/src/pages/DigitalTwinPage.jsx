@@ -18,12 +18,14 @@ export default function DigitalTwinPage() {
   const { user } = useContext(AuthContext);
   const [selectedZone, setSelectedZone] = useState(CITY_ZONES[1]);
   const [pendingVerificationComplaints, setPendingVerificationComplaints] = useState([]);
-  const [stats, setStats] = useState({ total: 0, verified: 0, rejected: 0 });
+  const [streamFilter, setStreamFilter] = useState('ALL');
+  const [stats, setStats] = useState({ total: 0, verified: 0, rejected: 0, completed: 0 });
 
   const loadVerificationFeed = async () => {
     try {
-      // Fetch from real backend API
-      const citizenId = user?.citizenId || user?.email || user?.name || '';
+      // Fetch from real backend API with client device ID support
+      const clientDeviceId = typeof localStorage !== 'undefined' ? localStorage.getItem('awaaz_citizen_client_id') : '';
+      const citizenId = user?.citizenId || user?.email || user?.mobile || (user?.name && user.name !== 'Verified Citizen' ? user.name : clientDeviceId) || '';
       const citizenEmail = user?.email || '';
       const citizenName = user?.name || '';
       const res = await axios.get('/api/twin-city/verifications', {
@@ -35,10 +37,11 @@ export default function DigitalTwinPage() {
         setPendingVerificationComplaints(feedData);
 
         // Calculate stats
-        const totalVotes = feedData.reduce((sum, c) => sum + (c.verified_count || 0) + (c.rejected_count || 0), 0);
+        const activeAwaiting = feedData.filter((c) => c.status === 'Under Verification' || c.status === 'Pending Verification').length;
+        const totalCompleted = feedData.filter((c) => c.status === 'Completed' || c.status === 'Verified & Resolved' || c.verification_status === 'VERIFIED').length;
         const totalVerified = feedData.reduce((sum, c) => sum + (c.verified_count || 0), 0);
         const totalRejected = feedData.reduce((sum, c) => sum + (c.rejected_count || 0), 0);
-        setStats({ total: feedData.length, verified: totalVerified, rejected: totalRejected });
+        setStats({ total: activeAwaiting, verified: totalVerified, rejected: totalRejected, completed: totalCompleted });
         return;
       }
     } catch (err) {
@@ -50,10 +53,10 @@ export default function DigitalTwinPage() {
       const res = await axios.get('/api/complaints');
       if (res.data?.data && Array.isArray(res.data.data)) {
         const pendingList = res.data.data.filter(
-          (c) => c.status === 'Under Verification' || c.status === 'Pending Verification'
+          (c) => c.status === 'Under Verification' || c.status === 'Pending Verification' || c.status === 'Completed'
         );
         setPendingVerificationComplaints(pendingList);
-        setStats({ total: pendingList.length, verified: 0, rejected: 0 });
+        setStats({ total: pendingList.length, verified: 0, rejected: 0, completed: 0 });
       }
     } catch (err) {}
   };
@@ -210,12 +213,54 @@ export default function DigitalTwinPage() {
           </p>
         </div>
 
+        {/* Stream Filter Pills */}
+        <div className="flex flex-wrap items-center justify-between gap-3 bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setStreamFilter('ALL')}
+              className={`px-3.5 py-1.5 rounded-xl font-bold text-xs transition ${
+                streamFilter === 'ALL'
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100'
+              }`}
+            >
+              {isHindi ? 'सभी स्ट्रीम' : 'All Stream'} ({pendingVerificationComplaints.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setStreamFilter('PENDING')}
+              className={`px-3.5 py-1.5 rounded-xl font-bold text-xs transition ${
+                streamFilter === 'PENDING'
+                  ? 'bg-amber-600 text-white shadow-xs'
+                  : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100'
+              }`}
+            >
+              {isHindi ? 'सत्यापन हेतु लंबित' : 'Awaiting Citizen Verification'} ({stats.total})
+            </button>
+            <button
+              type="button"
+              onClick={() => setStreamFilter('COMPLETED')}
+              className={`px-3.5 py-1.5 rounded-xl font-bold text-xs transition ${
+                streamFilter === 'COMPLETED'
+                  ? 'bg-emerald-600 text-white shadow-xs'
+                  : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100'
+              }`}
+            >
+              {isHindi ? 'सत्यापित व पूर्ण' : 'Completed & Community Verified'} ({stats.completed})
+            </button>
+          </div>
+          <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+            {isHindi ? '3 सकारात्मक वोट = स्वतः पूर्ण' : 'Rule: 3 Positive Votes or 3 Days = Auto-Complete'}
+          </span>
+        </div>
+
         {/* Empty State */}
-        {pendingVerificationComplaints.length === 0 && (
+        {displayedComplaints.length === 0 && (
           <div className="bg-slate-50 dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 text-center space-y-2">
             <CheckCircle2 className="w-10 h-10 text-emerald-500 mx-auto" />
             <p className="text-sm font-bold text-slate-700 dark:text-slate-300">
-              {isHindi ? 'सत्यापन हेतु कोई शिकायत लंबित नहीं है।' : 'No complaints currently awaiting citizen verification.'}
+              {isHindi ? 'इस श्रेणी में कोई शिकायत नहीं है।' : 'No complaints found for this filter.'}
             </p>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               {isHindi ? 'जब कोई अधिकारी कार्य पूर्ण करेगा, तो शिकायतें यहाँ दिखाई देंगी।' : 'When an officer marks work as completed and uploads proof, complaints will appear here for community audit.'}
@@ -224,7 +269,7 @@ export default function DigitalTwinPage() {
         )}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {pendingVerificationComplaints.map((comp) => (
+          {displayedComplaints.map((comp) => (
             <CitizenVerificationPanel
               key={comp.complaintId || comp._id}
               complaint={comp}

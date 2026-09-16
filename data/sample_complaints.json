@@ -1,5 +1,31 @@
 [
   {
+    "complaintId": "CMP-2026-415",
+    "title": "Municipal Grievance Issue",
+    "description": "Grievance ticket under officer resolution",
+    "category": "Road Damage",
+    "urgency": "High Priority",
+    "status": "Assigned",
+    "priority_weight": 1,
+    "verification_status": "NONE",
+    "verification_attempts": 0,
+    "verification_failures": 0,
+    "createdAt": "2026-09-16T04:06:29.874Z",
+    "auditTimeline": [
+      {
+        "event": "Status Updated to \"Assigned\"",
+        "actor": "Officer",
+        "actorRole": "officer",
+        "timestamp": "2026-09-16T04:06:29.878Z",
+        "details": {
+          "status": "Assigned"
+        },
+        "hash": "1b15b1643cc11be480f3a0c0c4c4c1bbdf1e4c1f8e276f6382088a6d1b142d7b"
+      }
+    ],
+    "blockchainHash": "1b15b1643cc11be480f3a0c0c4c4c1bbdf1e4c1f8e276f6382088a6d1b142d7b"
+  },
+  {
     "complaintId": "CMP-2026-016",
     "intakeReference": "ING-2026-0016",
     "tenantId": "tenant_nmc",
@@ -92,7 +118,7 @@
     "department": "Roads & Infrastructure Department",
     "departmentCode": "DEPT_ROAD",
     "urgency": "High Priority",
-    "status": "New",
+    "status": "Assigned",
     "source": "telegram",
     "citizenPhone": "@amit_dev",
     "telegramChatId": "123456",
@@ -579,7 +605,7 @@
     "title": "Severe road pothole near ABC School",
     "category": "Road Damage",
     "urgency": "High",
-    "status": "Completed",
+    "status": "Under Verification",
     "confidenceScore": 96,
     "completion_history": [],
     "completion_proof": "https://images.unsplash.com/photo-1584467735871-8e85353a8413?w=600",
@@ -594,12 +620,12 @@
       "department": "Roads Dept"
     },
     "completed_at": "2026-09-15T14:07:46.928Z",
-    "verification_status": "VERIFIED",
+    "verification_status": "PENDING",
     "verification_deadline": "2026-09-22T14:07:46.928Z",
     "verification_attempts": 1,
-    "verified_count": 3,
+    "verified_count": 2,
     "rejected_count": 0,
-    "verificationsCount": 3,
+    "verificationsCount": 2,
     "requiredVerifications": 3,
     "pendingVerificationStartedAt": "2026-09-15T14:07:46.928Z",
     "verificationWindowDays": 7,
@@ -640,33 +666,9 @@
           "rejectedCount": 0
         },
         "hash": "6827b9c5683d29305ced5f962659d64582b476163f54f9d715f97de8b4aad4eb"
-      },
-      {
-        "event": "Citizen Verified (3/3)",
-        "actor": "Sunita Devi",
-        "actorRole": "citizen",
-        "timestamp": "2026-09-15T14:09:41.514Z",
-        "details": {
-          "vote": "VERIFIED",
-          "feedback": "Pothole fixed completely. Safe road now.",
-          "verifiedCount": 3,
-          "rejectedCount": 0
-        },
-        "hash": "c4d1b8b6d4fa98bd86abf85fb47b7709f1b19cafc6f53a0a07e160727712b673"
-      },
-      {
-        "event": "Community Verification Complete (3/3) — Complaint Completed",
-        "actor": "System",
-        "actorRole": "system",
-        "timestamp": "2026-09-15T14:09:41.514Z",
-        "details": {
-          "verifiedCount": 3,
-          "rejectedCount": 0
-        },
-        "hash": "ae336a0dae9e745627ccf2cee54194e66fbb7a4036621bbfd1f31be07da2a442"
       }
     ],
-    "blockchainHash": "ae336a0dae9e745627ccf2cee54194e66fbb7a4036621bbfd1f31be07da2a442",
+    "blockchainHash": "6827b9c5683d29305ced5f962659d64582b476163f54f9d715f97de8b4aad4eb",
     "verifications": [
       {
         "citizenName": "Priya Patel",
@@ -678,12 +680,6 @@
         "citizenName": "Amit Verma",
         "comment": "Road is fixed, good work.",
         "verifiedAt": "2026-09-15T14:09:17.307Z",
-        "vote": "VERIFIED"
-      },
-      {
-        "citizenName": "Sunita Devi",
-        "comment": "Pothole fixed completely. Safe road now.",
-        "verifiedAt": "2026-09-15T14:09:41.514Z",
         "vote": "VERIFIED"
       }
     ]

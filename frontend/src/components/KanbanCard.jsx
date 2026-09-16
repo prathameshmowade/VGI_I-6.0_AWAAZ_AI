@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import StatusBadge from './StatusBadge';
-import { ThumbsUp, MapPin, Sparkles, Camera, CheckCircle2, Play, Building2, Bot, AlertTriangle, Send } from 'lucide-react';
+import { ThumbsUp, MapPin, Sparkles, Camera, CheckCircle2, Play, Building2, Bot, AlertTriangle, Send, UserCheck } from 'lucide-react';
 
 const DEPT_BADGES = {
   'Road Damage': { label: 'Roads & Infra', icon: '🏛️', color: 'bg-amber-50 text-amber-900 border-amber-300 dark:bg-amber-950/50 dark:text-amber-200' },
@@ -41,6 +41,11 @@ export default function KanbanCard({ complaint, onSelect, onStatusChange }) {
   const priorityWeight = complaint.priority_weight || 1;
   const verificationStatus = complaint.verification_status || 'NONE';
   const verificationFailures = complaint.verification_failures || 0;
+
+  const handleAssign = (e) => {
+    e.stopPropagation();
+    onStatusChange?.(compId, 'Assigned');
+  };
 
   const handleStartWork = (e) => {
     e.stopPropagation();
@@ -138,7 +143,7 @@ export default function KanbanCard({ complaint, onSelect, onStatusChange }) {
             <span>⏳ Review & Audit Window Active</span>
           </span>
           <span className="text-amber-800 dark:text-amber-400 text-[9.5px] block leading-tight">
-            {complaint.timeRemainingHuman ? `${complaint.timeRemainingHuman} remaining in audit cycle.` : 'Work under administrative review.'}
+            {complaint.timeRemainingHuman ? `${complaint.timeRemainingHuman} remaining in audit cycle.` : 'Work under community citizen review.'}
           </span>
         </div>
       )}
@@ -185,23 +190,41 @@ export default function KanbanCard({ complaint, onSelect, onStatusChange }) {
 
         {onStatusChange && (
           <div className="flex flex-wrap gap-1.5 items-center">
-            {!['In Progress', 'Started', 'Under Verification', 'Pending Verification', 'Completed', 'Resolved', 'Verified & Resolved'].includes(complaint.status) && (
+            {/* New / Accepted / Not Assigned: Show "Assign" Button */}
+            {(complaint.status === 'New' || complaint.status === 'new' || complaint.status === 'Accepted' || complaint.status === 'Not Assigned' || !complaint.status) && (
+              <button
+                type="button"
+                onClick={handleAssign}
+                className="text-[10px] bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 text-indigo-800 dark:text-indigo-200 font-bold px-2.5 py-1 rounded-lg transition border border-indigo-200 dark:border-indigo-700 whitespace-nowrap flex items-center gap-1 shadow-2xs"
+                title="Assign ticket to officer"
+              >
+                <UserCheck className="w-3 h-3 text-indigo-600" />
+                <span>Assign</span>
+              </button>
+            )}
+
+            {/* Assigned: Show "Start Work" Button */}
+            {complaint.status === 'Assigned' && (
               <button
                 type="button"
                 onClick={handleStartWork}
                 className="text-[10px] bg-amber-50 dark:bg-amber-950/60 hover:bg-amber-100 text-amber-800 dark:text-amber-200 font-bold px-2.5 py-1 rounded-lg transition border border-amber-200 dark:border-amber-700 whitespace-nowrap flex items-center gap-1 shadow-2xs"
+                title="Start field work on this assigned grievance"
               >
                 <Play className="w-3 h-3 text-amber-600" />
-                <span>Start</span>
+                <span>Start Work</span>
               </button>
             )}
-            {!['Under Verification', 'Pending Verification', 'Completed', 'Resolved', 'Verified & Resolved'].includes(complaint.status) && (
+
+            {/* In Progress: Show "Mark Solved" Button */}
+            {(complaint.status === 'In Progress' || complaint.status === 'In-Progress' || complaint.status === 'Started') && (
               <button
                 type="button"
                 onClick={handleMarkSolved}
                 className="text-[10px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-2.5 py-1 rounded-lg transition flex items-center gap-1 shadow-2xs whitespace-nowrap"
+                title="Attach resolution proof & move to verification"
               >
-                <Camera className="w-3 h-3" />
+                <Camera className="w-3 h-3 text-white" />
                 <span>Mark Solved</span>
               </button>
             )}

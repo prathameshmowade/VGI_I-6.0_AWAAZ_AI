@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
 import { LanguageContext } from '../context/LanguageContext';
@@ -9,6 +9,19 @@ import {
 } from 'lucide-react';
 
 const VOTE_STORAGE_KEY = 'awaaz_citizen_7day_votes';
+
+export const getCitizenClientId = () => {
+  try {
+    let id = localStorage.getItem('awaaz_citizen_client_id');
+    if (!id) {
+      id = 'CITIZEN-' + Math.random().toString(36).substring(2, 9).toUpperCase();
+      localStorage.setItem('awaaz_citizen_client_id', id);
+    }
+    return id;
+  } catch (e) {
+    return 'CITIZEN-' + Date.now().toString(36);
+  }
+};
 
 export const getStoredVotes = () => {
   try {
@@ -71,6 +84,13 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
+  // Keep local state in sync when parent feed updates
+  useEffect(() => {
+    if (complaint) {
+      setLocalComp(complaint);
+    }
+  }, [complaint]);
+
   if (!localComp) return null;
 
   // Determine current state from backend fields
@@ -90,19 +110,22 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
 
   if (!proofImage && !isUnderVerification && !isCompleted) return null;
 
-  // Determine citizen identity
-  const citizenId = user?.citizenId || user?.email || user?.mobile || user?.name || 'guest';
+  // Determine citizen identity using distinct client device ID for anonymous guests
+  const clientDeviceId = getCitizenClientId();
+  const citizenId = user?.citizenId || user?.email || user?.mobile || (user?.name && user.name !== 'Verified Citizen' ? user.name : clientDeviceId);
   const citizenName = user?.name || 'Verified Citizen';
   const citizenEmail = user?.email || '';
 
+  const genericIdentifiers = ['guest', 'verified citizen', 'citizen', 'anonymous', 'citizen-anonymous', 'local resident', 'user'];
+
+  // Only non-generic identifiers are tracked for duplicate prevention to avoid false locks
   const userIdentifiers = [
     citizenId,
     citizenEmail,
-    citizenName,
     user?.citizenId,
     user?.email,
-    user?.name
-  ].filter(Boolean);
+    clientDeviceId
+  ].filter((id) => id && !genericIdentifiers.includes(String(id).trim().toLowerCase()));
 
   // Check 7-day localStorage vote persistence
   const compId = localComp.complaintId || localComp._id;
@@ -121,7 +144,8 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
     const vName = (v.citizenName || '').trim().toLowerCase();
     return userIdentifiers.some((myId) => {
       const norm = String(myId).trim().toLowerCase();
-      return norm && (norm === vId || norm === vEmail || norm === vName);
+      if (!norm || genericIdentifiers.includes(norm)) return false;
+      return norm === vId || (vEmail && norm === vEmail) || (vName && !genericIdentifiers.includes(vName) && norm === vName);
     });
   });
 
@@ -132,7 +156,8 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
     const vName = (v.citizenName || '').trim().toLowerCase();
     return userIdentifiers.some((myId) => {
       const norm = String(myId).trim().toLowerCase();
-      return norm && (norm === vId || norm === vEmail || norm === vName);
+      if (!norm || genericIdentifiers.includes(norm)) return false;
+      return norm === vId || (vEmail && norm === vEmail) || (vName && !genericIdentifiers.includes(vName) && norm === vName);
     });
   });
 
@@ -181,17 +206,28 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
       if (res.data?.success) {
         const updated = res.data.data;
         storeUserVote(localComp.complaintId || localComp._id, userIdentifiers, voteType);
-        setLocalComp({
+        
+        const newVerifiedCount = updated.verified_count !== undefined
+          ? updated.verified_count
+          : (verifiedCount + (voteType === 'VERIFIED' ? 1 : 0));
+        const newStatus = updated.status || (newVerifiedCount >= requiredCount ? 'Completed' : localComp.status);
+
+        const updatedState = {
           ...localComp,
           ...updated,
+          status: newStatus,
+          verified_count: newVerifiedCount,
           hasVoted: true,
           userVote: voteType,
           canVote: false
-        });
+        };
+
+        setLocalComp(updatedState);
         setSuccessMsg(res.data.message || (isHindi ? 'सत्यापन सफलतापूर्वक दर्ज हुआ। 7-दिन की विंडो में आपका वोट सुरक्षित है।' : 'Verification recorded successfully. Your vote is recorded for this 7-day window.'));
+        
         // Notify parent components
-        onVerified?.(updated);
-        onVerificationUpdate?.(updated);
+        onVerified?.(updatedState);
+        onVerificationUpdate?.(updatedState);
       } else {
         setErrorMsg(res.data?.message || 'Verification failed.');
       }
