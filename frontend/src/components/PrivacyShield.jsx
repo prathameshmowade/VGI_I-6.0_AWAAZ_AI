@@ -7,20 +7,20 @@ export default function PrivacyShield() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/80 rounded-2xl p-3.5 transition-all text-xs">
+    <div className="bg-emerald-50/80 dark:bg-slate-900 border border-emerald-200 dark:border-emerald-500/40 rounded-2xl p-3.5 transition-all text-xs shadow-xs">
       <div className="flex items-center justify-between gap-3 flex-wrap">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shrink-0">
             <ShieldCheck className="w-4 h-4" />
           </div>
           <div>
-            <div className="font-bold text-emerald-900 dark:text-emerald-200 flex items-center gap-1.5">
+            <div className="font-bold text-emerald-950 dark:text-emerald-200 flex items-center gap-1.5">
               <span>{isHindi ? 'आपकी गोपनीयता सुरक्षित है' : 'Your Privacy is Protected'}</span>
-              <span className="text-[10px] font-semibold bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-300 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] font-bold bg-emerald-100 dark:bg-emerald-500/20 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-500/40 px-2 py-0.5 rounded-full">
                 {isHindi ? 'सुरक्षित ✓' : 'Secured ✓'}
               </span>
             </div>
-            <p className="text-[11px] text-emerald-700 dark:text-emerald-400">
+            <p className="text-[11px] text-emerald-800 dark:text-slate-200 font-medium">
               {isHindi
                 ? 'मोबाइल नंबर, व्यक्तिगत पहचान और फोटो में दिखने वाले चेहरे स्वतः सुरक्षित किए जाते हैं।'
                 : 'Phone numbers, personal IDs, and faces in photos are automatically kept confidential.'}
@@ -31,7 +31,7 @@ export default function PrivacyShield() {
         <button
           type="button"
           onClick={() => setExpanded(!expanded)}
-          className="text-[11px] text-emerald-800 dark:text-emerald-300 font-bold hover:text-emerald-950 dark:hover:text-emerald-100 flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40 transition"
+          className="text-[11px] text-emerald-800 dark:text-emerald-300 font-bold hover:text-emerald-950 dark:hover:text-white flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-emerald-100/60 dark:hover:bg-slate-800 transition"
         >
           <span>{expanded ? (isHindi ? 'कम देखें' : 'Hide details') : (isHindi ? 'विवरण देखें' : 'Learn more')}</span>
           {expanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}

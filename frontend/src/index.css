@@ -75,12 +75,110 @@
 }
 
 html, body {
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+  background-color: #f8fafc;
+  color: #0f172a;
   min-height: 100vh;
   line-height: 1.6;
   overflow-x: hidden;
   letter-spacing: -0.01em;
+}
+
+/* Base Dark Mode Root Styling */
+html.dark,
+html.dark body,
+body.dark-theme {
+  background-color: #0b1120 !important;
+  color: #f8fafc !important;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+/* ========================================================
+   HIGH-CONTRAST DARK MODE TEXT & ELEMENT OVERRIDES
+   ======================================================== */
+html.dark .text-slate-500,
+html.dark .text-slate-600 {
+  color: #cbd5e1 !important; /* slate-300: High WCAG AAA contrast */
+}
+
+html.dark .text-slate-700 {
+  color: #e2e8f0 !important; /* slate-200 */
+}
+
+html.dark .text-slate-800,
+html.dark .text-slate-900 {
+  color: #ffffff !important; /* Pure White */
+}
+
+html.dark .text-emerald-700,
+html.dark .text-emerald-800 {
+  color: #a7f3d0 !important; /* emerald-200 */
+}
+
+html.dark .text-emerald-900,
+html.dark .text-emerald-950 {
+  color: #ecfdf5 !important; /* emerald-50 */
+}
+
+html.dark .text-sky-700,
+html.dark .text-sky-800 {
+  color: #bae6fd !important; /* sky-200 */
+}
+
+html.dark .text-sky-900,
+html.dark .text-sky-950 {
+  color: #f0f9ff !important; /* sky-50 */
+}
+
+html.dark .text-blue-700,
+html.dark .text-blue-800 {
+  color: #bfdbfe !important; /* blue-200 */
+}
+
+html.dark .text-blue-900,
+html.dark .text-blue-950 {
+  color: #eff6ff !important; /* blue-50 */
+}
+
+html.dark .text-amber-700,
+html.dark .text-amber-800 {
+  color: #fde68a !important; /* amber-200 */
+}
+
+html.dark .text-amber-900,
+html.dark .text-amber-950 {
+  color: #fffbeb !important; /* amber-50 */
+}
+
+html.dark .text-purple-700,
+html.dark .text-purple-800 {
+  color: #e9d5ff !important; /* purple-200 */
+}
+
+html.dark .text-purple-900,
+html.dark .text-purple-950 {
+  color: #faf5ff !important; /* purple-50 */
+}
+
+/* High Contrast for Form Controls in Dark Mode */
+html.dark input,
+html.dark textarea,
+html.dark select {
+  color: #ffffff !important;
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.dark select option {
+  background-color: #0f172a;
+  color: #ffffff;
 }
 
 /* Custom Figma Rainbow Smooth Scrollbar */

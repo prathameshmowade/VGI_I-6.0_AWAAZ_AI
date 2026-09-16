@@ -182,7 +182,7 @@ export default function VoiceInput({ onTranscript }) {
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800/80 p-1 rounded-2xl border border-slate-200 dark:border-slate-700">
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-2xl border border-slate-200 dark:border-slate-700">
           {LANGUAGE_OPTIONS.map((opt) => (
             <button
               key={opt.code}
@@ -194,7 +194,7 @@ export default function VoiceInput({ onTranscript }) {
               className={`text-xs px-3 py-1.5 rounded-xl font-bold transition flex items-center gap-1.5 ${
                 selectedLang === opt.code
                   ? 'bg-blue-600 text-white shadow-xs scale-[1.02]'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                  : 'text-slate-600 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
               <span>{opt.flag}</span>
@@ -324,7 +324,7 @@ export default function VoiceInput({ onTranscript }) {
 
       {/* 4. Instant Preset Simulations for Testing */}
       <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-        <span className="text-xs font-bold text-slate-700 dark:text-slate-300 block">
+        <span className="text-xs font-bold text-slate-800 dark:text-white block">
           {t('voice_presets')}
         </span>
         <div className="flex flex-wrap gap-2">
@@ -333,9 +333,9 @@ export default function VoiceInput({ onTranscript }) {
               key={idx}
               type="button"
               onClick={() => handleSimulate(preset)}
-              className="text-[11px] bg-slate-50 dark:bg-slate-800/70 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-medium px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 transition flex items-center gap-1.5 active:scale-95"
+              className="text-[11px] bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-800 dark:text-white font-semibold px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-600 transition flex items-center gap-1.5 active:scale-95 shadow-2xs"
             >
-              <Volume2 className="w-3 h-3 text-blue-600 dark:text-blue-400" />
+              <Volume2 className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
               <span>{preset.lang}: "{preset.text.substring(0, 26)}..."</span>
             </button>
           ))}
