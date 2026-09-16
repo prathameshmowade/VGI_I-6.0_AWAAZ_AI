@@ -75,11 +75,11 @@ export default function Navbar() {
 
       {/* Top Header Navbar */}
       <nav className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 sticky top-[3.5px] z-40 px-3 sm:px-4 lg:px-6 py-2.5 shadow-xs transition-colors">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
+        <div className="w-full max-w-[1680px] mx-auto flex justify-between items-center gap-2">
           
           {/* Left Area on Mobile / Desktop */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* 3-Line Hamburger Button (Visible only on mobile/tablet < 1200px) */}
+            {/* 3-Line Hamburger Button (Visible only on mobile/tablet < 1240px) */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(true)}
@@ -100,20 +100,20 @@ export default function Navbar() {
                   <span className="text-blue-600 dark:text-blue-400">awaaz</span>
                   <span className="text-purple-600 dark:text-purple-400 font-black">.ai</span>
                 </span>
-                {/* Slogan visible on sm+ screens */}
-                <span className="hidden sm:block text-[9.5px] font-bold tracking-wide text-slate-500 dark:text-slate-400 mt-0.5 truncate max-w-[140px] md:max-w-none">
+                {/* Slogan visible only on wide screens and properly truncated */}
+                <span className="hidden xl:block text-[9px] font-bold tracking-wide text-slate-500 dark:text-slate-400 mt-0.5 truncate max-w-[130px] 2xl:max-w-[220px]">
                   {t('brand_slogan')}
                 </span>
               </div>
             </Link>
           </div>
 
-          {/* Desktop Navigation Links (>= 1200px) */}
-          <div className="navbar-desktop items-center gap-1 xl:gap-1.5 text-xs font-semibold shrink-0">
+          {/* Desktop Navigation Links (>= 1240px) */}
+          <div className="navbar-desktop items-center gap-1 xl:gap-1.5 text-xs font-semibold shrink-0 flex-nowrap">
             {/* Overview Link */}
             <Link
               to="/overview"
-              className={`px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+              className={`px-2 xl:px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 isActive('/overview') || isActive('/')
                   ? 'bg-blue-50 text-blue-700 font-bold border border-blue-200 dark:bg-blue-950/60 dark:text-blue-200 dark:border-blue-800 shadow-xs'
                   : 'text-slate-700 hover:text-blue-600 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
@@ -127,7 +127,7 @@ export default function Navbar() {
             {(!user || user.role === 'citizen' || user.role === 'resident') && (
               <Link
                 to="/citizen"
-                className={`px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+                className={`px-2 xl:px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
                   isActive('/citizen')
                     ? 'bg-indigo-50 text-indigo-700 font-bold border border-indigo-200 dark:bg-indigo-950/60 dark:text-indigo-200 dark:border-indigo-800 shadow-xs'
                     : 'text-slate-700 hover:text-indigo-600 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
@@ -142,7 +142,7 @@ export default function Navbar() {
             {user && (user.role === 'officer' || user.role === 'admin') && (
               <Link
                 to="/officer"
-                className={`px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+                className={`px-2 xl:px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
                   isActive('/officer')
                     ? 'bg-amber-50 text-amber-800 font-bold border border-amber-200 dark:bg-amber-950/60 dark:text-amber-200 dark:border-amber-800 shadow-xs'
                     : 'text-slate-700 hover:text-amber-600 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
@@ -156,7 +156,7 @@ export default function Navbar() {
             {/* Digital Twin */}
             <Link
               to="/digital-twin"
-              className={`px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+              className={`px-2 xl:px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
                 isActive('/digital-twin')
                   ? 'bg-purple-50 text-purple-700 font-bold border border-purple-200 dark:bg-purple-950/60 dark:text-purple-200 dark:border-purple-800 shadow-xs'
                   : 'text-slate-700 hover:text-purple-600 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
@@ -170,7 +170,7 @@ export default function Navbar() {
             {user && (user.role === 'officer' || user.role === 'admin') && (
               <Link
                 to="/analytics"
-                className={`px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+                className={`px-2 xl:px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
                   isActive('/analytics')
                     ? 'bg-teal-50 text-teal-700 font-bold border border-teal-200 dark:bg-teal-950/60 dark:text-teal-200 dark:border-teal-800 shadow-xs'
                     : 'text-slate-700 hover:text-teal-600 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
@@ -182,19 +182,19 @@ export default function Navbar() {
             )}
 
             {/* Direct Intake Channels Dropdown (SMS & Call) */}
-            <div className="relative" ref={dropdownRef}>
+            <div className="relative shrink-0" ref={dropdownRef}>
               <button
                 type="button"
                 onClick={() => setChannelsDropdownOpen(!channelsDropdownOpen)}
-                className={`px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+                className={`px-2 xl:px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 whitespace-nowrap ${
                   isChannelActive
                     ? 'bg-rose-50 text-rose-700 font-bold border border-rose-200 dark:bg-rose-950/60 dark:text-rose-200 dark:border-rose-800 shadow-xs'
                     : 'text-slate-700 hover:text-rose-600 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
                 }`}
               >
                 <Sparkles className="w-3.5 h-3.5 text-rose-500 shrink-0" />
-                <span>{isHindi ? 'हेल्पलाइन चैनल' : 'Helpline Channels'}</span>
-                <ChevronDown className={`w-3 h-3 transition-transform ${channelsDropdownOpen ? 'rotate-180' : ''}`} />
+                <span>{t('nav_helpline_channels') || (isHindi ? 'हेल्पलाइन' : 'Helplines')}</span>
+                <ChevronDown className={`w-3 h-3 transition-transform shrink-0 ${channelsDropdownOpen ? 'rotate-180' : ''}`} />
               </button>
 
               {channelsDropdownOpen && (
@@ -266,13 +266,13 @@ export default function Navbar() {
             </div>
 
             {/* Right Controls (Language + Theme + User/Login) */}
-            <div className="flex items-center gap-2 pl-2.5 border-l border-slate-200 dark:border-slate-800 ml-1">
+            <div className="flex items-center gap-1.5 xl:gap-2 pl-1.5 xl:pl-2.5 border-l border-slate-200 dark:border-slate-800 ml-1 shrink-0">
               <LanguageToggle />
               <ThemeToggle />
 
               {user ? (
-                <div className="flex items-center gap-1.5">
-                  <div className="bg-indigo-50 dark:bg-indigo-950/50 text-indigo-900 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800 px-2.5 py-1 rounded-xl text-xs font-bold flex items-center gap-1.5 max-w-[140px] truncate" title={user.name}>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <div className="bg-indigo-50 dark:bg-indigo-950/50 text-indigo-900 dark:text-indigo-200 border border-indigo-200 dark:border-indigo-800 px-2 xl:px-2.5 py-1 rounded-xl text-xs font-bold flex items-center gap-1.5 max-w-[120px] xl:max-w-[140px] truncate" title={user.name}>
                     <User className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
                     <span className="truncate">{user.name.split(' ')[0]}</span>
                     <span className="text-[9px] bg-indigo-200 dark:bg-indigo-800 text-indigo-950 dark:text-indigo-100 px-1 py-0.2 rounded font-mono uppercase">
@@ -282,7 +282,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={logout}
-                    className="p-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-xl transition"
+                    className="p-1.5 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/50 rounded-xl transition shrink-0"
                     title={t('auth_logout')}
                   >
                     <LogOut className="w-3.5 h-3.5" />
@@ -291,17 +291,17 @@ export default function Navbar() {
               ) : (
                 <Link
                   to="/login"
-                  className="btn-primary text-xs py-1.5 px-3.5"
+                  className="btn-primary text-xs py-1.5 px-3.5 whitespace-nowrap shrink-0"
                 >
-                  <LogIn className="w-3.5 h-3.5" />
+                  <LogIn className="w-3.5 h-3.5 shrink-0" />
                   <span>{t('auth_signin')}</span>
                 </Link>
               )}
             </div>
           </div>
 
-          {/* Right Controls for Mobile Screen (< 1200px) */}
-          <div className="flex items-center gap-1.5 navbar-mobile-toggle">
+          {/* Right Controls for Mobile Screen (< 1240px) */}
+          <div className="flex items-center gap-1.5 navbar-mobile-toggle shrink-0">
             <LanguageToggle />
             <ThemeToggle />
 

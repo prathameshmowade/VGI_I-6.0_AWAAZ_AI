@@ -14,13 +14,13 @@ export default function LanguageToggle() {
   const { language, setSpecificLanguage } = useContext(LanguageContext);
 
   return (
-    <div className="flex items-center bg-emerald-50/90 dark:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-700 p-0.5 rounded-xl shadow-xs shrink-0 flex-wrap gap-0.5">
+    <div className="flex items-center bg-emerald-50/90 dark:bg-emerald-900/60 border border-emerald-200 dark:border-emerald-700 p-0.5 rounded-xl shadow-xs shrink-0 flex-nowrap gap-0.5">
       {LANG_OPTIONS.map((opt) => (
         <button
           key={opt.code}
           type="button"
           onClick={() => setSpecificLanguage(opt.code)}
-          className={`text-[10px] px-1.5 py-1 rounded-lg font-bold transition-all flex items-center gap-0.5 ${
+          className={`text-[10px] px-1.5 py-0.5 rounded-lg font-bold transition-all flex items-center gap-0.5 shrink-0 whitespace-nowrap ${
             language === opt.code
               ? 'bg-emerald-600 text-white shadow-xs'
               : 'text-emerald-800 hover:text-emerald-950 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-800'

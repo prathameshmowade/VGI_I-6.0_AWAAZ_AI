@@ -199,7 +199,7 @@ html.dark select option {
 }
 
 /* Responsive Navbar Media Query Rules */
-@media (min-width: 1200px) {
+@media (min-width: 1240px) {
   .navbar-mobile-toggle {
     display: none !important;
   }
@@ -208,7 +208,7 @@ html.dark select option {
   }
 }
 
-@media (max-width: 1199px) {
+@media (max-width: 1239px) {
   .navbar-desktop {
     display: none !important;
   }

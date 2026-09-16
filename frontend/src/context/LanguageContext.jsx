@@ -17,6 +17,7 @@ const TRANSLATIONS = {
     nav_login: 'Sign In',
     nav_logout: 'Logout',
     nav_track: 'Track Status',
+    nav_helpline_channels: 'Helplines',
     auth_signin: 'Sign In',
     auth_logout: 'Logout',
     
@@ -208,6 +209,7 @@ const TRANSLATIONS = {
     nav_login: 'साइन इन',
     nav_logout: 'लॉगआउट',
     nav_track: 'स्थिति ट्रैक करें',
+    nav_helpline_channels: 'हेल्पलाइन',
     auth_signin: 'साइन इन',
     auth_logout: 'लॉगआउट',
     
@@ -399,6 +401,7 @@ const TRANSLATIONS = {
     nav_login: 'साइन इन',
     nav_logout: 'लॉगआउट',
     nav_track: 'स्थिती ट्रॅक करा',
+    nav_helpline_channels: 'हेल्पलाइन',
     auth_signin: 'साइन इन',
     auth_logout: 'लॉगआउट',
 
@@ -590,6 +593,7 @@ const TRANSLATIONS = {
     nav_login: 'உள்நுழைவு',
     nav_logout: 'வெளியேறு',
     nav_track: 'நிலை கண்காணிப்பு',
+    nav_helpline_channels: 'ஹெல்ப்லைன்',
     auth_signin: 'உள்நுழைவு',
     auth_logout: 'வெளியேறு',
 
@@ -781,6 +785,7 @@ const TRANSLATIONS = {
     nav_login: 'సైన్ ఇన్',
     nav_logout: 'లాగ్‌అవుట్',
     nav_track: 'స్థితి ట్రాక్ చేయండి',
+    nav_helpline_channels: 'హెల్ప్‌లైన్',
     auth_signin: 'సైన్ ఇన్',
     auth_logout: 'లాగ్‌అవుట్',
 
