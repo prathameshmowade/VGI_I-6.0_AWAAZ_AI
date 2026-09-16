@@ -75,7 +75,7 @@ export default function LandingPage() {
   ];
 
   const RESOLUTION_WORKFLOW = [
-    { step: '01', color: 'bg-blue-100 text-blue-800 border-blue-200', title: isHindi ? 'नागरिक शिकायत प्रविष्टि' : 'Resident Intake', desc: isHindi ? 'हिंदी, मराठी और अंग्रेजी में आवाज़ या टेक्स्ट से तुरंत ऑटो जीपीएस स्थान के साथ प्रविष्टि।' : 'Voice or text entry in EN/HI/MR with auto GPS map pinpointing.' },
+    { step: '01', color: 'bg-blue-100 text-blue-800 border-blue-200', title: isHindi ? 'नागरिक शिकायत प्रविष्टि' : 'Resident Intake', desc: isHindi ? 'हिंदी, मराठी, तमिल, तेलुगु और अंग्रेजी में आवाज़ या टेक्स्ट से तुरंत ऑटो जीपीएस स्थान के साथ प्रविष्टि।' : 'Voice or text entry in EN/HI/MR/TA/TE with auto GPS map pinpointing.' },
     { step: '02', color: 'bg-indigo-100 text-indigo-800 border-indigo-200', title: isHindi ? 'एक्सएआई बहु-श्रेणी ट्राइएज' : 'XAI Multi-Class Triage', desc: isHindi ? 'सड़क, जल, सफाई, बिजली में 96% एआई सटीकता के साथ स्वतः वर्गीकरण।' : 'Categorized into Road, Water, Sanitation, Electrical with 96% AI confidence.' },
     { step: '03', color: 'bg-purple-100 text-purple-800 border-purple-200', title: isHindi ? 'सामुदायिक क्लस्टरिंग व जनसमर्थन' : 'Community Weighting', desc: isHindi ? 'आसपास के प्रभावित नागरिकों द्वारा स्वतः अपवोट और समूह निर्माण।' : 'Auto upvoted and clustered by nearby affected citizens.' },
     { step: '04', color: 'bg-cyan-100 text-cyan-800 border-cyan-200', title: isHindi ? 'स्वायत्त वर्क ऑर्डर प्रेषण' : 'Agentic Work Order', desc: isHindi ? '60 सेकंड में अधिकृत नगर निगम ठेकेदारों को स्वतः वर्क ऑर्डर जारी।' : '60s autonomous dispatch to city municipal contractors.' },

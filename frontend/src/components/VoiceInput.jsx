@@ -4,21 +4,28 @@ import { Mic, MicOff, Sparkles, CheckCircle2, RotateCcw, Volume2, Globe2, Edit3 
 import { enhanceSpeechTranscript, synthesizeCivicGrievance } from '../utils/speechEnhancer';
 
 const LANGUAGE_OPTIONS = [
-  { code: 'hi-IN', label: 'हिन्दी / Hinglish', flag: '🇮🇳' },
-  { code: 'en-IN', label: 'English (India)', flag: '🌐' },
-  { code: 'mr-IN', label: 'मराठी (Marathi)', flag: '🏛️' }
+  { code: 'hi-IN', label: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'en-IN', label: 'English', flag: '🌐' },
+  { code: 'mr-IN', label: 'मराठी', flag: '🏛️' },
+  { code: 'ta-IN', label: 'தமிழ்', flag: '🎭' },
+  { code: 'te-IN', label: 'తెలుగు', flag: '🌾' }
 ];
 
 const PRESET_TRANSCRIPTS = [
   { lang: 'EN', code: 'en-IN', text: "Severe road pothole near ABC School in Laxmi Nagar causing traffic accidents." },
   { lang: 'HI', code: 'hi-IN', text: "वार्ड 5 में मार्केट रोड के पास सीवेज पाइपलाइन लीक हो रही है और पानी भर गया है।" },
-  { lang: 'MR', code: 'mr-IN', text: "वार्ड 7 मधील सार्वजनिक उद्यानाजवळ कचरा साचला आहे आणि पथदिवे बंद आहेत." }
+  { lang: 'MR', code: 'mr-IN', text: "वार्ड 7 मधील सार्वजनिक उद्यानाजवळ कचरा साचला आहे आणि पथदिवे बंद आहेत." },
+  { lang: 'TA', code: 'ta-IN', text: "வார்டு 3 இல் முக்கிய சாலையில் பெரிய குழி உள்ளது, வாகனங்கள் பாதிக்கப்படுகின்றன." },
+  { lang: 'TE', code: 'te-IN', text: "వార్డు 8 లో ప్రధాన రహదారిలో పెద్ద గొయ్యి ఉంది, వాహనాలకు ప్రమాదకరం." }
 ];
 
 export default function VoiceInput({ onTranscript }) {
-  const { t, isHindi } = useContext(LanguageContext);
+  const { t, isHindi, language } = useContext(LanguageContext);
   const [listening, setListening] = useState(false);
-  const [selectedLang, setSelectedLang] = useState(isHindi ? 'hi-IN' : 'en-IN');
+  const [selectedLang, setSelectedLang] = useState(() => {
+    const langMap = { en: 'en-IN', hi: 'hi-IN', mr: 'mr-IN', ta: 'ta-IN', te: 'te-IN' };
+    return langMap[language] || 'en-IN';
+  });
   const [finalTranscript, setFinalTranscript] = useState('');
   const [interimTranscript, setInterimTranscript] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -30,9 +37,10 @@ export default function VoiceInput({ onTranscript }) {
   // Sync default language with context toggle if user hasn't explicitly customized it
   useEffect(() => {
     if (!listening) {
-      setSelectedLang(isHindi ? 'hi-IN' : 'en-IN');
+      const langMap = { en: 'en-IN', hi: 'hi-IN', mr: 'mr-IN', ta: 'ta-IN', te: 'te-IN' };
+      setSelectedLang(langMap[language] || 'en-IN');
     }
-  }, [isHindi]);
+  }, [language]);
 
   // Clean up recognition instance on unmount
   useEffect(() => {
@@ -178,7 +186,7 @@ export default function VoiceInput({ onTranscript }) {
         <div className="flex items-center gap-2">
           <Globe2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
-            {isHindi ? 'भाषा चुनें:' : 'Language:'}
+            {t('lang_select_label')}
           </span>
         </div>
 
@@ -235,7 +243,7 @@ export default function VoiceInput({ onTranscript }) {
               title="Clear transcript"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>{isHindi ? 'हटाएं' : 'Clear'}</span>
+              <span>{t('lang_clear')}</span>
             </button>
           )}
         </div>
@@ -251,7 +259,7 @@ export default function VoiceInput({ onTranscript }) {
               <span className="w-1 h-4 bg-red-500 rounded-full animate-pulse delay-100"></span>
             </div>
             <span className="text-xs font-bold text-red-700 dark:text-red-400 ml-1">
-              {isHindi ? 'सुन रहे हैं... स्पष्ट बोलें' : 'Listening... Speak clearly'}
+              {t('lang_listening')}
             </span>
           </div>
         )}
@@ -264,7 +272,7 @@ export default function VoiceInput({ onTranscript }) {
             <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>
-                {isHindi ? 'पहचाना गया विवरण:' : 'Spoken Description:'}
+                {t('lang_spoken_desc')}
               </span>
             </span>
 
@@ -276,7 +284,7 @@ export default function VoiceInput({ onTranscript }) {
                 title="Automatically format punctuation and text"
               >
                 <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                <span>{isHindi ? 'सुधारें' : 'Clean Text'}</span>
+                <span>{t('lang_clean')}</span>
               </button>
 
               <button
@@ -285,7 +293,7 @@ export default function VoiceInput({ onTranscript }) {
                 className="text-[11px] font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 transition flex items-center gap-1"
               >
                 <Edit3 className="w-3.5 h-3.5" />
-                <span>{isEditing ? (isHindi ? 'सम्पन्न' : 'Done') : (isHindi ? 'संपादित करें' : 'Edit')}</span>
+                <span>{isEditing ? t('lang_done') : t('lang_edit')}</span>
               </button>
             </div>
           </div>
@@ -311,7 +319,7 @@ export default function VoiceInput({ onTranscript }) {
 
           <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
             <span>
-              {isHindi ? '✓ यह विवरण नीचे दिए गए फॉर्म में स्वतः जुड़ गया है' : '✓ Automatically added to your complaint form below'}
+              {t('lang_auto_added')}
             </span>
             {enhancedCount > 0 && (
               <span className="text-emerald-600 dark:text-emerald-400 font-bold">

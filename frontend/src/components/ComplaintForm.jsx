@@ -4,14 +4,14 @@ import { FileEdit, Sparkles, Send, MapPin, Tag, BarChart2, Navigation, ShieldChe
 import { detectPII, redactPII } from '../utils/piiShield';
 
 export default function ComplaintForm({ initialDescription = '', initialLocation = '', onSubmit, loading = false }) {
-  const { t, isHindi } = useContext(LanguageContext);
+  const { t, isHindi, language } = useContext(LanguageContext);
   const [form, setForm] = useState({
     title: '',
     description: initialDescription,
     category: 'Road Damage',
     customCategory: '',
     location: initialLocation || 'Vijay Nagar, Indore',
-    language: isHindi ? 'hi' : 'en'
+    language: language || 'en'
   });
 
   const [detectingGps, setDetectingGps] = useState(false);

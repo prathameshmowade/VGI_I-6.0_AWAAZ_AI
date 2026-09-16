@@ -5,7 +5,6 @@ import { LanguageContext } from '../context/LanguageContext';
 import { AuthContext } from '../context/AuthContext';
 import ComplaintForm from '../components/ComplaintForm';
 import VoiceInput from '../components/VoiceInput';
-import GeoTagCamera from '../components/GeoTagCamera';
 import LocationPicker from '../components/LocationPicker';
 import PrivacyShield from '../components/PrivacyShield';
 import TelegramBotModal from '../components/TelegramBotModal';
@@ -18,7 +17,6 @@ import {
   CheckCircle2,
   PlusCircle,
   MapPin,
-  Camera,
   Sparkles,
   Shield,
   Search,
@@ -40,7 +38,6 @@ export default function CitizenPortal() {
   const [submitted, setSubmitted] = useState(null);
   const [voiceText, setVoiceText] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('Vijay Nagar, Indore');
-  const [capturedPhoto, setCapturedPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showResponsibility, setShowResponsibility] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
@@ -117,7 +114,7 @@ export default function CitizenPortal() {
       description: safeDesc,
       category: formData.category || 'Road Damage',
       location: formData.location || selectedLocation || 'Vijay Nagar, Indore',
-      evidencePhoto: capturedPhoto || 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=700&auto=format&fit=crop&q=80',
+      evidencePhoto: 'https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?w=700&auto=format&fit=crop&q=80',
       urgency: 'High Priority',
       status: 'New',
       citizenId,
@@ -407,29 +404,17 @@ export default function CitizenPortal() {
                 <VoiceInput onTranscript={(text) => setVoiceText(text)} />
               </div>
 
-              {/* Section 2: Location Pinpoint & Live Geo-Tag Camera */}
+              {/* Section 2: Location Pinpoint */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
                   <span className="w-7 h-7 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 font-black text-xs flex items-center justify-center border border-indigo-200 dark:border-indigo-800 shadow-2xs">
                     2
                   </span>
-                  <h2 className="text-lg font-black text-slate-900 dark:text-white">{t('citizen_loc_step')}</h2>
+                  <h2 className="text-lg font-black text-slate-900 dark:text-white">{isHindi ? '2. समस्या का स्थान' : '2. Problem Location'}</h2>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Google Maps Geolocation */}
-                  <LocationPicker onSelect={(loc) => setSelectedLocation(loc)} />
-
-                  {/* Camera & Evidence Attachment */}
-                  <GeoTagCamera
-                    onCapture={(anonymizedImg, originalImg) => {
-                      setCapturedPhoto(anonymizedImg || originalImg);
-                    }}
-                    onLocationDetected={(detectedLoc) => {
-                      if (detectedLoc) setSelectedLocation(detectedLoc);
-                    }}
-                  />
-                </div>
+                {/* Google Maps Geolocation */}
+                <LocationPicker onSelect={(loc) => setSelectedLocation(loc)} />
               </div>
 
               {/* Section 3: Grievance Form Details & Submit */}

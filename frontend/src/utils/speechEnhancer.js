@@ -61,7 +61,7 @@ const FILLER_WORDS = /\b(uh|um|er|ah|like you know|basically|you know|arre|haan|
 /**
  * Enhances and normalizes raw speech recognition text.
  * @param {string} rawText - The raw transcript from Web Speech API
- * @param {string} language - Locale code ('en-IN', 'hi-IN', 'mr-IN')
+ * @param {string} language - Locale code ('en-IN', 'hi-IN', 'mr-IN', 'ta-IN', 'te-IN')
  * @returns {string} - Cleaned, punctuated, phonetically corrected text
  */
 export function enhanceSpeechTranscript(rawText, language = 'en-IN') {
@@ -82,7 +82,7 @@ export function enhanceSpeechTranscript(rawText, language = 'en-IN') {
 
   // 4. Clean up spaces around punctuation
   text = text.replace(/\s+([,.:;?!।])/g, '$1');
-  text = text.replace(/([,.:;?!।])([A-Za-z0-9\u0900-\u097F])/g, '$1 $2');
+  text = text.replace(/([,.:;?!।])([A-Za-z0-9\u0900-\u097F\u0B80-\u0BFF\u0C00-\u0C7F])/g, '$1 $2');
 
   // 5. Ensure first letter is capitalized
   if (text.length > 0) {
@@ -91,7 +91,8 @@ export function enhanceSpeechTranscript(rawText, language = 'en-IN') {
 
   // 6. Append sentence termination if missing
   if (text.length > 8 && !/[.!?।]$/.test(text)) {
-    text += language.startsWith('hi') || language.startsWith('mr') ? '।' : '.';
+    const useDevanagariStop = language.startsWith('hi') || language.startsWith('mr') || language.startsWith('ta') || language.startsWith('te');
+    text += useDevanagariStop ? '।' : '.';
   }
 
   return text.trim();

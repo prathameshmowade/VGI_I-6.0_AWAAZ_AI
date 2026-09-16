@@ -121,7 +121,7 @@ export default function CallComplaintPage() {
       <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 p-5 rounded-2xl shadow-xl space-y-3">
         <div className="flex flex-wrap gap-4 text-white text-xs">
           {[
-            { icon: <Globe className="w-4 h-4" />, text: isHindi ? '3 भाषाएं (EN/HI/MR)' : '3 Languages (EN/HI/MR)' },
+            { icon: <Globe className="w-4 h-4" />, text: isHindi ? '5 भाषाएं (EN/HI/MR/TA/TE)' : '5 Languages (EN/HI/MR/TA/TE)' },
             { icon: <Radio className="w-4 h-4" />, text: isHindi ? 'वॉयस ट्रांसक्रिप्शन' : 'Voice Transcription' },
             { icon: <Sparkles className="w-4 h-4" />, text: isHindi ? 'AI ऑटो-वर्गीकरण' : 'AI Auto-Classification' },
             { icon: <ShieldCheck className="w-4 h-4" />, text: isHindi ? 'SHA-256 ऑडिट' : 'SHA-256 Audit Trail' }
