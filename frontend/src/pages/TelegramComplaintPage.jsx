@@ -88,14 +88,27 @@ export default function TelegramComplaintPage() {
             </p>
           </div>
 
-          <div className="bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 px-3 py-2 rounded-2xl flex items-center gap-2 shrink-0">
-            <Radio className="w-3.5 h-3.5 text-emerald-500 animate-pulse" />
-            <div className="text-left leading-none">
-              <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Bot Status</span>
-              <span className="text-xs font-bold text-sky-900 dark:text-sky-200">
-                {botInfo?.configured ? '🟢 Live Telegram API' : '⚡ Webhook & Simulator Ready'}
-              </span>
+          <div className="flex items-center gap-3 shrink-0 flex-wrap">
+            <div className="bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 px-3 py-2 rounded-2xl flex items-center gap-2">
+              <Radio className="w-3.5 h-3.5 text-emerald-500 animate-pulse" />
+              <div className="text-left leading-none">
+                <span className="text-[10px] text-slate-500 dark:text-slate-400 block">Bot Status</span>
+                <span className="text-xs font-bold text-sky-900 dark:text-sky-200">
+                  {botInfo?.configured ? '🟢 Live Telegram API' : '⚡ Webhook & Simulator Ready'}
+                </span>
+              </div>
             </div>
+
+            <a
+              href="https://t.me/awaaz_ai_civic_bot"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-[#2AABEE] hover:bg-sky-600 text-white font-extrabold text-xs px-4 py-2.5 rounded-2xl shadow-md hover:shadow-lg transition flex items-center gap-1.5 active:scale-95"
+            >
+              <Send className="w-3.5 h-3.5" />
+              <span>Open @awaaz_ai_civic_bot</span>
+              <ExternalLink className="w-3 h-3" />
+            </a>
           </div>
         </div>
       </div>
