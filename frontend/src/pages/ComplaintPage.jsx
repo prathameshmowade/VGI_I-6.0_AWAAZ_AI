@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import TrackingTimeline from '../components/TrackingTimeline';
 import XAIPanel from '../components/XAIPanel';
@@ -48,6 +49,20 @@ export default function ComplaintPage() {
   const [upvotes, setUpvotes] = useState(complaint.upvotes);
   const [hasUpvoted, setHasUpvoted] = useState(false);
   const [showResponsibility, setShowResponsibility] = useState(false);
+
+  useEffect(() => {
+    if (!id) return;
+    axios.get(`/api/complaints/${id}`)
+      .then((res) => {
+        if (res.data?.data) {
+          setComplaint(res.data.data);
+          setUpvotes(res.data.data.upvotes || 0);
+        }
+      })
+      .catch((err) => {
+        console.warn('Could not load complaint from server, using sample fallback:', err);
+      });
+  }, [id]);
 
   const handleEndorse = () => {
     if (!hasUpvoted) {

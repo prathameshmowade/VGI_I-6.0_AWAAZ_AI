@@ -47,13 +47,16 @@ const saveDatabase = (complaints) => {
 
 const getComplaints = async (req, res) => {
   const tenantId = req.tenantId || req.headers['x-tenant-id'] || 'tenant_nmc';
-  const { h3Cell, status } = req.query;
+  const { h3Cell, status, citizenEmail, citizenPhone, citizenId } = req.query;
 
   try {
     if (mongoose.connection.readyState === 1) {
       const filter = { tenantId };
       if (h3Cell) filter.$or = [{ h3IndexRes8: h3Cell }, { h3IndexRes9: h3Cell }];
       if (status) filter.status = status;
+      if (citizenEmail) filter.citizenEmail = citizenEmail;
+      if (citizenPhone) filter.citizenPhone = citizenPhone;
+      if (citizenId) filter.citizenId = citizenId;
 
       const dbComplaints = await Complaint.find(filter).sort({ priority_weight: -1, createdAt: -1 });
       if (dbComplaints && dbComplaints.length > 0) {
@@ -72,6 +75,14 @@ const getComplaints = async (req, res) => {
   }
   if (status) {
     store = store.filter((c) => c.status === status);
+  }
+  if (citizenEmail || citizenPhone || citizenId) {
+    store = store.filter((c) => {
+      if (citizenEmail && c.citizenEmail && c.citizenEmail.toLowerCase() === citizenEmail.toLowerCase()) return true;
+      if (citizenPhone && c.citizenPhone && c.citizenPhone.includes(citizenPhone)) return true;
+      if (citizenId && c.citizenId === citizenId) return true;
+      return false;
+    });
   }
 
   // Sort by priority_weight descending so failed-verification complaints appear first
@@ -263,6 +274,10 @@ const createComplaint = async (req, res) => {
       department: aiTriage.department,
       departmentCode: aiTriage.departmentCode,
       location: locationStr,
+      citizenId: req.body.citizenId || null,
+      citizenEmail: req.body.citizenEmail || null,
+      citizenName: req.body.citizenName || null,
+      citizenPhone: req.body.citizenPhone || req.body.mobile || null,
       jurisdiction: {
         ward: responsibility.jurisdiction.ward,
         zone: responsibility.jurisdiction.zone,
