@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider, AuthContext } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
@@ -36,6 +36,36 @@ function RootRoute() {
   return <Navigate to={user.role === 'officer' || user.role === 'admin' ? '/officer' : '/citizen'} replace />;
 }
 
+function RouteView() {
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [location.pathname]);
+
+  return (
+    <ErrorBoundary key={location.pathname}>
+      <Routes>
+        {/* Default root redirects to /login if unauthenticated, or dashboard if logged in */}
+        <Route path="/" element={<RootRoute />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/overview" element={<ProtectedRoute><LandingPage /></ProtectedRoute>} />
+        <Route path="/citizen" element={<ProtectedRoute><CitizenPortal /></ProtectedRoute>} />
+        <Route path="/officer" element={<ProtectedRoute officerOnly><OfficerDashboard /></ProtectedRoute>} />
+        <Route path="/analytics" element={<ProtectedRoute officerOnly><AnalyticsPage /></ProtectedRoute>} />
+        <Route path="/digital-twin" element={<ProtectedRoute><DigitalTwinPage /></ProtectedRoute>} />
+        <Route path="/track" element={<ProtectedRoute><TrackComplaint /></ProtectedRoute>} />
+        <Route path="/complaint/:id" element={<ProtectedRoute><ComplaintPage /></ProtectedRoute>} />
+        <Route path="/sms-complaint" element={<ProtectedRoute><SmsComplaintPage /></ProtectedRoute>} />
+        <Route path="/call-complaint" element={<ProtectedRoute><CallComplaintPage /></ProtectedRoute>} />
+        <Route path="/telegram-complaint" element={<ProtectedRoute><TelegramComplaintPage /></ProtectedRoute>} />
+        {/* Catch-all fallback */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </ErrorBoundary>
+  );
+}
+
 function App() {
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '1081234567890-awaazai.apps.googleusercontent.com';
 
@@ -50,25 +80,7 @@ function App() {
             <div className="min-h-screen flex flex-col justify-between relative z-10">
               <div>
                 <Navbar />
-                <ErrorBoundary>
-                  <Routes>
-                    {/* Default root redirects to /login if unauthenticated, or dashboard if logged in */}
-                    <Route path="/" element={<RootRoute />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/overview" element={<ProtectedRoute><LandingPage /></ProtectedRoute>} />
-                    <Route path="/citizen" element={<ProtectedRoute><CitizenPortal /></ProtectedRoute>} />
-                    <Route path="/officer" element={<ProtectedRoute officerOnly><OfficerDashboard /></ProtectedRoute>} />
-                    <Route path="/analytics" element={<ProtectedRoute officerOnly><AnalyticsPage /></ProtectedRoute>} />
-                    <Route path="/digital-twin" element={<ProtectedRoute><DigitalTwinPage /></ProtectedRoute>} />
-                    <Route path="/track" element={<ProtectedRoute><TrackComplaint /></ProtectedRoute>} />
-                    <Route path="/complaint/:id" element={<ProtectedRoute><ComplaintPage /></ProtectedRoute>} />
-                    <Route path="/sms-complaint" element={<ProtectedRoute><SmsComplaintPage /></ProtectedRoute>} />
-                    <Route path="/call-complaint" element={<ProtectedRoute><CallComplaintPage /></ProtectedRoute>} />
-                    <Route path="/telegram-complaint" element={<ProtectedRoute><TelegramComplaintPage /></ProtectedRoute>} />
-                    {/* Catch-all fallback */}
-                    <Route path="*" element={<Navigate to="/login" replace />} />
-                  </Routes>
-                </ErrorBoundary>
+                <RouteView />
               </div>
               <Footer />
             </div>
