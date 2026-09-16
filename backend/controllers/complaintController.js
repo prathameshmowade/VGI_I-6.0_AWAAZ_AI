@@ -12,38 +12,8 @@ const logger = require('../infrastructure/observability/logger');
 
 const { generateUniqueComplaintId, generateUniqueIntakeId } = require('../utils/idGenerator');
 
-const dataFilePath = path.join(__dirname, '../../data/sample_complaints.json');
-
-// In-memory cache to guarantee persistence across requests and prevent ephemeral filesystem loss
-let inMemoryStore = null;
-
-// Helper to load persistent database file
-const loadDatabase = () => {
-  if (inMemoryStore && inMemoryStore.length > 0) {
-    return inMemoryStore;
-  }
-  try {
-    if (fs.existsSync(dataFilePath)) {
-      const data = fs.readFileSync(dataFilePath, 'utf8');
-      inMemoryStore = JSON.parse(data);
-      return inMemoryStore;
-    }
-  } catch (err) {
-    console.error('Error reading database file:', err);
-  }
-  inMemoryStore = inMemoryStore || [];
-  return inMemoryStore;
-};
-
-// Helper to save persistent database file
-const saveDatabase = (complaints) => {
-  inMemoryStore = complaints;
-  try {
-    fs.writeFileSync(dataFilePath, JSON.stringify(complaints, null, 2), 'utf8');
-  } catch (err) {
-    console.error('Error saving to database file:', err);
-  }
-};
+// Centralized Database Store — single source of truth
+const { loadComplaints: loadDatabase, saveComplaints: saveDatabase, syncComplaintToMongo } = require('../utils/databaseStore');
 
 const getComplaints = async (req, res) => {
   const tenantId = req.tenantId || req.headers['x-tenant-id'] || 'tenant_nmc';

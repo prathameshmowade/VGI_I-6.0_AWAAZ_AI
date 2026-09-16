@@ -16,49 +16,13 @@ const crypto = require('crypto');
 const VERIFICATION_WINDOW_MS = parseInt(process.env.VERIFICATION_WINDOW_HOURS || '168', 10) * 60 * 60 * 1000; // default 168h = 7 days
 const REQUIRED_VERIFICATIONS = 3;
 
-// Persistent JSON storage paths
-const complaintsFilePath = path.join(__dirname, '../../data/sample_complaints.json');
-const verificationsFilePath = path.join(__dirname, '../../data/verifications.json');
-
-// ─── JSON File Helpers ───────────────────────────────────────────────────────
-
-const loadComplaints = () => {
-  try {
-    if (fs.existsSync(complaintsFilePath)) {
-      return JSON.parse(fs.readFileSync(complaintsFilePath, 'utf8'));
-    }
-  } catch (err) {
-    console.error('[VerificationEngine] Error reading complaints file:', err.message);
-  }
-  return [];
-};
-
-const saveComplaints = (complaints) => {
-  try {
-    fs.writeFileSync(complaintsFilePath, JSON.stringify(complaints, null, 2), 'utf8');
-  } catch (err) {
-    console.error('[VerificationEngine] Error saving complaints file:', err.message);
-  }
-};
-
-const loadVerifications = () => {
-  try {
-    if (fs.existsSync(verificationsFilePath)) {
-      return JSON.parse(fs.readFileSync(verificationsFilePath, 'utf8'));
-    }
-  } catch (err) {
-    console.error('[VerificationEngine] Error reading verifications file:', err.message);
-  }
-  return [];
-};
-
-const saveVerifications = (verifications) => {
-  try {
-    fs.writeFileSync(verificationsFilePath, JSON.stringify(verifications, null, 2), 'utf8');
-  } catch (err) {
-    console.error('[VerificationEngine] Error saving verifications file:', err.message);
-  }
-};
+// Centralized Database Store — single source of truth
+const {
+  loadComplaints,
+  saveComplaints,
+  loadVerifications,
+  saveVerifications
+} = require('../utils/databaseStore');
 
 // ─── SHA-256 Audit Hashing ───────────────────────────────────────────────────
 

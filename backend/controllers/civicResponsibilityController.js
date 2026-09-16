@@ -11,7 +11,9 @@ const {
 
 const fs = require('fs');
 const path = require('path');
-const dataFilePath = path.join(__dirname, '../../data/sample_complaints.json');
+
+// Centralized Database Store — single source of truth
+const { loadComplaints } = require('../utils/databaseStore');
 
 /**
  * GET /api/civic/jurisdiction?lat=...&lng=...
@@ -88,13 +90,11 @@ const getResponsibleContractor = (req, res) => {
 const getComplaintResponsibility = (req, res) => {
   const { id } = req.params;
 
-  // Load complaint from JSON store
+  // Load complaint from centralized store
   let complaint = null;
   try {
-    if (fs.existsSync(dataFilePath)) {
-      const data = JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
-      complaint = data.find(c => c.complaintId === id);
-    }
+    const data = loadComplaints();
+    complaint = data.find(c => c.complaintId === id);
   } catch (err) {}
 
   if (!complaint) {

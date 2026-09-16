@@ -5,24 +5,8 @@ const { sendConfirmationSms } = require('../services/smsService');
 const { recordAuditEvent } = require('../services/blockchainService');
 const { generateUniqueComplaintId } = require('../utils/idGenerator');
 
-const dataFilePath = path.join(__dirname, '../../data/sample_complaints.json');
-
-const loadDatabase = () => {
-  try {
-    if (fs.existsSync(dataFilePath)) {
-      return JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
-    }
-  } catch (err) {}
-  return [];
-};
-
-const saveDatabase = (complaints) => {
-  try {
-    fs.writeFileSync(dataFilePath, JSON.stringify(complaints, null, 2), 'utf8');
-  } catch (err) {
-    console.error('Error saving to database file:', err);
-  }
-};
+// Centralized Database Store — single source of truth
+const { loadComplaints: loadDatabase, saveComplaints: saveDatabase } = require('../utils/databaseStore');
 
 /**
  * Handle incoming phone call from Twilio webhook.

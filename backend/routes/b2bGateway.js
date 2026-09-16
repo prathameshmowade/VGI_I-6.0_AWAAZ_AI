@@ -13,16 +13,8 @@ const Complaint = require('../models/Complaint');
 const fs = require('fs');
 const path = require('path');
 
-const dataFilePath = path.join(__dirname, '../../data/sample_complaints.json');
-
-function loadComplaints() {
-  try {
-    if (fs.existsSync(dataFilePath)) {
-      return JSON.parse(fs.readFileSync(dataFilePath, 'utf8'));
-    }
-  } catch (e) {}
-  return [];
-}
+// Centralized Database Store — single source of truth
+const { loadComplaints } = require('../utils/databaseStore');
 
 // In-Memory Edge Cache (30s TTL)
 let edgeCache = {

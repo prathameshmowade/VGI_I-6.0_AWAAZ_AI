@@ -118,23 +118,24 @@ export default function OfficerDashboard() {
       }
 
       if (serverData.length > 0) {
-        setComplaints((prevLocal) => {
-          const baseList = prevLocal.length > 0 ? prevLocal : localSaved.length > 0 ? localSaved : FALLBACK_MOCK;
-          const localMap = new Map(baseList.map((c) => [c.complaintId || c._id, c]));
+        setComplaints(() => {
+          const serverMap = new Map(serverData.map((c) => [c.complaintId || c._id, c]));
 
+          // Server data ALWAYS takes precedence — merge local only for fields not on server
           const merged = serverData.map((serverComp) => {
             const id = serverComp.complaintId || serverComp._id;
-            const localComp = localMap.get(id);
-            if (localComp && localComp.status === 'Pending Verification' && serverComp.status !== 'Verified & Resolved') {
-              return { ...serverComp, ...localComp, status: 'Pending Verification' };
+            const localComp = localSaved.find((l) => (l.complaintId || l._id) === id);
+            // Server wins; only add local-only UI fields (not status, not counts)
+            if (localComp) {
+              return { ...localComp, ...serverComp };
             }
-            return localComp ? { ...serverComp, ...localComp } : serverComp;
+            return serverComp;
           });
 
-          // Ensure all local new complaints are retained at top
-          baseList.forEach((lComp) => {
+          // Retain local-only complaints not yet synced to server (brand new, not on backend yet)
+          localSaved.forEach((lComp) => {
             const id = lComp.complaintId || lComp._id;
-            if (!merged.find((m) => (m.complaintId || m._id) === id)) {
+            if (!serverMap.has(id)) {
               merged.unshift(lComp);
             }
           });
@@ -176,9 +177,10 @@ export default function OfficerDashboard() {
 
   const handleResolutionSubmit = async (resolutionPayload) => {
     const compId = resolutionPayload.complaintId;
-    const backendStatus = resolutionPayload.status || 'Completed';
+    // Default to Under Verification so community verification phase is triggered
+    const backendStatus = resolutionPayload.status || 'Under Verification';
 
-    // Ensure status is updated to Completed via API
+    // Ensure status is updated via API
     try {
       await axios.patch(`/api/complaints/${compId}/status`, {
         status: backendStatus,

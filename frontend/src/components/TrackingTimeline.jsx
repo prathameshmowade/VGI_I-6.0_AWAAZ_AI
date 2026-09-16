@@ -1,11 +1,11 @@
 import React from 'react';
-import { FileCheck2, Brain, UserCheck, Wrench, CheckCircle2 } from 'lucide-react';
+import { FileCheck2, UserCheck, Wrench, Shield, CheckCircle2 } from 'lucide-react';
 
 const STEPS = [
   { label: 'Submitted', icon: FileCheck2 },
-  { label: 'AI Analyzed', icon: Brain },
   { label: 'Assigned', icon: UserCheck },
   { label: 'In Progress', icon: Wrench },
+  { label: 'Under Verification', icon: Shield },
   { label: 'Resolved', icon: CheckCircle2 }
 ];
 

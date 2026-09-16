@@ -150,7 +150,13 @@ export default function ComplaintPage() {
         {/* 5-Step Visual Tracking Timeline */}
         <div className="pt-2">
           <span className="text-xs font-bold text-emerald-950 block mb-2">5-Step Live Tracking Status:</span>
-          <TrackingTimeline currentStep={complaint.status === 'Verified & Resolved' ? 4 : 3} />
+          <TrackingTimeline currentStep={
+            complaint.status === 'Completed' || complaint.status === 'Resolved' || complaint.status === 'Verified & Resolved' ? 4
+            : complaint.status === 'Under Verification' || complaint.status === 'Pending Verification' ? 3
+            : complaint.status === 'In Progress' || complaint.status === 'In-Progress' || complaint.status === 'Started' ? 2
+            : complaint.status === 'Assigned' ? 1
+            : 0
+          } />
         </div>
 
         {/* Who is Responsible? Button */}
