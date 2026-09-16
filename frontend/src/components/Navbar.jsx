@@ -63,6 +63,11 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Do not render navbar on the login page
+  if (location.pathname === '/login' || location.pathname.startsWith('/login/')) {
+    return null;
+  }
+
   return (
     <>
       {/* Animated Multi-Color Top Accent Bar */}
