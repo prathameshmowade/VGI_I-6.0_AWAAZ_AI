@@ -225,13 +225,52 @@ const submitVerification = ({ complaintId, citizen, vote, feedback, location }) 
     }
   }
 
-  // Anti-abuse: check duplicate vote
+  // Anti-abuse: check duplicate vote — 1 vote per citizen per problem in 7-day window
   const allVerifications = loadVerifications();
-  const existingVote = allVerifications.find(
-    (v) => v.complaintId === complaintId && v.citizenId === citizenId
-  );
+  const normalizedCitizenEmail = citizen.email ? citizen.email.trim().toLowerCase() : '';
+  const normalizedCitizenName = citizen.name ? citizen.name.trim().toLowerCase() : '';
+  const normalizedCitizenId = citizenId ? citizenId.trim().toLowerCase() : '';
+
+  const existingVote = allVerifications.find((v) => {
+    if (v.complaintId !== complaintId) return false;
+    const vId = (v.citizenId || '').trim().toLowerCase();
+    const vEmail = (v.citizenEmail || '').trim().toLowerCase();
+    const vName = (v.citizenName || '').trim().toLowerCase();
+
+    const matchId = normalizedCitizenId && vId && (vId === normalizedCitizenId || vId === normalizedCitizenEmail);
+    const matchEmail = normalizedCitizenEmail && vEmail && vEmail === normalizedCitizenEmail;
+    const matchName = normalizedCitizenName && vName && vName === normalizedCitizenName;
+
+    return matchId || matchEmail || matchName;
+  });
+
   if (existingVote) {
-    throw { status: 400, message: `You have already submitted a verification vote (${existingVote.vote}) for this complaint.` };
+    throw {
+      status: 400,
+      message: `Duplicate vote blocked: You have already submitted a verification vote (${existingVote.vote}) for this problem. A citizen cannot verify a problem more than once in a 7-day window.`
+    };
+  }
+
+  // Also check comp.verifications array
+  if (Array.isArray(comp.verifications)) {
+    const existingInComp = comp.verifications.find((v) => {
+      const vId = (v.citizenId || '').trim().toLowerCase();
+      const vEmail = (v.citizenEmail || '').trim().toLowerCase();
+      const vName = (v.citizenName || '').trim().toLowerCase();
+
+      const matchId = normalizedCitizenId && vId && (vId === normalizedCitizenId || vId === normalizedCitizenEmail);
+      const matchEmail = normalizedCitizenEmail && vEmail && vEmail === normalizedCitizenEmail;
+      const matchName = normalizedCitizenName && vName && vName === normalizedCitizenName;
+
+      return matchId || matchEmail || matchName;
+    });
+
+    if (existingInComp) {
+      throw {
+        status: 400,
+        message: `Duplicate vote blocked: You have already verified this problem. A citizen cannot verify a problem more than once in a 7-day window.`
+      };
+    }
   }
 
   // Create verification record
@@ -261,9 +300,11 @@ const submitVerification = ({ complaintId, citizen, vote, feedback, location }) 
   comp.rejected_count = rejectedCount;
   comp.verificationsCount = verifiedCount; // backward compat
 
-  // Update legacy verifications array for backward compat
+  // Update legacy verifications array for backward compat with full identity
   if (!comp.verifications) comp.verifications = [];
   comp.verifications.push({
+    citizenId,
+    citizenEmail: citizen.email || '',
     citizenName: verificationRecord.citizenName,
     comment: feedback || (vote === 'VERIFIED' ? 'Verified work completion at site.' : 'Work not completed — rejected.'),
     verifiedAt: now.toISOString(),
@@ -371,7 +412,7 @@ const submitVerification = ({ complaintId, citizen, vote, feedback, location }) 
 // 3. GET TWIN CITY VERIFICATIONS — Complaints needing citizen verification
 // ═════════════════════════════════════════════════════════════════════════════
 
-const getTwinCityVerifications = ({ citizenId, citizenEmail, zone, ward } = {}) => {
+const getTwinCityVerifications = ({ citizenId, citizenEmail, citizenName, zone, ward } = {}) => {
   const store = loadComplaints();
   const allVerifications = loadVerifications();
   const now = new Date();
@@ -417,8 +458,12 @@ const getTwinCityVerifications = ({ citizenId, citizenEmail, zone, ward } = {}) 
     return dA - dB;
   });
 
-  // Annotate each with citizen-specific voting info
-  const resolvedCitizenId = citizenId || citizenEmail || null;
+  // Annotate each with citizen-specific voting info (enforce 1 vote per citizen in 7-day window)
+  const normalizedCitizenId = (citizenId || '').trim().toLowerCase();
+  const normalizedCitizenEmail = (citizenEmail || '').trim().toLowerCase();
+  const normalizedCitizenName = (citizenName || '').trim().toLowerCase();
+  const hasCitizenContext = normalizedCitizenId || normalizedCitizenEmail || normalizedCitizenName;
+
   const annotated = pendingList.map((comp) => {
     const votes = allVerifications.filter((v) => v.complaintId === comp.complaintId);
     const verifiedCount = votes.filter((v) => v.vote === 'VERIFIED').length;
@@ -428,17 +473,50 @@ const getTwinCityVerifications = ({ citizenId, citizenEmail, zone, ward } = {}) 
     let userVote = null;
     let canVote = true;
 
-    if (resolvedCitizenId) {
-      const myVote = votes.find((v) => v.citizenId === resolvedCitizenId);
+    if (hasCitizenContext) {
+      const myVote = votes.find((v) => {
+        const vId = (v.citizenId || '').trim().toLowerCase();
+        const vEmail = (v.citizenEmail || '').trim().toLowerCase();
+        const vName = (v.citizenName || '').trim().toLowerCase();
+
+        const matchId = normalizedCitizenId && vId && (vId === normalizedCitizenId || vId === normalizedCitizenEmail);
+        const matchEmail = normalizedCitizenEmail && vEmail && vEmail === normalizedCitizenEmail;
+        const matchName = normalizedCitizenName && vName && vName === normalizedCitizenName;
+
+        return matchId || matchEmail || matchName;
+      });
+
       if (myVote) {
         hasVoted = true;
         userVote = myVote.vote;
         canVote = false;
       }
+
+      // Also check comp.verifications array
+      if (!hasVoted && Array.isArray(comp.verifications)) {
+        const legacyVote = comp.verifications.find((v) => {
+          const vId = (v.citizenId || '').trim().toLowerCase();
+          const vEmail = (v.citizenEmail || '').trim().toLowerCase();
+          const vName = (v.citizenName || '').trim().toLowerCase();
+
+          const matchId = normalizedCitizenId && vId && (vId === normalizedCitizenId || vId === normalizedCitizenEmail);
+          const matchEmail = normalizedCitizenEmail && vEmail && vEmail === normalizedCitizenEmail;
+          const matchName = normalizedCitizenName && vName && vName === normalizedCitizenName;
+
+          return matchId || matchEmail || matchName;
+        });
+
+        if (legacyVote) {
+          hasVoted = true;
+          userVote = legacyVote.vote || 'VERIFIED';
+          canVote = false;
+        }
+      }
+
       // Check if citizen is the completing officer
       if (comp.completed_by) {
-        const officerId = comp.completed_by.id || comp.completed_by.email || comp.completed_by.name;
-        if (resolvedCitizenId === officerId) {
+        const officerId = (comp.completed_by.id || comp.completed_by.email || comp.completed_by.name || '').trim().toLowerCase();
+        if (normalizedCitizenId === officerId || normalizedCitizenEmail === officerId || normalizedCitizenName === officerId) {
           canVote = false;
         }
       }
@@ -471,6 +549,8 @@ const getTwinCityVerifications = ({ citizenId, citizenEmail, zone, ward } = {}) 
       timeRemainingMs,
       timeRemainingHuman,
       voters: votes.map((v) => ({
+        citizenId: v.citizenId,
+        citizenEmail: v.citizenEmail,
         citizenName: v.citizenName,
         vote: v.vote,
         feedback: v.feedback,

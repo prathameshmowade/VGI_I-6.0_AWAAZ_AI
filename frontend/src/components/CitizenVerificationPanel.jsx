@@ -8,6 +8,59 @@ import {
   MessageSquare, Award, Shield, Loader2
 } from 'lucide-react';
 
+const VOTE_STORAGE_KEY = 'awaaz_citizen_7day_votes';
+
+export const getStoredVotes = () => {
+  try {
+    const raw = localStorage.getItem(VOTE_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    const now = Date.now();
+    const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+    const valid = {};
+    Object.entries(parsed).forEach(([key, record]) => {
+      if (record && record.votedAt && (now - new Date(record.votedAt).getTime() < sevenDaysMs)) {
+        valid[key] = record;
+      }
+    });
+    return valid;
+  } catch (e) {
+    return {};
+  }
+};
+
+export const storeUserVote = (complaintId, userIdentifiers, voteType) => {
+  try {
+    const stored = getStoredVotes();
+    const now = new Date().toISOString();
+    const ids = Array.isArray(userIdentifiers) ? userIdentifiers : [userIdentifiers];
+    ids.filter(Boolean).forEach((id) => {
+      const key = `${complaintId}_${String(id).trim().toLowerCase()}`;
+      stored[key] = {
+        complaintId,
+        userIdentifier: id,
+        vote: voteType,
+        votedAt: now
+      };
+    });
+    localStorage.setItem(VOTE_STORAGE_KEY, JSON.stringify(stored));
+  } catch (e) {}
+};
+
+export const checkUserStoredVote = (complaintId, identifiers = []) => {
+  try {
+    const stored = getStoredVotes();
+    for (const id of identifiers) {
+      if (!id) continue;
+      const key = `${complaintId}_${String(id).trim().toLowerCase()}`;
+      if (stored[key]) {
+        return stored[key];
+      }
+    }
+  } catch (e) {}
+  return null;
+};
+
 export default function CitizenVerificationPanel({ complaint, onVerified, onVerificationUpdate }) {
   const { user } = useContext(AuthContext);
   const langCtx = useContext(LanguageContext);
@@ -42,15 +95,51 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
   const citizenName = user?.name || 'Verified Citizen';
   const citizenEmail = user?.email || '';
 
-  // Check if current user has already voted (from backend data)
-  const hasVoted = localComp.hasVoted || false;
-  const userVote = localComp.userVote || null;
-  const canVote = localComp.canVote !== undefined ? localComp.canVote : !hasVoted;
+  const userIdentifiers = [
+    citizenId,
+    citizenEmail,
+    citizenName,
+    user?.citizenId,
+    user?.email,
+    user?.name
+  ].filter(Boolean);
+
+  // Check 7-day localStorage vote persistence
+  const compId = localComp.complaintId || localComp._id;
+  const storedVoteRecord = checkUserStoredVote(compId, userIdentifiers);
+  const alreadyVotedLocally = !!storedVoteRecord;
+
+  // Check if current user has already voted (from backend data or voters array)
+  const hasVotedInBackend = localComp.hasVoted || false;
+  const userVoteInBackend = localComp.userVote || null;
+
+  // Check in voters list
+  const votersList = localComp.voters || [];
+  const inVoters = votersList.some((v) => {
+    const vId = (v.citizenId || '').trim().toLowerCase();
+    const vEmail = (v.citizenEmail || '').trim().toLowerCase();
+    const vName = (v.citizenName || '').trim().toLowerCase();
+    return userIdentifiers.some((myId) => {
+      const norm = String(myId).trim().toLowerCase();
+      return norm && (norm === vId || norm === vEmail || norm === vName);
+    });
+  });
 
   // Also check legacy verifications array
-  const legacyVoted = !hasVoted && (localComp.verifications || []).some(
-    (v) => v.citizenName === citizenName || v.citizenId === citizenId
-  );
+  const legacyVoted = (localComp.verifications || []).some((v) => {
+    const vId = (v.citizenId || '').trim().toLowerCase();
+    const vEmail = (v.citizenEmail || '').trim().toLowerCase();
+    const vName = (v.citizenName || '').trim().toLowerCase();
+    return userIdentifiers.some((myId) => {
+      const norm = String(myId).trim().toLowerCase();
+      return norm && (norm === vId || norm === vEmail || norm === vName);
+    });
+  });
+
+  // Strict: 1 vote per citizen per problem in 7 days
+  const hasVoted = hasVotedInBackend || inVoters || legacyVoted || alreadyVotedLocally;
+  const userVote = userVoteInBackend || (storedVoteRecord ? storedVoteRecord.vote : null) || 'VERIFIED';
+  const canVote = localComp.canVote !== undefined ? (localComp.canVote && !hasVoted) : !hasVoted;
 
   // Check if user is an officer or administrator
   const isOfficerOrAdmin = user?.role === 'officer' || user?.role === 'admin';
@@ -62,7 +151,7 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
     (user?.role === 'officer' && user?.name === completedBy.name)
   );
 
-  const effectiveCanVote = !isOfficerOrAdmin && canVote && !legacyVoted && !isCompletingOfficer && isUnderVerification && !isCompleted && !isFailed;
+  const effectiveCanVote = !isOfficerOrAdmin && canVote && !hasVoted && !isCompletingOfficer && isUnderVerification && !isCompleted && !isFailed;
 
   // Time remaining
   const timeRemaining = localComp.timeRemainingHuman || '';
@@ -91,6 +180,7 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
 
       if (res.data?.success) {
         const updated = res.data.data;
+        storeUserVote(localComp.complaintId || localComp._id, userIdentifiers, voteType);
         setLocalComp({
           ...localComp,
           ...updated,
@@ -98,7 +188,7 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
           userVote: voteType,
           canVote: false
         });
-        setSuccessMsg(res.data.message || 'Verification recorded successfully.');
+        setSuccessMsg(res.data.message || (isHindi ? 'सत्यापन सफलतापूर्वक दर्ज हुआ। 7-दिन की विंडो में आपका वोट सुरक्षित है।' : 'Verification recorded successfully. Your vote is recorded for this 7-day window.'));
         // Notify parent components
         onVerified?.(updated);
         onVerificationUpdate?.(updated);
@@ -293,23 +383,30 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
             </div>
           )}
 
-          {/* Already voted indicator */}
-          {(hasVoted || legacyVoted) && (
-            <div className={`rounded-xl p-3 text-xs font-bold flex items-center gap-2 border ${
+          {/* Already voted indicator — 1 vote per citizen in 7-day window */}
+          {hasVoted && (
+            <div className={`rounded-xl p-3.5 text-xs font-bold flex flex-col gap-1.5 border shadow-2xs ${
               userVote === 'REJECTED'
                 ? 'bg-rose-50 dark:bg-rose-950/50 text-rose-800 dark:text-rose-300 border-rose-200 dark:border-rose-800'
                 : 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
             }`}>
-              {userVote === 'REJECTED'
-                ? <XCircle className="w-4 h-4" />
-                : <CheckCircle2 className="w-4 h-4" />
-              }
-              <span>
+              <div className="flex items-center gap-2">
                 {userVote === 'REJECTED'
-                  ? (isHindi ? 'आपने इस कार्य को अस्वीकार किया ✘' : 'You rejected this work ✘')
-                  : (isHindi ? 'आपने इसे सत्यापित किया ✓' : 'You verified this work ✓')
+                  ? <XCircle className="w-4 h-4 text-rose-600" />
+                  : <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                 }
-              </span>
+                <span className="font-extrabold">
+                  {userVote === 'REJECTED'
+                    ? (isHindi ? 'आपने इस समस्या को अस्वीकार किया ✘' : 'You rejected this work resolution ✘')
+                    : (isHindi ? 'आपने इस कार्य को सत्यापित किया ✓' : 'You verified this problem resolution ✓')
+                  }
+                </span>
+              </div>
+              <p className="text-[11px] font-normal leading-relaxed opacity-90 pl-6 text-slate-700 dark:text-slate-300">
+                {isHindi
+                  ? '🔒 सत्यापन नियम: एक नागरिक 7-दिन की विंडो के दौरान किसी समस्या को केवल एक बार सत्यापित कर सकता है।'
+                  : '🔒 7-Day Window Rule: Each citizen can only verify a particular problem once within the 7-day duration.'}
+              </p>
             </div>
           )}
 

@@ -493,11 +493,12 @@ const verifyComplaint = async (req, res) => {
 
 const getTwinCityVerifications = async (req, res) => {
   try {
-    const { citizenId, citizenEmail, zone, ward } = req.query;
+    const { citizenId, citizenEmail, citizenName, zone, ward } = req.query;
 
     const result = verificationEngine.getTwinCityVerifications({
       citizenId,
       citizenEmail,
+      citizenName,
       zone,
       ward
     });

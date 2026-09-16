@@ -25,8 +25,9 @@ export default function DigitalTwinPage() {
       // Fetch from real backend API
       const citizenId = user?.citizenId || user?.email || user?.name || '';
       const citizenEmail = user?.email || '';
+      const citizenName = user?.name || '';
       const res = await axios.get('/api/twin-city/verifications', {
-        params: { citizenId, citizenEmail }
+        params: { citizenId, citizenEmail, citizenName }
       });
 
       if (res.data?.success && Array.isArray(res.data.data)) {
