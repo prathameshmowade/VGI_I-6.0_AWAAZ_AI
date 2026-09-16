@@ -72,18 +72,8 @@ const FALLBACK_MOCK = [
 export default function OfficerDashboard() {
   const { user } = useContext(AuthContext);
 
-  // Auto-select department based on officer login context
-  const getInitialDept = () => {
-    if (user?.department) {
-      const d = user.department.toLowerCase();
-      if (d.includes('water')) return 'DEPT_WATER';
-      if (d.includes('sanitation') || d.includes('waste')) return 'DEPT_SANITATION';
-      if (d.includes('electric') || d.includes('light')) return 'DEPT_ELECTRICAL';
-      if (d.includes('park')) return 'DEPT_PARKS';
-      if (d.includes('road') || d.includes('infra')) return 'DEPT_ROAD';
-    }
-    return 'DEPT_ROAD';
-  };
+  // Default to ALL (Municipal Overview) so all incoming citizen complaints across all categories are immediately visible
+  const getInitialDept = () => 'ALL';
 
   const [selectedDept, setSelectedDept] = useState(getInitialDept);
 
