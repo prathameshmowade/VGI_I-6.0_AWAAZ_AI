@@ -173,12 +173,12 @@ export default function VoiceInput({ onTranscript }) {
   return (
     <div className="bg-white dark:bg-slate-900/90 p-5 sm:p-6 rounded-3xl border border-slate-200 dark:border-slate-800 space-y-5 shadow-sm transition-colors">
       
-      {/* 1. Language Model Selector Bar */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+      {/* 1. Language Selector Bar */}
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-2">
           <Globe2 className="w-4 h-4 text-blue-600 dark:text-blue-400" />
           <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
-            {isHindi ? 'ध्वनि भाषा मॉडल चुनें:' : 'Speech Recognition Language Model:'}
+            {isHindi ? 'भाषा चुनें:' : 'Language:'}
           </span>
         </div>
 
@@ -214,7 +214,7 @@ export default function VoiceInput({ onTranscript }) {
               className="btn-primary text-xs py-3 px-6 rounded-2xl font-bold shadow-md hover:shadow-lg transition-transform active:scale-95 flex items-center gap-2"
             >
               <Mic className="w-4 h-4 text-white" />
-              <span>{isHindi ? 'बोलकर शिकायत दर्ज करें' : 'Start Voice Intake'}</span>
+              <span>{t('voice_start')}</span>
             </button>
           ) : (
             <button
@@ -223,7 +223,7 @@ export default function VoiceInput({ onTranscript }) {
               className="bg-red-600 hover:bg-red-700 text-white text-xs py-3 px-6 rounded-2xl font-bold shadow-md hover:shadow-lg transition-transform active:scale-95 flex items-center gap-2 animate-pulse"
             >
               <MicOff className="w-4 h-4 text-white" />
-              <span>{isHindi ? 'रिकॉर्डिंग रोकें' : 'Stop Listening'}</span>
+              <span>{t('voice_stop')}</span>
             </button>
           )}
 
@@ -235,7 +235,7 @@ export default function VoiceInput({ onTranscript }) {
               title="Clear transcript"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>{isHindi ? 'रीसेट' : 'Clear'}</span>
+              <span>{isHindi ? 'हटाएं' : 'Clear'}</span>
             </button>
           )}
         </div>
@@ -251,7 +251,7 @@ export default function VoiceInput({ onTranscript }) {
               <span className="w-1 h-4 bg-red-500 rounded-full animate-pulse delay-100"></span>
             </div>
             <span className="text-xs font-bold text-red-700 dark:text-red-400 ml-1">
-              {isHindi ? 'आवाज़ पहचान चालू है... स्पष्ट बोलें' : 'Continuous AI speech stream active...'}
+              {isHindi ? 'सुन रहे हैं... स्पष्ट बोलें' : 'Listening... Speak clearly'}
             </span>
           </div>
         )}
@@ -261,10 +261,10 @@ export default function VoiceInput({ onTranscript }) {
       {(finalTranscript || interimTranscript) && (
         <div className="bg-slate-50 dark:bg-slate-800/60 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-3">
           <div className="flex items-center justify-between flex-wrap gap-2">
-            <span className="text-[11px] font-black tracking-wider uppercase text-blue-700 dark:text-blue-400 flex items-center gap-1.5">
+            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>
-                {isHindi ? 'पहचाना गया वॉयस टेक्स्ट (स्वतः फॉर्म में सिंक):' : 'Accurate Speech Transcript (Auto-Populating Form):'}
+                {isHindi ? 'पहचाना गया विवरण:' : 'Spoken Description:'}
               </span>
             </span>
 
@@ -273,10 +273,10 @@ export default function VoiceInput({ onTranscript }) {
                 type="button"
                 onClick={handleApplyAiEnhancement}
                 className="text-[11px] font-bold bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900 px-3 py-1.5 rounded-xl border border-blue-200 dark:border-blue-800 transition flex items-center gap-1"
-                title="Automatically fix civic phonetic errors and punctuation"
+                title="Automatically format punctuation and text"
               >
                 <Sparkles className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
-                <span>{isHindi ? 'AI सुधार लागू करें' : 'AI Grammar Polish'}</span>
+                <span>{isHindi ? 'सुधारें' : 'Clean Text'}</span>
               </button>
 
               <button
@@ -311,11 +311,11 @@ export default function VoiceInput({ onTranscript }) {
 
           <div className="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
             <span>
-              {isHindi ? '✓ नगर निगम की शब्दावली और ध्वन्यात्मक सुधार सक्रिय' : '✓ Municipal phonetics & continuous multi-chunk streaming active'}
+              {isHindi ? '✓ यह विवरण नीचे दिए गए फॉर्म में स्वतः जुड़ गया है' : '✓ Automatically added to your complaint form below'}
             </span>
             {enhancedCount > 0 && (
               <span className="text-emerald-600 dark:text-emerald-400 font-bold">
-                ✓ AI Polished
+                ✓ Polished
               </span>
             )}
           </div>

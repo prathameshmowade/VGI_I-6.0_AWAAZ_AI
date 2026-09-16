@@ -6,48 +6,48 @@ import { processPrivacyBlur } from '../utils/imageAnonymizer';
 const GEOTAG_PRESETS = [
   {
     id: 'road-pothole',
-    label: 'Road Pothole (Laxmi Nagar)',
-    labelHi: 'सड़क गड्ढा (लक्ष्मी नगर)',
+    label: 'Road Pothole (MG Road)',
+    labelHi: 'सड़क गड्ढा (एम.जी. रोड)',
     url: '/presets/pothole.jpg',
-    lat: 21.1458,
-    lng: 79.0882,
-    location: '21.1458° N, 79.0882° E (Laxmi Nagar Main Road, Nagpur)'
+    lat: 22.7196,
+    lng: 75.8577,
+    location: '22.7196° N, 75.8577° E (MG Road, Indore)'
   },
   {
     id: 'vehicle-plate',
-    label: 'Traffic / Vehicle Plate (Dharampeth)',
-    labelHi: 'वाहन नंबर प्लेट (धरमपेठ मुख्य मार्ग)',
+    label: 'Vehicle / Parking Issue',
+    labelHi: 'वाहन / पार्किंग समस्या',
     url: '/presets/vehicle_plate.jpg',
-    lat: 21.1492,
-    lng: 79.0715,
-    location: '21.1492° N, 79.0715° E (Dharampeth Main Road, Nagpur)'
+    lat: 22.7235,
+    lng: 75.8640,
+    location: '22.7235° N, 75.8640° E (Palasia Square, Indore)'
   },
   {
     id: 'citizen-face',
-    label: 'Citizen / Field Worker (Ward 12)',
-    labelHi: 'नागरिक / फील्ड कर्मी (वार्ड 12)',
+    label: 'Public Facility / Ward 12',
+    labelHi: 'सार्वजनिक सुविधा (वार्ड 12)',
     url: '/presets/citizen_face.jpg',
-    lat: 21.1435,
-    lng: 79.0812,
-    location: '21.1435° N, 79.0812° E (Sitabuldi Ward 12, Nagpur)'
+    lat: 22.7510,
+    lng: 75.8920,
+    location: '22.7510° N, 75.8920° E (Vijay Nagar, Indore)'
   },
   {
     id: 'water-leak',
-    label: 'Water Pipeline Leak (Ramdaspeth)',
-    labelHi: 'पानी पाइपलाइन लीकेज (रामदासपेठ)',
+    label: 'Water Pipeline Leak',
+    labelHi: 'पानी पाइपलाइन लीकेज',
     url: '/presets/water_leak.jpg',
-    lat: 21.1382,
-    lng: 79.0755,
-    location: '21.1382° N, 79.0755° E (Ramdaspeth Canal Rd, Nagpur)'
+    lat: 22.7300,
+    lng: 75.8700,
+    location: '22.7300° N, 75.8700° E (Geeta Bhawan, Indore)'
   },
   {
     id: 'sanitation-waste',
-    label: 'Sanitation Dump (Ward 12 Park)',
-    labelHi: 'कचरा ढेर (वार्ड 12 पार्क)',
+    label: 'Garbage & Waste Dump',
+    labelHi: 'कचरा ढेर व सफाई',
     url: '/presets/sanitation.jpg',
-    lat: 21.1412,
-    lng: 79.0845,
-    location: '21.1412° N, 79.0845° E (Near Rajiv Gandhi Public Park, Nagpur)'
+    lat: 22.7400,
+    lng: 75.8800,
+    location: '22.7400° N, 75.8800° E (Anand Bazar, Indore)'
   }
 ];
 
@@ -182,17 +182,17 @@ export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }
       const padding = 16;
       let yPos = height - bannerHeight + fontSize + 16;
 
-      ctx.fillText(`📍 NAGPUR MUNICIPAL CORP • WARD 12 (LAXMI NAGAR)`, padding, yPos);
+      ctx.fillText(`📍 INDORE MUNICIPAL CORP • CIVIC EVIDENCE`, padding, yPos);
       yPos += fontSize + 6;
 
       ctx.font = `bold ${fontSize - 2}px monospace`;
       ctx.fillStyle = '#34d399';
-      ctx.fillText(`🌐 GPS: ${coords.lat}° N, ${coords.lng}° E • ALT: 310m • ACC: ±${coords.acc}m`, padding, yPos);
+      ctx.fillText(`🌐 GPS: ${coords.lat}° N, ${coords.lng}° E`, padding, yPos);
       yPos += fontSize + 4;
 
       ctx.font = `${fontSize - 3}px monospace`;
       ctx.fillStyle = '#a7f3d0';
-      ctx.fillText(`🕒 ${currentTime} IST • PROOF-ID: #GEO-${Date.now().toString(36).toUpperCase()} • SHA-256 VERIFIED`, padding, yPos);
+      ctx.fillText(`🕒 ${currentTime} IST`, padding, yPos);
 
       return canvas.toDataURL('image/jpeg', 0.92);
     } catch (err) {
@@ -374,10 +374,10 @@ export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }
                 <div className="flex justify-between items-center text-white text-[11px] font-mono">
                   <span className="bg-red-600/90 text-white font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1.5 backdrop-blur-xs">
                     <span className="w-2 h-2 rounded-full bg-white animate-ping" />
-                    <span>LIVE GEO CAM</span>
+                    <span>CAMERA</span>
                   </span>
                   <span className="bg-emerald-950/80 border border-emerald-500/50 px-2.5 py-1 rounded-lg text-emerald-300 font-bold backdrop-blur-xs">
-                    📍 {coords.lat}° N, {coords.lng}° E (±{coords.acc}m)
+                    📍 {coords.lat}° N, {coords.lng}° E
                   </span>
                 </div>
 
@@ -385,16 +385,16 @@ export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }
                   <div className="w-24 h-24 border-2 border-dashed border-emerald-400/80 rounded-2xl flex items-center justify-center relative">
                     <div className="w-2 h-2 bg-emerald-400 rounded-full" />
                     <span className="absolute -bottom-5 text-[10px] font-mono text-emerald-300 font-bold bg-black/60 px-1.5 py-0.5 rounded">
-                      ALIGN EVIDENCE
+                      CENTER ISSUE
                     </span>
                   </div>
                 </div>
 
                 <div className="bg-emerald-950/85 border border-emerald-500/40 p-2.5 rounded-xl text-white text-[10.5px] font-mono space-y-0.5 backdrop-blur-xs">
-                  <div className="text-emerald-300 font-bold">🏛️ NAGPUR MUNICIPAL CORP • WARD 12 (LAXMI NAGAR)</div>
+                  <div className="text-emerald-300 font-bold">🏛️ INDORE MUNICIPAL CORP • WARD 12</div>
                   <div className="text-emerald-100 text-[10px] flex justify-between">
                     <span>🕒 {currentTime} IST</span>
-                    <span className="text-emerald-400">🛡️ TAMPER-PROOF GPS STAMP</span>
+                    <span className="text-emerald-400">📍 GEO-TAGGED</span>
                   </div>
                 </div>
               </div>
@@ -465,35 +465,18 @@ export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }
                 {!showOriginal && !processingYolo && (
                   <span className="absolute top-2 right-2 bg-emerald-950/85 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-xs flex items-center gap-1 border border-emerald-400">
                     <ShieldCheck className="w-3 h-3 text-emerald-400" />
-                    <span>
-                      {yoloDetections?.totalBlurred > 0
-                        ? (isHindi ? `DPDP गोपनीयता: ${yoloDetections.totalBlurred} मास्क` : `DPDP Masked (${yoloDetections.totalBlurred} Redacted)`)
-                        : (isHindi ? 'DPDP सत्यापित • स्वच्छ साक्ष्य' : 'DPDP Verified • Clean Evidence')}
-                    </span>
+                    <span>{isHindi ? 'गोपनीयता सुरक्षित ✓' : 'Privacy Protected ✓'}</span>
                   </span>
                 )}
               </div>
 
-              {/* YOLOv8 AI Detection Telemetry Chips */}
-              {yoloDetections && !showOriginal && (
-                <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[11px]">
-                  {yoloDetections.totalBlurred === 0 ? (
-                    <span className="bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold px-2.5 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>{isHindi ? 'गोपनीयता सुरक्षित • 0 संवेदनशील डेटा' : 'Privacy Verified • 0 PII Detected'}</span>
-                    </span>
-                  ) : (
-                    <>
-                      <span className="bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold px-2.5 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
-                        <span>👤 {yoloDetections.facesBlurred} {isHindi ? 'चेहरे धुंधले' : 'Faces Redacted'}</span>
-                      </span>
-                      <span className="bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-bold px-2.5 py-0.5 rounded-lg border border-amber-200 dark:border-amber-800 flex items-center gap-1">
-                        <span>🚗 {yoloDetections.licensePlatesBlurred} {isHindi ? 'नंबर प्लेट सुरक्षित' : 'Plates Blurred'}</span>
-                      </span>
-                    </>
-                  )}
-                  <span className="bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 font-bold px-2.5 py-0.5 rounded-lg border border-blue-200 dark:border-blue-800 font-mono text-[10px]">
-                    🎯 {yoloDetections.confidenceScore || 96.4}% {isHindi ? 'सटीकता' : 'Accuracy'}
+              {!showOriginal && (
+                <div className="flex items-center gap-1.5 pt-1 text-[11px] text-emerald-800 dark:text-emerald-300 font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>
+                    {isHindi
+                      ? 'फोटो में चेहरे और वाहन नंबर प्लेट स्वतः सुरक्षित कर दिए गए हैं'
+                      : 'Faces and vehicle plates automatically blurred for privacy'}
                   </span>
                 </div>
               )}
@@ -579,7 +562,7 @@ export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }
               <div className="flex justify-between items-center text-xs">
                 <span className="font-bold text-emerald-950 dark:text-white flex items-center gap-1.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>{isHindi ? 'YOLOv8 द्वारा प्राइवेसी मास्क लागू किया गया ✓' : 'YOLOv8 Privacy Mask Applied ✓'}</span>
+                  <span>{isHindi ? 'गोपनीयता सुरक्षा लागू की गई ✓' : 'Privacy Protection Applied ✓'}</span>
                 </span>
                 <button
                   type="button"
@@ -600,35 +583,18 @@ export default function GeoTagCamera({ onCapture, onLocationDetected, onUpload }
                 {!uploadShowOriginal && (
                   <span className="absolute bottom-2 right-2 bg-emerald-950/85 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full backdrop-blur-xs flex items-center gap-1 border border-emerald-400">
                     <ShieldCheck className="w-3 h-3 text-emerald-400" />
-                    <span>
-                      {uploadDetections?.totalBlurred > 0
-                        ? (isHindi ? `DPDP गोपनीयता: ${uploadDetections.totalBlurred} मास्क` : `DPDP Masked (${uploadDetections.totalBlurred} Redacted)`)
-                        : (isHindi ? 'DPDP सत्यापित • स्वच्छ साक्ष्य' : 'DPDP Verified • Clean Evidence')}
-                    </span>
+                    <span>{isHindi ? 'गोपनीयता सुरक्षित ✓' : 'Privacy Protected ✓'}</span>
                   </span>
                 )}
               </div>
 
-              {/* Upload YOLOv8 Telemetry Chips */}
-              {uploadDetections && !uploadShowOriginal && (
-                <div className="flex flex-wrap items-center gap-1.5 pt-1 text-[11px]">
-                  {uploadDetections.totalBlurred === 0 ? (
-                    <span className="bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold px-2.5 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>{isHindi ? 'गोपनीयता सुरक्षित • 0 संवेदनशील डेटा' : 'Privacy Verified • 0 PII Detected'}</span>
-                    </span>
-                  ) : (
-                    <>
-                      <span className="bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 font-bold px-2.5 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
-                        <span>👤 {uploadDetections.facesBlurred} {isHindi ? 'चेहरे धुंधले' : 'Faces Redacted'}</span>
-                      </span>
-                      <span className="bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 font-bold px-2.5 py-0.5 rounded-lg border border-amber-200 dark:border-amber-800 flex items-center gap-1">
-                        <span>🚗 {uploadDetections.licensePlatesBlurred} {isHindi ? 'नंबर प्लेट सुरक्षित' : 'Plates Blurred'}</span>
-                      </span>
-                    </>
-                  )}
-                  <span className="bg-blue-50 dark:bg-blue-950/60 text-blue-800 dark:text-blue-300 font-bold px-2.5 py-0.5 rounded-lg border border-blue-200 dark:border-blue-800 font-mono text-[10px]">
-                    🎯 {uploadDetections.confidenceScore || 96.4}% {isHindi ? 'सटीकता' : 'Accuracy'}
+              {!uploadShowOriginal && (
+                <div className="flex items-center gap-1.5 pt-1 text-[11px] text-emerald-800 dark:text-emerald-300 font-medium">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <span>
+                    {isHindi
+                      ? 'फोटो में चेहरे और वाहन नंबर प्लेट स्वतः सुरक्षित कर दिए गए हैं'
+                      : 'Faces and vehicle plates automatically blurred for privacy'}
                   </span>
                 </div>
               )}

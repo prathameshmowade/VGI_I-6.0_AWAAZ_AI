@@ -123,12 +123,12 @@ export default function LocationPicker({ onSelect }) {
           </GoogleMap>
         ) : (
           <div className="h-[240px] flex flex-col items-center justify-center p-6 text-center space-y-2">
-            <Compass className="w-8 h-8 text-blue-600 animate-spin" />
-            <span className="font-black text-slate-900 dark:text-white text-xs">
-              {isHindi ? 'नागपुर जोन 12 जीपीएस टेलीमेट्री ग्रिड' : 'Nagpur Zone 12 Spatial Telemetry Grid'}
+            <MapPin className="w-8 h-8 text-blue-600" />
+            <span className="font-bold text-slate-900 dark:text-white text-xs">
+              {isHindi ? 'इंटरैक्टिव मैप' : 'Interactive Map'}
             </span>
-            <p className="text-[10px] text-slate-500 dark:text-slate-400 max-w-xs leading-relaxed">
-              {isHindi ? 'सटीक भौगोलिक निर्देशांक: 21.1458° N, 79.0882° E (लक्ष्मी नगर, नागपुर)' : 'Simulated GPS Pinpoint: 21.1458° N, 79.0882° E (Laxmi Nagar Ward Center)'}
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 max-w-xs leading-relaxed">
+              {isHindi ? 'समस्या का स्थान चुनने के लिए ऊपर दिए गए "मेरा स्थान खोजें" बटन पर क्लिक करें' : 'Click "Find My Location" above to auto-pin your location'}
             </p>
           </div>
         )}
@@ -139,9 +139,9 @@ export default function LocationPicker({ onSelect }) {
         <span className="text-slate-700 dark:text-slate-300 font-medium">
           {t('loc_current')} <strong className="text-blue-900 dark:text-blue-200 font-bold">{address}</strong>
         </span>
-        <span className="text-[10px] font-bold text-blue-700 dark:text-blue-300 bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-lg border border-blue-200 dark:border-blue-700 flex items-center gap-1 shadow-2xs">
+        <span className="text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-0.5 rounded-lg border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
           <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-          <span>{isHindi ? 'जीपीएस लॉक' : 'GPS Locked'}</span>
+          <span>{isHindi ? 'सत्यापित' : 'Confirmed'}</span>
         </span>
       </div>
     </div>
