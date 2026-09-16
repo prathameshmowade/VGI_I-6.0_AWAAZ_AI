@@ -185,36 +185,19 @@ export default function OfficerDashboard() {
   };
 
   const handleResolutionSubmit = async (resolutionPayload) => {
-    // The ResolutionProofModal already calls POST /api/complaints/:id/complete.
-    // This handler updates local state from the backend response data.
     const compId = resolutionPayload.complaintId;
-    const backendStatus = resolutionPayload.status || 'Under Verification';
+    const backendStatus = resolutionPayload.status || 'Completed';
 
-    // If the modal didn't call the API directly (fallback), do it here
-    if (!resolutionPayload.completed_by) {
-      try {
-        await axios.post(`/api/complaints/${compId}/complete`, {
-          completionProof: resolutionPayload.resolutionProof || resolutionPayload.completionProof,
-          completionNotes: resolutionPayload.resolutionNotes || resolutionPayload.completionNotes || '',
-          officer: {
-            id: 'officer-dashboard',
-            name: 'Municipal Officer',
-            email: '',
-            role: 'officer',
-            department: ''
-          }
-        });
-      } catch (err) {
-        // Also try legacy status update as fallback
-        try {
-          await axios.patch(`/api/complaints/${compId}/status`, {
-            status: 'Under Verification',
-            resolutionProof: resolutionPayload.resolutionProof,
-            resolutionNotes: resolutionPayload.resolutionNotes
-          });
-        } catch (e) {}
-      }
-    }
+    // Ensure status is updated to Completed via API
+    try {
+      await axios.patch(`/api/complaints/${compId}/status`, {
+        status: backendStatus,
+        resolutionProof: resolutionPayload.resolutionProof || resolutionPayload.completionProof,
+        resolutionNotes: resolutionPayload.resolutionNotes || resolutionPayload.completionNotes,
+        actorName: user?.name || 'Municipal Officer',
+        actorRole: 'officer'
+      });
+    } catch (err) {}
 
     // Update local state with backend data
     const updated = complaints.map((c) => {

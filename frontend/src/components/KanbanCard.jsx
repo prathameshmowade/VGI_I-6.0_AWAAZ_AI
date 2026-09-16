@@ -121,24 +121,24 @@ export default function KanbanCard({ complaint, onSelect, onStatusChange }) {
           <div className="text-[10px] space-y-0.5 flex-1">
             <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1">
               <Camera className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
-              <span>Admin Proof Attached</span>
+              <span>Officer Proof Attached</span>
             </span>
-            <span className="text-amber-700 dark:text-amber-300 font-bold block">
-              Citizen Audit: {verificationsCount}/3 Verified
+            <span className="text-emerald-700 dark:text-emerald-400 font-bold block">
+              Official Municipal Certification
             </span>
           </div>
         </div>
       )}
 
-      {/* 7-Day Verification Lock Banner */}
+      {/* Review Window Banner */}
       {(complaint.status === 'Under Verification' || complaint.status === 'Pending Verification') && (
         <div className="bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 rounded-xl p-2 text-[10px] text-amber-950 dark:text-amber-200 font-semibold space-y-0.5">
           <span className="font-bold text-amber-900 dark:text-amber-300 block flex items-center gap-1">
             <CheckCircle2 className="w-3 h-3 text-amber-600" />
-            <span>⏳ {complaint.verificationWindowDays || 7}-Day Verification Window Active</span>
+            <span>⏳ Review & Audit Window Active</span>
           </span>
           <span className="text-amber-800 dark:text-amber-400 text-[9.5px] block leading-tight">
-            {verificationsCount}/3 citizens verified. {complaint.timeRemainingHuman ? `${complaint.timeRemainingHuman} remaining.` : 'Awaiting community audit.'}
+            {complaint.timeRemainingHuman ? `${complaint.timeRemainingHuman} remaining in audit cycle.` : 'Work under administrative review.'}
           </span>
         </div>
       )}

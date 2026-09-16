@@ -52,6 +52,9 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
     (v) => v.citizenName === citizenName || v.citizenId === citizenId
   );
 
+  // Check if user is an officer or administrator
+  const isOfficerOrAdmin = user?.role === 'officer' || user?.role === 'admin';
+
   // Check if user is the completing officer
   const isCompletingOfficer = completedBy && (
     citizenId === (completedBy.id || completedBy.email || completedBy.name) ||
@@ -59,7 +62,7 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
     (user?.role === 'officer' && user?.name === completedBy.name)
   );
 
-  const effectiveCanVote = canVote && !legacyVoted && !isCompletingOfficer && isUnderVerification && !isCompleted && !isFailed;
+  const effectiveCanVote = !isOfficerOrAdmin && canVote && !legacyVoted && !isCompletingOfficer && isUnderVerification && !isCompleted && !isFailed;
 
   // Time remaining
   const timeRemaining = localComp.timeRemainingHuman || '';
@@ -270,8 +273,20 @@ export default function CitizenVerificationPanel({ complaint, onVerified, onVeri
       {/* ─── Voting Actions ─── */}
       {isUnderVerification && !isCompleted && !isFailed && (
         <div className="space-y-3">
+          {/* Officer Audit Information Notice */}
+          {isOfficerOrAdmin && (
+            <div className="bg-indigo-50/80 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800 rounded-xl p-3.5 text-xs font-semibold text-indigo-900 dark:text-indigo-200 flex items-center gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+              <span>
+                {isHindi
+                  ? 'अधिकारी दृश्य: नागरिक सत्यापन विकल्प केवल स्थानीय नागरिकों और निवासियों के लिए सक्रिय है।'
+                  : 'Officer Audit Mode: Citizen verification voting is reserved for local residents and community auditors.'}
+              </span>
+            </div>
+          )}
+
           {/* Officer self-verification warning */}
-          {isCompletingOfficer && (
+          {!isOfficerOrAdmin && isCompletingOfficer && (
             <div className="bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 rounded-xl p-3 text-xs font-semibold text-amber-800 dark:text-amber-300 flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
               <span>{isHindi ? 'आप अपना काम स्वयं सत्यापित नहीं कर सकते।' : 'You cannot verify your own completed work.'}</span>
