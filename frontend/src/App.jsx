@@ -19,9 +19,12 @@ import SmsComplaintPage from './pages/SmsComplaintPage';
 import CallComplaintPage from './pages/CallComplaintPage';
 import TelegramComplaintPage from './pages/TelegramComplaintPage';
 
-function ProtectedRoute({ children }) {
+function ProtectedRoute({ children, officerOnly = false }) {
   const { user } = useContext(AuthContext);
   if (!user) return <Navigate to="/login" replace />;
+  if (officerOnly && user.role !== 'officer' && user.role !== 'admin') {
+    return <Navigate to="/citizen" replace />;
+  }
   return children;
 }
 
@@ -54,8 +57,8 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/overview" element={<ProtectedRoute><LandingPage /></ProtectedRoute>} />
                     <Route path="/citizen" element={<ProtectedRoute><CitizenPortal /></ProtectedRoute>} />
-                    <Route path="/officer" element={<ProtectedRoute><OfficerDashboard /></ProtectedRoute>} />
-                    <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
+                    <Route path="/officer" element={<ProtectedRoute officerOnly><OfficerDashboard /></ProtectedRoute>} />
+                    <Route path="/analytics" element={<ProtectedRoute officerOnly><AnalyticsPage /></ProtectedRoute>} />
                     <Route path="/digital-twin" element={<ProtectedRoute><DigitalTwinPage /></ProtectedRoute>} />
                     <Route path="/track" element={<ProtectedRoute><TrackComplaint /></ProtectedRoute>} />
                     <Route path="/complaint/:id" element={<ProtectedRoute><ComplaintPage /></ProtectedRoute>} />

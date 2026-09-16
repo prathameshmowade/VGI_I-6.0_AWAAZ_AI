@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LanguageContext } from '../context/LanguageContext';
+import { AuthContext } from '../context/AuthContext';
 import { ShieldCheck, Globe, Code, Mail, Phone, Heart, Sparkles } from 'lucide-react';
 
 export default function Footer() {
   const { t, isHindi } = useContext(LanguageContext);
+  const { user } = useContext(AuthContext);
 
   return (
     <footer className="relative bg-slate-900 text-slate-200 pt-12 pb-8 border-t border-slate-800 overflow-hidden">
@@ -98,11 +100,13 @@ export default function Footer() {
                       {isHindi ? 'सार्वजनिक शिकायत ट्रैकिंग' : 'Public Grievance Tracker'}
                     </Link>
                   </li>
-                  <li>
-                    <Link to="/analytics" className="text-slate-400 hover:text-teal-400 transition block">
-                      {isHindi ? 'इंदौर जोन 12 मेट्रिक्स' : 'Indore Zone 12 Metrics'}
-                    </Link>
-                  </li>
+                  {user && (user.role === 'officer' || user.role === 'admin') && (
+                    <li>
+                      <Link to="/analytics" className="text-slate-400 hover:text-teal-400 transition block">
+                        {isHindi ? 'इंदौर जोन 12 मेट्रिक्स' : 'Indore Zone 12 Metrics'}
+                      </Link>
+                    </li>
+                  )}
                   <li>
                     <span className="text-slate-400 block">
                       {isHindi ? 'संवैधानिक एआई सुरक्षा' : 'Constitutional AI Safety'}

@@ -161,18 +161,20 @@ export default function Navbar() {
               <span>{t('nav_digital_twin')}</span>
             </Link>
 
-            {/* Analytics */}
-            <Link
-              to="/analytics"
-              className={`px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
-                isActive('/analytics')
-                  ? 'bg-teal-50 text-teal-700 font-bold border border-teal-200 dark:bg-teal-950/60 dark:text-teal-200 dark:border-teal-800 shadow-xs'
-                  : 'text-slate-700 hover:text-teal-600 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
-              }`}
-            >
-              <BarChart3 className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-              <span>{t('nav_analytics')}</span>
-            </Link>
+            {/* Analytics (Officer & Admin Only) */}
+            {user && (user.role === 'officer' || user.role === 'admin') && (
+              <Link
+                to="/analytics"
+                className={`px-2.5 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+                  isActive('/analytics')
+                    ? 'bg-teal-50 text-teal-700 font-bold border border-teal-200 dark:bg-teal-950/60 dark:text-teal-200 dark:border-teal-800 shadow-xs'
+                    : 'text-slate-700 hover:text-teal-600 hover:bg-slate-50 dark:text-slate-200 dark:hover:bg-slate-800'
+                }`}
+              >
+                <BarChart3 className="w-3.5 h-3.5 text-teal-600 shrink-0" />
+                <span>{t('nav_analytics')}</span>
+              </Link>
+            )}
 
             {/* Direct Intake Channels Dropdown (SMS & Call) */}
             <div className="relative" ref={dropdownRef}>
@@ -425,21 +427,23 @@ export default function Navbar() {
                   <ChevronRight className="w-4 h-4 text-slate-300" />
                 </Link>
 
-                <Link
-                  to="/analytics"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-xs transition ${
-                    isActive('/analytics')
-                      ? 'bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300'
-                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <BarChart3 className="w-4 h-4 text-teal-600" />
-                    <span>{t('nav_analytics')}</span>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-slate-300" />
-                </Link>
+                {user && (user.role === 'officer' || user.role === 'admin') && (
+                  <Link
+                    to="/analytics"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl font-bold text-xs transition ${
+                      isActive('/analytics')
+                        ? 'bg-teal-50 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300'
+                        : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5">
+                      <BarChart3 className="w-4 h-4 text-teal-600" />
+                      <span>{t('nav_analytics')}</span>
+                    </div>
+                    <ChevronRight className="w-4 h-4 text-slate-300" />
+                  </Link>
+                )}
               </div>
 
               {/* Direct Offline Channels */}
